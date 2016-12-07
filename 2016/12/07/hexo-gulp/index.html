@@ -84,22 +84,31 @@
 
 
 
-<meta name="description" content="折腾Hexo的本来目的就是为了学习把性能优化到极致，由于水平有限，这里牵涉到的所谓的性能优化仅仅只是一些表面工夫，并不牵涉非常细节的前端性能。另外，由于我朝特殊的网络环境，我使用的谷歌分析，以及Disqus 均会导致出现因时因地因运营商而异的发抽状况，故而所有速度测试均在排除这些干扰下进行的。
+<meta name="description" content="hexo项目生成的public文件可以使用gulp进行压缩优化
 
-静态文件压缩静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务">
+静态文件压缩静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务 。具体方法如下:
+
+npm 安装如下工具, 方法皆为 : npm install xxx –save
+123456&quot;gulp&quot;: &quot;^3.9.1&quot;,&quot;gulp-htmlclean&quot;: &quot;^2.7.6&quot;,&quot;gulp-htmlmin&quot;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo折腾记——性能优化篇">
+<meta property="og:title" content="使用gulp对Hexo性能优化篇">
 <meta property="og:url" content="http://yoursite.com/2016/12/07/hexo-gulp/index.html">
 <meta property="og:site_name" content="Mr.Hua's Blog">
-<meta property="og:description" content="折腾Hexo的本来目的就是为了学习把性能优化到极致，由于水平有限，这里牵涉到的所谓的性能优化仅仅只是一些表面工夫，并不牵涉非常细节的前端性能。另外，由于我朝特殊的网络环境，我使用的谷歌分析，以及Disqus 均会导致出现因时因地因运营商而异的发抽状况，故而所有速度测试均在排除这些干扰下进行的。
+<meta property="og:description" content="hexo项目生成的public文件可以使用gulp进行压缩优化
 
-静态文件压缩静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务">
-<meta property="og:updated_time" content="2016-12-07T06:54:15.674Z">
+静态文件压缩静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务 。具体方法如下:
+
+npm 安装如下工具, 方法皆为 : npm install xxx –save
+123456&quot;gulp&quot;: &quot;^3.9.1&quot;,&quot;gulp-htmlclean&quot;: &quot;^2.7.6&quot;,&quot;gulp-htmlmin&quot;">
+<meta property="og:updated_time" content="2016-12-07T07:44:53.280Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo折腾记——性能优化篇">
-<meta name="twitter:description" content="折腾Hexo的本来目的就是为了学习把性能优化到极致，由于水平有限，这里牵涉到的所谓的性能优化仅仅只是一些表面工夫，并不牵涉非常细节的前端性能。另外，由于我朝特殊的网络环境，我使用的谷歌分析，以及Disqus 均会导致出现因时因地因运营商而异的发抽状况，故而所有速度测试均在排除这些干扰下进行的。
+<meta name="twitter:title" content="使用gulp对Hexo性能优化篇">
+<meta name="twitter:description" content="hexo项目生成的public文件可以使用gulp进行压缩优化
 
-静态文件压缩静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务">
+静态文件压缩静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务 。具体方法如下:
+
+npm 安装如下工具, 方法皆为 : npm install xxx –save
+123456&quot;gulp&quot;: &quot;^3.9.1&quot;,&quot;gulp-htmlclean&quot;: &quot;^2.7.6&quot;,&quot;gulp-htmlmin&quot;">
 
 
 
@@ -133,7 +142,7 @@
 
 
 
-  <title> Hexo折腾记——性能优化篇 | Mr.Hua's Blog </title>
+  <title> 使用gulp对Hexo性能优化篇 | Mr.Hua's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -268,7 +277,7 @@
             
             
               
-                Hexo折腾记——性能优化篇
+                使用gulp对Hexo性能优化篇
               
             
           </h1>
@@ -317,7 +326,7 @@
       
 
       
-        <p>折腾Hexo的本来目的就是为了学习把性能优化到极致，由于水平有限，这里牵涉到的所谓的性能优化仅仅只是一些表面工夫，并不牵涉非常细节的前端性能。<br>另外，由于我朝特殊的网络环境，我使用的谷歌分析，以及Disqus 均会导致出现因时因地因运营商而异的发抽状况，故而所有速度测试均在排除这些干扰下进行的。</p>
+        <p>hexo项目生成的public文件可以使用gulp进行压缩优化</p>
 <hr>
 <h2 id="静态文件压缩"><a href="#静态文件压缩" class="headerlink" title="静态文件压缩"></a>静态文件压缩</h2><p>静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务 。具体方法如下:</p>
 <ol>
@@ -355,8 +364,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/07/hexo-start/" rel="next" title="Hexo折腾记——基本配置篇">
-                <i class="fa fa-chevron-left"></i> Hexo折腾记——基本配置篇
+              <a href="/2016/12/07/hexo-start/" rel="next" title="使用node和git搭建Hexo博客">
+                <i class="fa fa-chevron-left"></i> 使用node和git搭建Hexo博客
               </a>
             
           </div>
