@@ -186,7 +186,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -196,7 +196,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -229,6 +229,347 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/babel5-to-babel6/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Mr.Hua">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Mr.Hua's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Mr.Hua's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/07/babel5-to-babel6/" itemprop="url">
+                  babel5升级到babel6总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:50:56+08:00">
+                2016-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/es6/" itemprop="url" rel="index">
+                    <span itemprop="name">es6</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>babel5 to babel6</p>
+<h2 id="为什么要升级？"><a href="#为什么要升级？" class="headerlink" title="为什么要升级？"></a>为什么要升级？</h2><p>性能提升：据说compile速度提升20%（但在测试后发现，速度慢了20%+）。<br>可配置的插件：更强的灵活性，以及更简单的插件API。<br>更简洁的配置。</p>
+<h2 id="重大变化"><a href="#重大变化" class="headerlink" title="重大变化"></a>重大变化</h2><p>不再提供babel包<br>命令行工具由babel-cli包提供<br>node api由babel-core提供<br>polyfill由babel-polyfill提供<br>.babelrc配置变化<br>移除“blacklist”、“whitelist”、“optional”、“nonStandard”和“modules”等<br>增加plugins：转码逻辑通过一系列插件实现，默认不使用任何插件<br>增加presets配置，提供一些预设的插件集合<br>external-helper选项由插件实现<br>项目升级过程中遇到问题</p>
+<p>babel官方未提供decorator transfrom插件</p>
+<p>decorator是es7的提案，如果要是用的话，需要用用非官方插件：transform-decorators-legacy。</p>
+<p>babel提供的es2015插件集默认包含transform-es2015-modules-commonjs插件</p>
+<p>项目系统需要将es6模块转成AMD模块，需要在plugins中指定使用transform-es2015-modules-amd.</p>
+<p>babel提供的AMD模块转码插件默认开启strict mode</p>
+<p>关闭strict mode的方法：</p>
+<p>不使用preset-es2015，需要自定义preset或者在plugins中引入所有需要的插件;<br>插件中做如下配置：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"plugins"</span>: [</div><div class="line">        [<span class="string">"transform-es2015-modules-amd"</span>, &#123;<span class="string">"strict"</span>: <span class="literal">false</span>&#125;]</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Notes：如果不提供es2015相关插件的preset，preset-stage-x也不能使用<br>备注下：preset是一系列plugin 的集合，而stage-x代表着支持es6哪个阶段的语法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">stage<span class="number">-0</span> - Strawman: just an idea, possible Babel plugin.</div><div class="line">stage<span class="number">-1</span> - Proposal: <span class="keyword">this</span> is worth working on.</div><div class="line">stage<span class="number">-2</span> - Draft: initial spec.</div><div class="line">stage<span class="number">-3</span> - Candidate: complete spec and initial browser implementations.</div><div class="line">stage<span class="number">-4</span> - Finished: will be added to the next yearly release.</div></pre></td></tr></table></figure></p>
+<p>es6代码中有require时会导致转码失败</p>
+<p>es6代码中出现require时，babel5能正确转码，但babel6会报如下错误：</p>
+<p>Property object of MemberExpression expected node to be of a type [“Expression”] but instead got null.<br>解决方法：讲require变更为import。</p>
+<p>windows7下会出现Couldn’t find preset</p>
+<p>当安装babel插件的是时候，在windows7环境上不能使用如下命令来安装，会报”Couldn’t find preset “es2015” relative to directory”。</p>
+<p>npm install –save-dev babel-preset-es2015<br>解决方法：升级node版本至5+，npm3+或者安装preset安装的时候，使用</p>
+<p>npm install –save babel-preset-es2015<br>原因是不同的操作系统cache策略不同。</p>
+<p>Cache files are stored in ~/.npm on Posix, or ~/npm-cache on Windows.<br>This is controlled by the cache configuration param.</p>
+<p>使用babel-core提供的api转码时，如果以对象形式传入配置，转码后AMD模块会有两层define</p>
+<p>解决方法：传入配置中需要增加babelrc=false。</p>
+<p>原因是：构建过程中，babel自身会去基于.babelrc来进行构建，如果我们不想让babel执行这个文件需要在调试的时候将babelrc设置为false，在构建的时候还是需要使用默认的true来调用和执行。</p>
+<h2 id="ES6-module-to-AMD的转码逻辑变更"><a href="#ES6-module-to-AMD的转码逻辑变更" class="headerlink" title="ES6 module to AMD的转码逻辑变更"></a>ES6 module to AMD的转码逻辑变更</h2><p>babel6提供的AMD转码插件对export default的转码逻辑做了修改，详情如下：<br>针对如下代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">    <span class="attr">foo</span>: <span class="number">1</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>使用babel5转码后：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">define([<span class="string">"exports"</span>, <span class="string">"module"</span>], <span class="function"><span class="keyword">function</span> (<span class="params">exports, module</span>) </span>&#123;</div><div class="line">    <span class="built_in">module</span>.exports = &#123;</div><div class="line">        <span class="attr">foo</span>: <span class="number">1</span></div><div class="line">    &#125;;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>使用babel6转码后：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">define([<span class="string">"exports"</span>], <span class="function"><span class="keyword">function</span> (<span class="params">exports</span>) </span>&#123;</div><div class="line">    <span class="built_in">Object</span>.defineProperty(exports, <span class="string">"__esModule"</span>, &#123;</div><div class="line">        <span class="attr">value</span>: <span class="literal">true</span></div><div class="line">    &#125;);</div><div class="line">    exports.default = &#123;</div><div class="line">        <span class="attr">foo</span>: <span class="number">1</span></div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>在AMD模块依赖es6模块的场景下，AMD模块代码会不能运行。</p>
+<p>备注：<br>主要的大坑就是项目里面既有es5的代码也有es6的代码，然后在5里面require es6文件就会出问题，会多一层未经处理的default….解决核心就是把这层default给干掉。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>升级最大的阻碍是：ES6 module to AMD的转码逻辑变更并且暂时没有什么好的办法解决这个问题，所以暂不升级。</p>
+<p>IoC支持插件后，可以考虑实施方法2解决模块转码问题，相比方法1代价更小。</p>
+<p>总体来说方法3代价最小，但babel5的转码存在问题是：导致不符合es6模块使用规范的代码出现。如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// foo.js</span></div><div class="line"><span class="keyword">const</span> foo = &#123;<span class="attr">baz</span>: <span class="number">42</span>, <span class="attr">bar</span>: <span class="literal">false</span>&#125;</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> foo</div><div class="line"><span class="comment">// bar.js</span></div><div class="line"><span class="keyword">import</span> &#123;baz&#125; <span class="keyword">from</span> <span class="string">'./foo'</span></div></pre></td></tr></table></figure></p>
+<h2 id="项目可用的BABEL6-转码配置"><a href="#项目可用的BABEL6-转码配置" class="headerlink" title="项目可用的BABEL6 转码配置"></a>项目可用的BABEL6 转码配置</h2><p>不考虑ES6 module to AMD的转码逻辑变更问题，通过一下配置可以在项目中使用babel6</p>
+<p>.babelrc<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"compact"</span>: <span class="literal">false</span>,</div><div class="line">    <span class="string">"ast"</span>: <span class="literal">false</span>,</div><div class="line">    <span class="string">"sourceMaps"</span>: <span class="string">"inline"</span>,</div><div class="line">    <span class="string">"highlightCode"</span>: <span class="literal">true</span>,</div><div class="line">    <span class="string">"plugins"</span>: [</div><div class="line">        [<span class="string">"transform-es2015-modules-amd"</span>, &#123;<span class="string">"strict"</span>: <span class="literal">false</span>&#125;],</div><div class="line">        <span class="string">"transform-decorators-legacy"</span></div><div class="line">    ],</div><div class="line">    <span class="string">"presets"</span>: [<span class="string">"es2015"</span>, <span class="string">"stage-0"</span>, <span class="string">"stage-3"</span>],</div><div class="line">    <span class="string">"ignore"</span>: [</div><div class="line">        <span class="string">"biz/report/**"</span>,</div><div class="line">        <span class="string">"dsp-base/**/biz/tool/keywords/**"</span></div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>package.json<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="string">"dependencies"</span>: &#123;</div><div class="line">    <span class="string">"babel-plugin-transform-decorators-legacy"</span>: <span class="string">"^1.3.4"</span></div><div class="line">    <span class="string">"babel-preset-es2015"</span>: <span class="string">"^6.6.0"</span>,</div><div class="line">    <span class="string">"babel-preset-stage-0"</span>: <span class="string">"^6.5.0"</span></div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/es6-coder-rules/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Mr.Hua">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Mr.Hua's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Mr.Hua's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/07/es6-coder-rules/" itemprop="url">
+                  ES6编程规范
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:44:07+08:00">
+                2016-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/es6/" itemprop="url" rel="index">
+                    <span itemprop="name">es6</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="let取代var"><a href="#let取代var" class="headerlink" title="let取代var"></a>let取代var</h2><p>ES6提出了两个新的声明变量的命令：let和const。其中，let完全可以取代var，因为两者语义相同，而且let没有副作用。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line"><span class="keyword">let</span> x = <span class="string">'hello'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line"><span class="built_in">console</span>.log(i);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面代码如果用var替代let，实际上就声明了两个全局变量，这显然不是本意。变量应该只在其声明的代码块内有效，var命令做不到这一点。</p>
+<p>var命令存在变量提升效用，let命令没有这个问题。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span>(<span class="literal">true</span>) &#123;</div><div class="line"><span class="built_in">console</span>.log(x); <span class="comment">// ReferenceError</span></div><div class="line"><span class="keyword">let</span> x = <span class="string">'hello'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面代码如果使用var替代let，console.log那一行就不会报错，而是会输出undefined，因为变量声明提升到代码块的头部。这违反了变量先声明后使用的原则。</p>
+<p>所以，建议不再使用var命令，而是使用let命令取代。</p>
+<h2 id="全局常量和线程安全"><a href="#全局常量和线程安全" class="headerlink" title="全局常量和线程安全"></a>全局常量和线程安全</h2><p>在let和const之间，建议优先使用const，尤其是在全局环境，不应该设置变量，只应设置常量。这符合函数式编程思想，有利于将来的分布式运算。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>, b = <span class="number">2</span>, c = <span class="number">3</span>;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">const</span> a = <span class="number">1</span>;</div><div class="line"><span class="keyword">const</span> b = <span class="number">2</span>;</div><div class="line"><span class="keyword">const</span> c = <span class="number">3</span>;</div><div class="line"></div><div class="line"><span class="comment">// best</span></div><div class="line"><span class="keyword">const</span> [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div></pre></td></tr></table></figure></p>
+<p>const声明常量还有两个好处，一是阅读代码的人立刻会意识到不应该修改这个值，二是防止了无意间修改变量值所导致的错误。</p>
+<p>所有的函数都应该设置为常量。</p>
+<p>长远来看，JavaScript可能会有多线程的实现（比如Intel的River Trail那一类的项目），这时let表示的变量，只应出现在单线程运行的代码中，不能是多线程共享的，这样有利于保证线程安全。</p>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>静态字符串一律使用单引号或反引号，不使用双引号。动态字符串使用反引号。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> a = <span class="string">"foobar"</span>;</div><div class="line"><span class="keyword">const</span> b = <span class="string">'foo'</span> + a + <span class="string">'bar'</span>;</div><div class="line"></div><div class="line"><span class="comment">// acceptable</span></div><div class="line"><span class="keyword">const</span> c = <span class="string">`foobar`</span>;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">const</span> a = <span class="string">'foobar'</span>;</div><div class="line"><span class="keyword">const</span> b = <span class="string">`foo<span class="subst">$&#123;a&#125;</span>bar`</span>;</div><div class="line"><span class="keyword">const</span> c = <span class="string">'foobar'</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h2><p>使用数组成员对变量赋值时，优先使用解构赋值。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</div><div class="line"></div><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> first = arr[<span class="number">0</span>];</div><div class="line"><span class="keyword">const</span> second = arr[<span class="number">1</span>];</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">const</span> [first, second] = arr;</div></pre></td></tr></table></figure></p>
+<p>函数的参数如果是对象的成员，优先使用解构赋值。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFullName</span>(<span class="params">user</span>) </span>&#123;</div><div class="line"><span class="keyword">const</span> firstName = user.firstName;</div><div class="line"><span class="keyword">const</span> lastName = user.lastName;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFullName</span>(<span class="params">obj</span>) </span>&#123;</div><div class="line"><span class="keyword">const</span> &#123; firstName, lastName &#125; = obj;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// best</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFullName</span>(<span class="params">&#123; firstName, lastName &#125;</span>) </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果函数返回多个值，优先使用对象的解构赋值，而不是数组的解构赋值。这样便于以后添加返回值，以及更改返回值的顺序。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">processInput</span>(<span class="params">input</span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> [left, right, top, bottom];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">processInput</span>(<span class="params">input</span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> &#123; left, right, top, bottom &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> &#123; left, right &#125; = processInput(input);</div></pre></td></tr></table></figure></p>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>单行定义的对象，最后一个成员不以逗号结尾。多行定义的对象，最后一个成员以逗号结尾。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> a = &#123; <span class="attr">k1</span>: v1, <span class="attr">k2</span>: v2, &#125;;</div><div class="line"><span class="keyword">const</span> b = &#123;</div><div class="line"><span class="attr">k1</span>: v1,</div><div class="line"><span class="attr">k2</span>: v2</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">const</span> a = &#123; <span class="attr">k1</span>: v1, <span class="attr">k2</span>: v2 &#125;;</div><div class="line"><span class="keyword">const</span> b = &#123;</div><div class="line"><span class="attr">k1</span>: v1,</div><div class="line"><span class="attr">k2</span>: v2,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>对象尽量静态化，一旦定义，就不得随意添加新的属性。如果添加属性不可避免，要使用Object.assign方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> a = &#123;&#125;;</div><div class="line">a.x = <span class="number">3</span>;</div><div class="line"></div><div class="line"><span class="comment">// if reshape unavoidable</span></div><div class="line"><span class="keyword">const</span> a = &#123;&#125;;</div><div class="line"><span class="built_in">Object</span>.assign(a, &#123; <span class="attr">x</span>: <span class="number">3</span> &#125;);</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">const</span> a = &#123; <span class="attr">x</span>: <span class="literal">null</span> &#125;;</div><div class="line">a.x = <span class="number">3</span>;</div></pre></td></tr></table></figure></p>
+<p>如果对象的属性名是动态的，可以在创造对象的时候，使用属性表达式定义。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> obj = &#123;</div><div class="line"><span class="attr">id</span>: <span class="number">5</span>,</div><div class="line"><span class="attr">name</span>: <span class="string">'San Francisco'</span>,</div><div class="line">&#125;;</div><div class="line">obj[getKey(<span class="string">'enabled'</span>)] = <span class="literal">true</span>;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">const</span> obj = &#123;</div><div class="line"><span class="attr">id</span>: <span class="number">5</span>,</div><div class="line"><span class="attr">name</span>: <span class="string">'San Francisco'</span>,</div><div class="line">[getKey(<span class="string">'enabled'</span>)]: <span class="literal">true</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>上面代码中，对象obj的最后一个属性名，需要计算得到。这时最好采用属性表达式，在新建obj的时候，将该属性与其他属性定义在一起。这样一来，所有属性就在一个地方定义了。</p>
+<p>另外，对象的属性和方法，尽量采用简洁表达法，这样易于描述和书写。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ref = <span class="string">'some value'</span>;</div><div class="line"></div><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> atom = &#123;</div><div class="line"><span class="attr">ref</span>: ref,</div><div class="line"></div><div class="line"><span class="attr">value</span>: <span class="number">1</span>,</div><div class="line"></div><div class="line"><span class="attr">addValue</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> atom.value + value;</div><div class="line">&#125;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">const</span> atom = &#123;</div><div class="line">ref,</div><div class="line"></div><div class="line"><span class="attr">value</span>: <span class="number">1</span>,</div><div class="line"></div><div class="line">addValue(value) &#123;</div><div class="line"><span class="keyword">return</span> atom.value + value;</div><div class="line">&#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>使用扩展运算符（…）拷贝数组。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> len = items.length;</div><div class="line"><span class="keyword">const</span> itemsCopy = [];</div><div class="line"><span class="keyword">let</span> i;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">itemsCopy[i] = items[i];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">const</span> itemsCopy = [...items];</div></pre></td></tr></table></figure></p>
+<p>使用Array.from方法，将类似数组的对象转为数组。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> foo = <span class="built_in">document</span>.querySelectorAll(<span class="string">'.foo'</span>);</div><div class="line"><span class="keyword">const</span> nodes = <span class="built_in">Array</span>.from(foo);</div><div class="line">函数</div><div class="line">立即执行函数可以写成箭头函数的形式。</div><div class="line"></div><div class="line">(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'Welcome to the Internet.'</span>);</div><div class="line">&#125;)();</div></pre></td></tr></table></figure></p>
+<p>那些需要使用函数表达式的场合，尽量用箭头函数代替。因为这样更简洁，而且绑定了this。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].map(<span class="function"><span class="keyword">function</span> (<span class="params">x</span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> x * x;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].map(<span class="function">(<span class="params">x</span>) =&gt;</span> &#123;</div><div class="line"><span class="keyword">return</span> x * x;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// best</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].map(<span class="function"><span class="params">x</span> =&gt;</span> x * x);</div></pre></td></tr></table></figure></p>
+<p>箭头函数取代Function.prototype.bind，不应再用self/_this/that绑定 this。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> self = <span class="keyword">this</span>;</div><div class="line"><span class="keyword">const</span> boundMethod = <span class="function"><span class="keyword">function</span>(<span class="params">...params</span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> method.apply(self, params);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// acceptable</span></div><div class="line"><span class="keyword">const</span> boundMethod = method.bind(<span class="keyword">this</span>);</div><div class="line"></div><div class="line"><span class="comment">// best</span></div><div class="line"><span class="keyword">const</span> boundMethod = <span class="function">(<span class="params">...params</span>) =&gt;</span> method.apply(<span class="keyword">this</span>, params);</div></pre></td></tr></table></figure></p>
+<p>简单的、单行的、不会复用的函数，建议采用箭头函数。如果函数体较为复杂，行数较多，还是应该采用传统的函数写法。</p>
+<p>所有配置项都应该集中在一个对象，放在最后一个参数，布尔值不可以直接作为参数。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">divide</span>(<span class="params">a, b, option = false </span>) </span>&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">divide</span>(<span class="params">a, b, &#123; option = false &#125; = &#123;&#125;</span>) </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>不要在函数体内使用arguments变量，使用rest运算符（…）代替。因为rest运算符显式表明你想要获取参数，而且arguments是一个类似数组的对象，而rest运算符可以提供一个真正的数组。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">concatenateAll</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">const</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</div><div class="line"><span class="keyword">return</span> args.join(<span class="string">''</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">concatenateAll</span>(<span class="params">...args</span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> args.join(<span class="string">''</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用默认值语法设置函数参数的默认值。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleThings</span>(<span class="params">opts</span>) </span>&#123;</div><div class="line">opts = opts || &#123;&#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleThings</span>(<span class="params">opts = &#123;&#125;</span>) </span>&#123;</div><div class="line"><span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Map结构"><a href="#Map结构" class="headerlink" title="Map结构"></a>Map结构</h2><p>注意区分Object和Map，只有模拟现实世界的实体对象时，才使用Object。如果只是需要key: value的数据结构，使用Map结构。因为Map有内建的遍历机制。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>(arr);</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">of</span> map.keys()) &#123;</div><div class="line"><span class="built_in">console</span>.log(key);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> value <span class="keyword">of</span> map.values()) &#123;</div><div class="line"><span class="built_in">console</span>.log(value);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> map.entries()) &#123;</div><div class="line"><span class="built_in">console</span>.log(item[<span class="number">0</span>], item[<span class="number">1</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h2><p>总是用Class，取代需要prototype的操作。因为Class的写法更简洁，更易于理解。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">// bad</div><div class="line">function Queue(contents = []) &#123;</div><div class="line">this._queue = [...contents];</div><div class="line">&#125;</div><div class="line">Queue.prototype.pop = function() &#123;</div><div class="line">const value = this._queue[0];</div><div class="line">this._queue.splice(0, 1);</div><div class="line">return value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// good</div><div class="line">class Queue &#123;</div><div class="line">constructor(contents = []) &#123;</div><div class="line">this._queue = [...contents];</div><div class="line">&#125;</div><div class="line">pop() &#123;</div><div class="line">const value = this._queue[0];</div><div class="line">this._queue.splice(0, 1);</div><div class="line">return value;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用extends实现继承，因为这样更简单，不会有破坏instanceof运算的危险。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> inherits = <span class="built_in">require</span>(<span class="string">'inherits'</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">PeekableQueue</span>(<span class="params">contents</span>) </span>&#123;</div><div class="line">Queue.apply(<span class="keyword">this</span>, contents);</div><div class="line">&#125;</div><div class="line">inherits(PeekableQueue, Queue);</div><div class="line">PeekableQueue.prototype.peek = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> <span class="keyword">this</span>._queue[<span class="number">0</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeekableQueue</span> <span class="keyword">extends</span> <span class="title">Queue</span> </span>&#123;</div><div class="line">peek() &#123;</div><div class="line"><span class="keyword">return</span> <span class="keyword">this</span>._queue[<span class="number">0</span>];</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>首先，Module语法是JavaScript模块的标准写法，坚持使用这种写法。使用import取代require。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">const</span> moduleA = <span class="built_in">require</span>(<span class="string">'moduleA'</span>);</div><div class="line"><span class="keyword">const</span> func1 = moduleA.func1;</div><div class="line"><span class="keyword">const</span> func2 = moduleA.func2;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">import</span> &#123; func1, func2 &#125; <span class="keyword">from</span> <span class="string">'moduleA'</span>;</div><div class="line">使用<span class="keyword">export</span>取代<span class="built_in">module</span>.exports。</div><div class="line"></div><div class="line"><span class="comment">// commonJS的写法</span></div><div class="line"><span class="keyword">var</span> React = <span class="built_in">require</span>(<span class="string">'react'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> Breadcrumbs = React.createClass(&#123;</div><div class="line">render() &#123;</div><div class="line"><span class="keyword">return</span> &lt;nav /&gt;;</div><div class="line">&#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">module.exports = Breadcrumbs;</div><div class="line"></div><div class="line">// ES6的写法</div><div class="line">import React from 'react';</div><div class="line"></div><div class="line">const Breadcrumbs = React.createClass(&#123;</div><div class="line">render() &#123;</div><div class="line">return &lt;nav /&gt;;</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h2 id="export-default-Breadcrumbs"><a href="#export-default-Breadcrumbs" class="headerlink" title="export default Breadcrumbs"></a>export default Breadcrumbs</h2><p>如果模块只有一个输出值，就使用export default，如果模块有多个输出值，就不使用export default，不要export default与普通的export同时使用。</p>
+<p>不要在模块输入中使用通配符。因为这样可以确保你的模块之中，有一个默认输出（export default）。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bad</span></div><div class="line"><span class="keyword">import</span> * <span class="keyword">as</span> myObject <span class="string">'./importModule'</span>;</div><div class="line"></div><div class="line"><span class="comment">// good</span></div><div class="line"><span class="keyword">import</span> myObject <span class="keyword">from</span> <span class="string">'./importModule'</span>;</div><div class="line">如果模块默认输出一个函数，函数名的首字母应该小写。</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeStyleGuide</span>(<span class="params"></span>) </span>&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> makeStyleGuide;</div></pre></td></tr></table></figure></p>
+<p>如果模块默认输出一个对象，对象名的首字母应该大写。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> StyleGuide = &#123;</div><div class="line"><span class="attr">es6</span>: &#123;</div><div class="line">&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> StyleGuide;</div></pre></td></tr></table></figure></p>
+<h2 id="ESLint的使用"><a href="#ESLint的使用" class="headerlink" title="ESLint的使用"></a>ESLint的使用</h2><p>ESLint是一个语法规则和代码风格的检查工具，可以用来保证写出语法正确、风格统一的代码。</p>
+<p>首先，安装ESLint。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ npm i -g eslint</div><div class="line">然后，安装Airbnb语法规则。</div><div class="line"></div><div class="line">$ npm i -g eslint-config-airbnb</div></pre></td></tr></table></figure></p>
+<p>最后，在项目的根目录下新建一个.eslintrc文件，配置ESLint。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="string">"extends"</span>: <span class="string">"eslint-config-airbnb"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>现在就可以检查，当前项目的代码是否符合预设的规则。</p>
+<p>index.js文件的代码如下。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> unusued = <span class="string">'I have no purpose!'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">var</span> message = <span class="string">'Hello, World!'</span>;</div><div class="line">alert(message);</div><div class="line">&#125;</div><div class="line"></div><div class="line">greet();</div></pre></td></tr></table></figure></p>
+<p>使用ESLint检查这个文件。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ eslint index.js</div><div class="line">index.js</div><div class="line"><span class="number">1</span>:<span class="number">5</span> error unusued is defined but never used no-unused-vars</div><div class="line"><span class="number">4</span>:<span class="number">5</span> error Expected indentation <span class="keyword">of</span> <span class="number">2</span> characters but found <span class="number">4</span> indent</div><div class="line"><span class="number">5</span>:<span class="number">5</span> error Expected indentation <span class="keyword">of</span> <span class="number">2</span> characters but found <span class="number">4</span> indent</div><div class="line"></div><div class="line">✖ <span class="number">3</span> problems (<span class="number">3</span> errors, <span class="number">0</span> warnings)</div></pre></td></tr></table></figure></p>
+<p>上面代码说明，原文件有三个错误，一个是定义了变量，却没有使用，另外两个是行首缩进为4个空格，而不是规定的2个空格。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -278,7 +619,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:36:47+08:00">
                 2016-12-07
               </time>
@@ -295,7 +636,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/es6/" itemprop="url" rel="index">
@@ -419,7 +760,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:22:49+08:00">
                 2016-12-07
               </time>
@@ -436,7 +777,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/nodejs/" itemprop="url" rel="index">
@@ -561,7 +902,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:17:25+08:00">
                 2016-12-07
               </time>
@@ -578,7 +919,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/r-js/" itemprop="url" rel="index">
@@ -695,7 +1036,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:13:06+08:00">
                 2016-12-07
               </time>
@@ -712,7 +1053,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/r-js/" itemprop="url" rel="index">
@@ -846,7 +1187,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T15:39:18+08:00">
                 2016-12-07
               </time>
@@ -863,7 +1204,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/jquery/" itemprop="url" rel="index">
@@ -1001,7 +1342,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T15:23:11+08:00">
                 2016-12-07
               </time>
@@ -1018,7 +1359,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/linux/" itemprop="url" rel="index">
@@ -1172,7 +1513,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T15:09:18+08:00">
                 2016-12-07
               </time>
@@ -1189,7 +1530,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/git/" itemprop="url" rel="index">
@@ -1314,7 +1655,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T14:53:58+08:00">
                 2016-12-07
               </time>
@@ -1331,7 +1672,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/hexo/" itemprop="url" rel="index">
@@ -1412,149 +1753,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/hexo-start/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Mr.Hua">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Mr.Hua's Blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Mr.Hua's Blog" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/07/hexo-start/" itemprop="url">
-                  使用node和git搭建Hexo博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T14:42:05+08:00">
-                2016-12-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#修改npm下载路径</span></div><div class="line">$ npm install -g cnpm --registry=https://registry.npm.taobao.org</div><div class="line"><span class="comment">#全局安装hexo</span></div><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure>
-<hr>
-<h2 id="本地运行hexo"><a href="#本地运行hexo" class="headerlink" title="本地运行hexo"></a>本地运行hexo</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#初始化hexo</span></div><div class="line">$ hexo init</div><div class="line"><span class="comment">#安装依赖包</span></div><div class="line">$ npm install</div><div class="line"><span class="comment">#运行hexo,以后要在本地运行博客只要输入该命令即可</span></div><div class="line">$ hexo s -g</div><div class="line"><span class="comment"># 停止运行</span></div><div class="line"><span class="comment">#按住Ctrl+C键即可停止</span></div></pre></td></tr></table></figure>
-<h2 id="hexo配置信息"><a href="#hexo配置信息" class="headerlink" title="hexo配置信息"></a>hexo配置信息</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">#博客名称</div><div class="line">title: Mr.hua</div><div class="line">#副标题</div><div class="line">subtitle:subtitle</div><div class="line">#简介</div><div class="line">description: your site interdution</div><div class="line">#博客作者</div><div class="line">author: Mr.hua</div><div class="line">#博客语言</div><div class="line">language: zh-CN</div><div class="line">#时区</div><div class="line">timezone:</div><div class="line"></div><div class="line">#博客地址,与申请的GitHub一致</div><div class="line">url: http://huajiang1989.github.io</div><div class="line">root: /</div><div class="line">#博客链接格式</div><div class="line">permalink: :year/:month/:day/:title/</div><div class="line">permalink_defaults:</div><div class="line"></div><div class="line">source_dir: source</div><div class="line">public_dir: public</div><div class="line">tag_dir: tags</div><div class="line">archive_dir: archives</div><div class="line">category_dir: categories</div><div class="line">code_dir: downloads/code</div><div class="line">i18n_dir: :lang</div><div class="line">skip_render:</div><div class="line"></div><div class="line">new_post_name: :title.md # File name of new posts</div><div class="line">default_layout: post</div><div class="line">titlecase: false # Transform title into titlecase</div><div class="line">external_link: true # Open external links in new tab</div><div class="line">filename_case: 0</div><div class="line">render_drafts: false</div><div class="line">post_asset_folder: false</div><div class="line">relative_link: false</div><div class="line">future: true</div><div class="line">highlight:</div><div class="line">  enable: true</div><div class="line">  line_number: true</div><div class="line">  auto_detect: true</div><div class="line">  tab_replace:</div><div class="line"></div><div class="line">default_category: uncategorized</div><div class="line">category_map:</div><div class="line">tag_map:</div><div class="line"></div><div class="line">#日期格式</div><div class="line">date_format: YYYY-MM-DD</div><div class="line">time_format: HH:mm:ss</div><div class="line"></div><div class="line">#分页，每页文章数量</div><div class="line">per_page: 10</div><div class="line">pagination_dir: page</div><div class="line"></div><div class="line">#博客主题</div><div class="line">theme: landscape</div><div class="line"></div><div class="line">#发布设置</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  #huajiang1989改为你的github用户名</div><div class="line">  repository: https://github.com/huajiang1989/huajiang1989.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1595,8 +1798,8 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">19</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
@@ -1604,7 +1807,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               
             </div>
           
@@ -1654,7 +1857,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
