@@ -1,1 +1,912 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>Mr.Hua&#39;s Blog</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta property="og:type" content="website"><meta property="og:title" content="Mr.Hua's Blog"><meta property="og:url" content="http://yoursite.com/index.html"><meta property="og:site_name" content="Mr.Hua's Blog"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Mr.Hua's Blog"><link rel="alternate" href="/atom.xml" title="Mr.Hua&#39;s Blog" type="application/atom+xml"><link rel="icon" href="/favicon.png"><link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css"><link rel="stylesheet" href="/css/style.css"></head><body><div id="container"><div id="wrap"><header id="header"><div id="banner"></div><div id="header-outer" class="outer"><div id="header-title" class="inner"><h1 id="logo-wrap"> <a href="/" id="logo">Mr.Hua&#39;s Blog</a></h1></div><div id="header-inner" class="inner"><nav id="main-nav"><a id="main-nav-toggle" class="nav-icon"></a> <a class="main-nav-link" href="/">Home</a> <a class="main-nav-link" href="/archives">Archives</a></nav><nav id="sub-nav"><a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a><a id="nav-search-btn" class="nav-icon" title="Search"></a></nav><div id="search-form-wrap"><form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div></div></div></header><div class="outer"><section id="main"><article id="post-upgrade-notes" class="article article-type-post" itemscope itemprop="blogPost"><div class="article-meta"> <a href="/2016-12-07-upgrade-notes.html" class="article-date"><time datetime="2016-12-07T03:11:55.505Z" itemprop="datePublished">2016-12-07</time></a></div><div class="article-inner"><div class="article-entry" itemprop="articleBody"><p>此处着重列出升级中的不兼容变化和推荐改动。所有变动请见 <a href="/changelog">Changelog</a>。</p><h2 id="0-8-x-gt-0-9"><a href="#0-8-x-gt-0-9" class="headerlink" title="0.8.x =&gt; 0.9"></a>0.8.x =&gt; 0.9</h2><p>此版本主要优化各组件的样式和兼容性，并提升长列表等组件性能，升级改动成本低。</p><p>详细变更见 <a href="https://github.com/ant-design/ant-design-mobile/releases/tag/0.9.0" target="_blank" rel="external">https://github.com/ant-design/ant-design-mobile/releases/tag/0.9.0</a></p><h2 id="0-7-x-gt-0-8-0"><a href="#0-7-x-gt-0-8-0" class="headerlink" title="0.7.x =&gt; 0.8.0"></a>0.7.x =&gt; 0.8.0</h2><p>此版本主要加入「高清方案」支持，设置方式见 wiki<br><a href="https://github.com/ant-design/ant-design-mobile/wiki" target="_blank" rel="external">antd mobile 0.8 以上版本「高清」方案设置</a></p><p>其他详细更见 <a href="https://github.com/ant-design/ant-design-mobile/releases/tag/0.8.0" target="_blank" rel="external">https://github.com/ant-design/ant-design-mobile/releases/tag/0.8.0</a></p><h2 id="0-5-x-gt-0-6-0"><a href="#0-5-x-gt-0-6-0" class="headerlink" title="0.5.x =&gt; 0.6.0"></a>0.5.x =&gt; 0.6.0</h2><p>请查看 <a href="/changelog#0.6.0">Changelog</a>。</p></div><footer class="article-footer"> <a data-url="http://yoursite.com/2016-12-07-upgrade-notes.html" data-id="ciwecz9ha0004lwfcibvj5ouz" class="article-share-link">Share</a></footer></div></article><article id="post-practical-projects.zh-CN" class="article article-type-post" itemscope itemprop="blogPost"><div class="article-meta"> <a href="/2016-12-07-practical-projects.zh-CN.html" class="article-date"><time datetime="2016-12-07T03:11:55.499Z" itemprop="datePublished">2016-12-07</time></a></div><div class="article-inner"><header class="article-header"><h1 itemprop="name"> <a class="article-title" href="/2016-12-07-practical-projects.zh-CN.html">项目实战</a></h1></header><div class="article-entry" itemprop="articleBody"><p><a href="https://github.com/dvajs/dva" target="_blank" rel="external">dva</a> 是一个基于 react 和 redux 的轻量应用框架，概念来自 elm，支持 side effects、热替换、动态加载、react-native、SSR 等，已在生产环境广泛应用。</p><p>本文会引导你使用 dva 和 antd 从 0 开始创建一个简单应用。</p><p>会包含以下内容：</p><hr><h2 id="安装-dva"><a href="#安装-dva" class="headerlink" title="安装 dva"></a>安装 dva</h2><p>通过 npm 安装 dva 。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install dva-cli -g</div></pre></td></tr></table></figure><h2 id="创建新应用"><a href="#创建新应用" class="headerlink" title="创建新应用"></a>创建新应用</h2><p>安装完 dva-cli 之后，就可以在 terminal 里访问到 <code>dva</code> 命令。现在，你可以通过 <code>dva new</code> 创建新应用。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ dva new dva-quickstart</div></pre></td></tr></table></figure><p>这会创建 <code>dva-quickstart</code> 目录，包含项目初始化目录和文件，并提供开发服务器、构建脚本、数据 mock 服务、代理服务器等功能。</p><p>然后我们 <code>cd</code> 进入 <code>dva-quickstart</code> 目录，并启动开发服务器：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> dva-quickstart</div><div class="line">$ npm start</div></pre></td></tr></table></figure><p>几秒钟后，你会看到以下输出：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">          proxy: load rule from proxy.config.js</div><div class="line">          proxy: listened on 8989</div><div class="line">📦  411/411 build modules</div><div class="line">webpack: bundle build is now finished.</div></pre></td></tr></table></figure><p>在浏览器里打开 <a href="http://localhost:8989" target="_blank" rel="external">http://localhost:8989</a> ，你会看到 dva 的欢迎界面。</p><h2 id="使用-antd-mobile"><a href="#使用-antd-mobile" class="headerlink" title="使用 antd-mobile"></a>使用 antd-mobile</h2><p><a href="/docs/react/introduce#使用">见此使用示例</a>，要点概括如下：</p><ul><li><code>npm install antd-mobile babel-plugin-import --save</code> 安装依赖</li><li>不需要再设置 resolve (因为 atool-build 内部已经设置好)</li><li><code>babel-plugin-import</code> 是用来按需加载脚本和样式，编辑 <code>webpack.config.js</code>，使 <code>babel-plugin-import</code> 插件生效</li><li>高清方案设置，让页面显示效果更加细腻</li></ul><h2 id="接下来："><a href="#接下来：" class="headerlink" title="接下来："></a>接下来：</h2><ul><li>定义路由</li><li>编写 UI Component</li><li>定义 Model</li></ul><p>请参考 <a href="https://github.com/dvajs/dva/tree/master/examples" target="_blank" rel="external">dva examples</a></p><h2 id="构建应用"><a href="#构建应用" class="headerlink" title="构建应用"></a>构建应用</h2><p>完成开发并且在开发环境验证之后，就需要部署给我们的用户了。先执行下面的命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm run build</div></pre></td></tr></table></figure><p>几秒后，输出应该如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Child</div><div class="line">    Time: 14008ms</div><div class="line">         Asset       Size  Chunks             Chunk Names</div><div class="line">    index.html  255 bytes          [emitted]</div><div class="line">     common.js    1.18 kB       0  [emitted]  common</div><div class="line">      index.js     504 kB    1, 0  [emitted]  index</div><div class="line">     index.css     127 kB    1, 0  [emitted]  index</div></pre></td></tr></table></figure><p><code>build</code> 命令会打包所有的资源，包含 JavaScript, CSS, web fonts, images, html 等。然后你可以在 <code>dist/</code> 目录下找到这些文件。</p><h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>我们已经完成了一个简单应用，你可能还有很多疑问，比如：</p><ul><li>如何处理异步请求</li><li>如何优雅地加载初始数据</li><li>如何统一处理出错，以及特定操作的出错</li><li>如何动态加载路由和 Model，以加速页面载入速度</li><li>如何实现 hmr</li><li>如何 mock 数据</li><li>等等</li></ul><p>你可以：</p><ul><li>访问 <a href="https://github.com/dvajs/dva" target="_blank" rel="external">dva 官网</a>。</li><li>查看所有 <a href="https://github.com/dvajs/dva#api" target="_blank" rel="external">API</a>。</li><li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/zh-cn/tutorial/01-%E6%A6%82%E8%A6%81.md" target="_blank" rel="external">教程</a>，一步步完成一个中型应用。</li><li>看看 <a href="https://github.com/dvajs/dva-hackernews" target="_blank" rel="external">dva 版 hackernews</a> 是 <a href="https://github.com/sorrycc/blog/issues/9" target="_blank" rel="external">如何实现</a> 的。</li></ul></div><footer class="article-footer"> <a data-url="http://yoursite.com/2016-12-07-practical-projects.zh-CN.html" data-id="ciwecz9h50003lwfc8g81bkve" class="article-share-link">Share</a></footer></div></article><article id="post-introduce.zh-CN" class="article article-type-post" itemscope itemprop="blogPost"><div class="article-meta"> <a href="/2016-12-07-introduce.zh-CN.html" class="article-date"><time datetime="2016-12-07T03:11:55.492Z" itemprop="datePublished">2016-12-07</time></a></div><div class="article-inner"><div class="article-entry" itemprop="articleBody"><p><code>antd-mobile</code> 是 Ant Design 的移动规范的 React 实现，服务于蚂蚁及口碑无线业务。</p><div class="pic-plus"><br> <img width="160" src="https://zos.alipayobjects.com/rmsportal/wIjMDnsrDoPPcIV.png"><br> <span>+</span><br> <img width="160" src="https://t.alipayobjects.com/images/rmsweb/T16xRhXkxbXXXXXXXX.svg"><br></div><style>.pic-plus>*{display:inline-block;vertical-align:middle}.pic-plus{margin:40px 0}.pic-plus span{font-size:30px;color:#aaa;margin:0 40px}</style><p><a href="http://ant.design" target="_blank" rel="external">Ant Design</a> 在中后台领域的耕耘取得了很多成绩，使得 Ant Design 设计规范和 React 逐渐成为蚂蚁金服主流的前端产品开发模式，也受到社区的广泛关注。我们没有止步于此，一年后推出了 Ant Design 移动端规范及其实现。</p><p>随着蚂蚁金服中后台的移动端需求增多，不同的设计规范及研发方式，给设计者和开发者带来大量的重复工作，降低了产品的研发效率。</p><p>我们希望为设计者和开发者提供一套统一的设计规范，可以降低设计、开发成本，减少沟通误差。不同于大多数设计规范，我们抽象出通用组件的基础样式和组件属性，使得拓展性更强。基于这套规范我们可以快速实现页面，提高研发效率，也希望借此推进蚂蚁金服各应用向设计规范化的方向发展。</p><p>在工程方面，我们继续推进和发展 React 全家桶技术栈，探索多端同栈、可预测、高效的研发模式。</p><h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul><li>基于 Ant Design 移动设计规范。</li><li>规则化的视觉样式配置，适应各类产品风格。</li><li>基于 React Native 的多平台支持。</li><li>使用 TypeScript 开发，提供类型定义文件。</li></ul><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install antd-mobile --save</div></pre></td></tr></table></figure><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><blockquote><p>遇到报错，请先参考 <a href="https://github.com/ant-design/ant-design-mobile/issues/56" target="_blank" rel="external">示例脚手架</a></p></blockquote><p>Set webpack to resolve .web.js suffix</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">resolve: &#123;</div><div class="line">  modulesDirectories: [&apos;node_modules&apos;, path.join(__dirname, &apos;../node_modules&apos;)],</div><div class="line">  extensions: [&apos;&apos;, &apos;.web.js&apos;, &apos;.js&apos;, &apos;.json&apos;],</div><div class="line">&#125;,</div></pre></td></tr></table></figure><p>无需单独引入样式，使用 <a href="https://github.com/ant-design/babel-plugin-import" target="_blank" rel="external">babel-plugin-import</a> 按需加载，插件设置如下：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// .babelrc</span></div><div class="line">&#123;<span class="string">"plugins"</span>: [[<span class="string">"import"</span>, &#123; <span class="string">"style"</span>: <span class="string">"css"</span>, <span class="string">"libraryName"</span>: <span class="string">"antd-mobile"</span> &#125;]]&#125;</div><div class="line"><span class="comment">// or webpack config file</span></div><div class="line">webpackConfig.babel.plugins.push([<span class="string">'import'</span>, &#123; <span class="attr">libraryName</span>: <span class="string">'antd-mobile'</span>, <span class="attr">style</span>: <span class="string">'css'</span> &#125;]);</div></pre></td></tr></table></figure><h4 id="Web-使用场景"><a href="#Web-使用场景" class="headerlink" title="Web 使用场景"></a>Web 使用场景</h4><p>首先需要引入『高清方案』设置：具体方法<br>见 wiki 里 <a href="https://github.com/ant-design/ant-design-mobile/wiki/antd-mobile-0.8-%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E3%80%8C%E9%AB%98%E6%B8%85%E3%80%8D%E6%96%B9%E6%A1%88%E8%AE%BE%E7%BD%AE" target="_blank" rel="external">antd-mobile-0.8-以上版本「高清」方案设置</a></p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// import js and css modularly, parsed by babel-plugin-import</span></div><div class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd-mobile'</span>;</div><div class="line">ReactDOM.render(&lt;Button&gt;Start&lt;/Button&gt;, mountNode);</div></pre></td></tr></table></figure><p>如何自定义主题？<a href="https://github.com/ant-design/antd-init/blob/master/examples/customize-antd-theme/README.md" target="_blank" rel="external">见此文档</a></p><h4 id="React-Native-使用场景"><a href="#React-Native-使用场景" class="headerlink" title="React-Native 使用场景"></a>React-Native 使用场景</h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> &#123; AppRegistry &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</div><div class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd-mobile'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloWorldApp</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> &lt;Button&gt;Start&lt;/Button&gt;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">AppRegistry.registerComponent(<span class="string">'HelloWorldApp'</span>, () =&gt; HelloWorldApp);</div></pre></td></tr></table></figure><blockquote><p>更多常见问题，请查看 <a href="https://github.com/ant-design/ant-design-mobile/wiki" target="_blank" rel="external">wiki pages</a></p></blockquote><h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><ul><li>稳定版：<a href="http://npmjs.com/package/antd-mobile" target="_blank" rel="external"><img src="http://img.shields.io/npm/v/antd-mobile.svg?style=flat-square" alt="npm package"></a></li><li>开发版：<a href="http://npmjs.com/package/antd-mobile" target="_blank" rel="external"><img src="https://cnpmjs.org/badge/v/antd-mobile.svg?tag=beta&amp;style=flat-square" alt="npm package"></a></li></ul><h2 id="体积"><a href="#体积" class="headerlink" title="体积"></a>体积</h2><ul><li>构建后总体积：<code>~110KB</code></li><li>按需加载：只需引入业务中需要的组件即可，未 import 进来的组件不会打包进来。</li></ul><h2 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h2><ul><li><code>iOS</code></li><li><code>Android 4.0+</code></li></ul><h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><ul><li><a href="/">首页</a></li><li><a href="http://github.com/ant-design/ant-design-mobile/blob/master/development.md" target="_blank" rel="external">开发文档</a></li><li><a href="http://github.com/react-component" target="_blank" rel="external">React 模块</a></li></ul><h2 id="谁在使用"><a href="#谁在使用" class="headerlink" title="谁在使用"></a>谁在使用</h2><ul><li>蚂蚁金服</li><li>阿里巴巴</li><li>口碑</li></ul><h2 id="欢迎参与"><a href="#欢迎参与" class="headerlink" title="欢迎参与"></a>欢迎参与</h2><p>有任何建议或意见您可以进行 <a href="http://github.com/ant-design/ant-design-mobile/issues" target="_blank" rel="external">提问</a>。</p></div><footer class="article-footer"> <a data-url="http://yoursite.com/2016-12-07-introduce.zh-CN.html" data-id="ciwecz9gz0002lwfcnxjoru63" class="article-share-link">Share</a></footer></div></article><article id="post-install.zh-CN" class="article article-type-post" itemscope itemprop="blogPost"><div class="article-meta"> <a href="/2016-12-07-install.zh-CN.html" class="article-date"><time datetime="2016-12-07T03:11:55.485Z" itemprop="datePublished">2016-12-07</time></a></div><div class="article-inner"><header class="article-header"><h1 itemprop="name"> <a class="article-title" href="/2016-12-07-install.zh-CN.html">安装</a></h1></header><div class="article-entry" itemprop="articleBody"><h2 id="使用-npm-安装"><a href="#使用-npm-安装" class="headerlink" title="使用 npm 安装"></a>使用 npm 安装</h2><p><strong>我们推荐使用 npm 的方式进行开发</strong>，不仅可在开发环境轻松调试，也可放心地在生产环境打包部署使用，享受整个生态圈和工具链带来的诸多好处。</p><p>可以通过 npm 直接安装到项目中，使用 <code>import</code> 或 <code>require</code> 进行引用。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install antd-mobile --save</div></pre></td></tr></table></figure><h2 id="浏览器引入"><a href="#浏览器引入" class="headerlink" title="浏览器引入"></a>浏览器引入</h2><p>我们在 npm 发布包内的 <code>antd-mobile/dist</code> 目录下提供了 <code>antd-mobile.js</code> <code>antd-mobile.css</code> 以及 <code>antd-mobile.min.js</code> <code>antd-mobile.min.css</code> 用于一次性引入所有的 antd-mobile 组件，也可以通过 <a href="https://unpkg.com/" target="_blank" rel="external">UNPKG</a> 进行下载。</p><p><strong>不要一次性引入全部代码，更好做法请查看 introduce - install &amp; usage</strong></p><h4 id="stable"><a href="#stable" class="headerlink" title="stable"></a>stable</h4><ul><li><a href="https://unpkg.com/antd-mobile/dist/antd-mobile.js" target="_blank" rel="external">https://unpkg.com/antd-mobile/dist/antd-mobile.js</a></li><li><a href="https://unpkg.com/antd-mobile/dist/antd-mobile.css" target="_blank" rel="external">https://unpkg.com/antd-mobile/dist/antd-mobile.css</a></li><li><a href="https://unpkg.com/antd-mobile/dist/antd-mobile.min.js" target="_blank" rel="external">https://unpkg.com/antd-mobile/dist/antd-mobile.min.js</a></li><li><a href="https://unpkg.com/antd-mobile/dist/antd-mobile.min.css" target="_blank" rel="external">https://unpkg.com/antd-mobile/dist/antd-mobile.min.css</a></li></ul></div><footer class="article-footer"> <a data-url="http://yoursite.com/2016-12-07-install.zh-CN.html" data-id="ciwecz9gq0001lwfctnaj9as8" class="article-share-link">Share</a></footer></div></article><article id="post-getting-started.zh-CN" class="article article-type-post" itemscope itemprop="blogPost"><div class="article-meta"> <a href="/2016-12-07-getting-started.zh-CN.html" class="article-date"><time datetime="2016-12-07T03:11:55.404Z" itemprop="datePublished">2016-12-07</time></a></div><div class="article-inner"><header class="article-header"><h1 itemprop="name"> <a class="article-title" href="/2016-12-07-getting-started.zh-CN.html">快速上手</a></h1></header><div class="article-entry" itemprop="articleBody"><p>Ant Design React 致力于提供给程序员<strong>愉悦</strong>的开发体验。</p><hr><p>在开始之前，推荐先学习 <a href="http://facebook.github.io/react/" target="_blank" rel="external">React</a> 和 <a href="http://babeljs.io/docs/learn-es2015/" target="_blank" rel="external">ES2015</a>。</p><h2 id="标准开发"><a href="#标准开发" class="headerlink" title="标准开发"></a>标准开发</h2><p>实际项目开发中，你会需要对 ES2015 和 JSX 代码的构建、调试、代理、打包部署等一系列工程化的需求。<br>我们提供了一套 <code>npm</code> + <code>webpack</code> 的开发工具链来辅助开发，下面我们用一个简单的实例来说明。</p><h3 id="1-安装工具"><a href="#1-安装工具" class="headerlink" title="1. 安装工具"></a>1. 安装工具</h3><p>确认 <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a> 已经升级到 v4.x 或以上。</p><p>可以使用蚂蚁提供的<a href="http://ant-tool.github.io/" target="_blank" rel="external">开发工具文档</a></p><h3 id="2-创建一个项目"><a href="#2-创建一个项目" class="headerlink" title="2. 创建一个项目"></a>2. 创建一个项目</h3><p>手动从脚手架工具里拷贝 <a href="https://github.com/ant-design/antd-init/tree/master/boilerplates/MobileDemo" target="_blank" rel="external">MobileDemo</a></p><h3 id="3-使用组件"><a href="#3-使用组件" class="headerlink" title="3. 使用组件"></a>3. 使用组件</h3><p><a href="/docs/react/introduce#使用">见此使用示例</a></p><h3 id="4-开发调试"><a href="#4-开发调试" class="headerlink" title="4. 开发调试"></a>4. 开发调试</h3><p>一键启动调试，访问 <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a> 查看效果。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm start</div></pre></td></tr></table></figure><h3 id="5-构建和部署"><a href="#5-构建和部署" class="headerlink" title="5. 构建和部署"></a>5. 构建和部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm run build</div></pre></td></tr></table></figure><p>入口文件会构建到 <code>dist</code> 目录中，你可以自由部署到不同环境中进行引用。</p><blockquote><p>上述例子用于帮助你理解 Ant Design React 的使用流程，并非真实的开发过程，你可以根据自己的项目开发流程进行接入。</p></blockquote><h2 id="自行构建"><a href="#自行构建" class="headerlink" title="自行构建"></a>自行构建</h2><p>如果想自己维护工作流，我们推荐使用 <a href="http://webpack.github.io/" target="_blank" rel="external">webpack</a> 进行构建和调试。理论上你可以利用 React 生态圈中的 <a href="https://github.com/enaqx/awesome-react#boilerplates" target="_blank" rel="external">各种脚手架</a> 进行开发，如果遇到问题可参考我们所使用的 <a href="https://github.com/ant-tool/atool-build/blob/master/src/getWebpackCommonConfig.js" target="_blank" rel="external">webpack 配置</a> 进行 <a href="http://ant-tool.github.io/webpack-config.html" target="_blank" rel="external">定制</a>。</p><h2 id="小甜点"><a href="#小甜点" class="headerlink" title="小甜点"></a>小甜点</h2><ul><li>你可以享用 <code>npm</code> 生态圈里的所有模块。</li><li>我们使用了 <code>babel</code>，试试用 <a href="http://babeljs.io/blog/2015/06/07/react-on-es6-plus" target="_blank" rel="external">ES2015</a> 的写法来提升编码的愉悦感。</li></ul></div><footer class="article-footer"> <a data-url="http://yoursite.com/2016-12-07-getting-started.zh-CN.html" data-id="ciwecz9d20000lwfcx650wnsk" class="article-share-link">Share</a></footer></div></article></section><aside id="sidebar"><div class="widget-wrap"><h3 class="widget-title">Categories</h3><div class="widget"><ul class="category-list"></ul></div></div><div class="widget-wrap"><h3 class="widget-title">Archives</h3><div class="widget"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li></ul></div></div><div class="widget-wrap"><h3 class="widget-title">Recent Posts</h3><div class="widget"><ul><li> <a href="/2016-12-07-upgrade-notes.html">(no title)</a></li><li> <a href="/2016-12-07-practical-projects.zh-CN.html">项目实战</a></li><li> <a href="/2016-12-07-introduce.zh-CN.html">(no title)</a></li><li> <a href="/2016-12-07-install.zh-CN.html">安装</a></li><li> <a href="/2016-12-07-getting-started.zh-CN.html">快速上手</a></li></ul></div></div></aside></div><footer id="footer"><div class="outer"><div id="footer-info" class="inner"> &copy; 2016 Mr.Hua<br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></div></div></footer></div><nav id="mobile-nav"> <a href="/" class="mobile-nav-link">Home</a> <a href="/archives" class="mobile-nav-link">Archives</a></nav><script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><link rel="stylesheet" href="/fancybox/jquery.fancybox.css"><script src="/fancybox/jquery.fancybox.pack.js"></script><script src="/js/script.js"></script></div></body></html>
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Title -->
+    
+    <title>
+        Mr.Hua&#39;s Blog
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Mr.Hua">
+    <meta name="description" content="null">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Mr.Hua&#39;s Blog">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Mr.Hua&#39;s Blog">
+    <meta property="og:description" content="null">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.en.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-white.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Index Module -->
+<div class="material-index mdl-grid">
+	
+		<!-- Paradox Header -->
+		<!-- Daily pic -->
+<div class="mdl-card daily-pic mdl-cell mdl-cell--8-col index-top-block">
+    
+    <!-- Pic & Slogan -->
+    <div class="mdl-card__media mdl-color-text--grey-50" style="background-image:url(/img/daily_pic.png)">
+        <p class="index-top-block-slogan"><a href="#">Hi, nice to meet you</a></p>
+    </div>
+
+    <!-- Avatar & Name -->
+    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
+        <!-- Author Avatar -->
+        <div id="author-avatar">
+            <img src="/img/avatar.png" width="32px" height="32px" alt="avatar">
+        </div>
+        <div>
+            <strong>Mr.Hua</strong>
+        </div>
+    </div>
+</div>
+
+		<!-- Blog info -->
+<div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop index-top-block">
+	
+    <!-- Search -->
+	
+	<!-- Google -->
+	<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable" method="post" action="">
+		<label id="search-label" class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent mdl-shadow--4dp" for="search">
+			<i class="material-icons mdl-color-text--white" role="presentation">search</i>
+		</label>
+
+		<form id="search-form" method="get" action="//google.com/search" accept-charset="UTF-8" class="mdl-textfield__expandable-holder" target="_blank">
+			<input class="mdl-textfield__input search-input" type="search" name="q" id="search" placeholder="">
+			<label id="search-form-label" class="mdl-textfield__label" for="search"></label>
+			
+			<input type="hidden" name="sitesearch" value="http://yoursite.com">
+		</form>
+	</div>
+
+
+
+
+
+
+    <!-- LOGO -->
+    <div class="something-else-logo mdl-color--white mdl-color-text--grey-600">
+        <a href="null">
+            <img src="/img/logo.png" alt="logo" />
+        </a>
+    </div>
+
+    <!-- Infomation -->
+    <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
+        <!-- Blog Title -->
+        <div>
+            <strong>Mr.Hua&#39;s Blog</strong>
+        </div>
+        <div class="section-spacer"></div>
+        
+        <!-- Pages -->
+        <button id="show-pages-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+            <i class="material-icons" role="presentation">view_carousel</i>
+            <span class="visuallyhidden">Pages</span>
+        </button>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="show-pages-button">
+            
+        </ul>
+        
+        <!-- Menu -->
+        <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+            <i class="material-icons" role="presentation">more_vert</i>
+            <span class="visuallyhidden">show menu</span>
+        </button>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="menubtn">
+            
+            <a class="index_share-link" href="null">
+                <li class="mdl-menu__item mdl-js-ripple-effect">
+                    Artikel als RSS
+                </li>
+            </a>
+            <a class="index_share-link" href="https://twitter.com/intent/tweet?text=Mr.Hua&#39;s Blog&url=http://yoursite.com/&via=Mr.Hua" target="_blank">
+                <li class="mdl-menu__item mdl-js-ripple-effect">
+                    Auf Twitter teilen
+                </li>
+            </a>
+            <a class="index_share-link" href="https://plus.google.com/share?url=http://yoursite.com/" target="_blank">
+                <li class="mdl-menu__item mdl-js-ripple-effect">
+                    Auf Google+ teilen
+                </li>
+            </a>
+            <a class="index_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Mr.Hua&#39;s Blog&url=http://yoursite.com/&pic=&searchPic=false&style=simple" target="_blank">
+                <li class="mdl-menu__item mdl-js-ripple-effect">
+                    Auf Weibo teilen
+                </li>
+            </a>
+        </ul>
+    </div>
+</div>
+
+	
+    
+    
+		
+			<!-- Paradox Thumbnail -->
+        	<div class="post_entry-module mdl-card mdl-cell mdl-cell--12-col fade out">
+    
+    <!-- Post Thumbnail -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+		
+	
+				
+		<!-- Post Title -->
+		<p class="article-headline-p"><a href="/2016/12/07/upgrade-notes/"></a></p>
+	</div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+          此处着重列出升级中的不兼容变化和推荐改动。所有变动请见 Changelog。
+
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2016/12/07/upgrade-notes/" target="_self">Weiterlesen</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="/img/avatar.png" width="44px" height="44px" alt="Mr.Hua's avatar">
+            </div>
+            <div>
+                <strong>Mr.Hua</strong>
+                <span>Dec 07, 2016</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+            <!-- Category -->
+            <span class="post_entry-category">
+                
+            </span>
+            
+            
+            
+            <!-- Post Views -->
+            <span class="post_entry-views">
+                
+            </span>
+        </div>
+    </div>
+            
+</div>
+
+		
+		
+    
+		
+			<!-- Paradox Thumbnail -->
+        	<div class="post_entry-module mdl-card mdl-cell mdl-cell--12-col fade out">
+    
+    <!-- Post Thumbnail -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+		
+	
+				
+		<!-- Post Title -->
+		<p class="article-headline-p"><a href="/2016/12/07/practical-projects.zh-CN/">项目实战</a></p>
+	</div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+          dva
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2016/12/07/practical-projects.zh-CN/" target="_self">Weiterlesen</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="/img/avatar.png" width="44px" height="44px" alt="Mr.Hua's avatar">
+            </div>
+            <div>
+                <strong>Mr.Hua</strong>
+                <span>Dec 07, 2016</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+            <!-- Category -->
+            <span class="post_entry-category">
+                
+            </span>
+            
+            
+            
+            <!-- Post Views -->
+            <span class="post_entry-views">
+                
+            </span>
+        </div>
+    </div>
+            
+</div>
+
+		
+		
+    
+		
+			<!-- Paradox Thumbnail -->
+        	<div class="post_entry-module mdl-card mdl-cell mdl-cell--12-col fade out">
+    
+    <!-- Post Thumbnail -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+		
+	
+				
+		<!-- Post Title -->
+		<p class="article-headline-p"><a href="/2016/12/07/introduce.zh-CN/"></a></p>
+	</div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+          antd-mobile 是 Ant Design 的移动规范的 React 实现，服务于蚂蚁及口碑无线业务。
+
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2016/12/07/introduce.zh-CN/" target="_self">Weiterlesen</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="/img/avatar.png" width="44px" height="44px" alt="Mr.Hua's avatar">
+            </div>
+            <div>
+                <strong>Mr.Hua</strong>
+                <span>Dec 07, 2016</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+            <!-- Category -->
+            <span class="post_entry-category">
+                
+            </span>
+            
+            
+            
+            <!-- Post Views -->
+            <span class="post_entry-views">
+                
+            </span>
+        </div>
+    </div>
+            
+</div>
+
+		
+		
+    
+		
+			<!-- Paradox Thumbnail -->
+        	<div class="post_entry-module mdl-card mdl-cell mdl-cell--12-col fade out">
+    
+    <!-- Post Thumbnail -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+		
+	
+				
+		<!-- Post Title -->
+		<p class="article-headline-p"><a href="/2016/12/07/install.zh-CN/">安装</a></p>
+	</div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+          ...
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2016/12/07/install.zh-CN/" target="_self">Weiterlesen</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="/img/avatar.png" width="44px" height="44px" alt="Mr.Hua's avatar">
+            </div>
+            <div>
+                <strong>Mr.Hua</strong>
+                <span>Dec 07, 2016</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+            <!-- Category -->
+            <span class="post_entry-category">
+                
+            </span>
+            
+            
+            
+            <!-- Post Views -->
+            <span class="post_entry-views">
+                
+            </span>
+        </div>
+    </div>
+            
+</div>
+
+		
+		
+    
+		
+			<!-- Paradox Thumbnail -->
+        	<div class="post_entry-module mdl-card mdl-cell mdl-cell--12-col fade out">
+    
+    <!-- Post Thumbnail -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+		
+	
+				
+		<!-- Post Title -->
+		<p class="article-headline-p"><a href="/2016/12/07/getting-started.zh-CN/">快速上手</a></p>
+	</div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+          Ant Design React 致力于提供给程序员愉悦的开发体验。
+
+在开始之前，推荐先学...
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2016/12/07/getting-started.zh-CN/" target="_self">Weiterlesen</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="/img/avatar.png" width="44px" height="44px" alt="Mr.Hua's avatar">
+            </div>
+            <div>
+                <strong>Mr.Hua</strong>
+                <span>Dec 07, 2016</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+            <!-- Category -->
+            <span class="post_entry-category">
+                
+            </span>
+            
+            
+            
+            <!-- Post Views -->
+            <span class="post_entry-views">
+                
+            </span>
+        </div>
+    </div>
+            
+</div>
+
+		
+		
+    
+    
+	
+		<script>
+    
+    var randomNum;
+    
+    var locatePost = $(".something-else").next();
+    for(var i=0; i < 10; i++){
+        
+        randomNum = Math.floor(Math.random() * 5 + 1);
+        
+        locatePost.children(".post_thumbnail-random").attr('id', 'random_thumbnail-'+randomNum);
+        locatePost.children(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')')
+        
+        locatePost = locatePost.next();
+    }
+    
+</script>
+
+	
+
+</div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Mr.Hua's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             Home
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             Archive
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2016/12/">December 2016<span class="sidebar_archives-count">5</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             Artikel Nummer
+             <span class="sidebar-badge">5</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		Theme - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/twitter" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+    
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/facebook" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+    
+    <!-- Google + -->
+    
+    <a href="https://www.google.com/" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+    
+    <!-- Weibo -->
+    
+    
+    
+    <!-- Instagram -->
+    
+    
+    
+    <!-- Tumblr -->
+    
+    
+    
+    <!-- Github -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;Mr.Hua's Blog</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div>
+		
+    </body>
+		
+	
+</html>
