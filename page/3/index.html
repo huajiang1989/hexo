@@ -239,6 +239,152 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/hexo-gulp/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Mr.Hua">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Mr.Hua's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Mr.Hua's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/07/hexo-gulp/" itemprop="url">
+                  使用gulp对Hexo性能优化篇
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T14:53:58+08:00">
+                2016-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>hexo项目生成的public文件可以使用gulp进行压缩优化</p>
+<hr>
+<h2 id="静态文件压缩"><a href="#静态文件压缩" class="headerlink" title="静态文件压缩"></a>静态文件压缩</h2><p>静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务 。具体方法如下:</p>
+<ol>
+<li><p>npm 安装如下工具, 方法皆为 : npm install xxx –save</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">"gulp"</span>: <span class="string">"^3.9.1"</span>,</div><div class="line"><span class="string">"gulp-htmlclean"</span>: <span class="string">"^2.7.6"</span>,</div><div class="line"><span class="string">"gulp-htmlmin"</span>: <span class="string">"^1.3.0"</span>,</div><div class="line"><span class="string">"gulp-imagemin"</span>: <span class="string">"^2.4.0"</span>,</div><div class="line"><span class="string">"gulp-minify-css"</span>: <span class="string">"^1.2.4"</span>,</div><div class="line"><span class="string">"gulp-uglify"</span>: <span class="string">"^1.5.3"</span>,</div></pre></td></tr></table></figure>
+</li>
+<li><p>建立 gulpfile.js 文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</div><div class="line"><span class="keyword">var</span> minifycss = <span class="built_in">require</span>(<span class="string">'gulp-minify-css'</span>);</div><div class="line"><span class="keyword">var</span> uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</div><div class="line"><span class="keyword">var</span> htmlmin = <span class="built_in">require</span>(<span class="string">'gulp-htmlmin'</span>);</div><div class="line"><span class="keyword">var</span> htmlclean = <span class="built_in">require</span>(<span class="string">'gulp-htmlclean'</span>);</div><div class="line"><span class="comment">// 获取 gulp-imagemin 模块</span></div><div class="line"><span class="keyword">var</span> imagemin = <span class="built_in">require</span>(<span class="string">'gulp-imagemin'</span>)</div><div class="line"><span class="comment">// 压缩 public 目录 css</span></div><div class="line">gulp.task(<span class="string">'minify-css'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> gulp.src(<span class="string">'./public/**/*.css'</span>)</div><div class="line">        .pipe(minifycss())</div><div class="line">        .pipe(gulp.dest(<span class="string">'./public'</span>));</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 压缩 public 目录 html</span></div><div class="line">gulp.task(<span class="string">'minify-html'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> gulp.src(<span class="string">'./public/**/*.html'</span>)</div><div class="line">    .pipe(htmlclean())</div><div class="line">    .pipe(htmlmin(&#123;</div><div class="line">         <span class="attr">removeComments</span>: <span class="literal">true</span>,</div><div class="line">         <span class="attr">minifyJS</span>: <span class="literal">true</span>,</div><div class="line">         <span class="attr">minifyCSS</span>: <span class="literal">true</span>,</div><div class="line">         <span class="attr">minifyURLs</span>: <span class="literal">true</span>,</div><div class="line">    &#125;))</div><div class="line">    .pipe(gulp.dest(<span class="string">'./public'</span>))</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 压缩 public/js 目录 js</span></div><div class="line">gulp.task(<span class="string">'minify-js'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> gulp.src(<span class="string">'./public/**/*.js'</span>)</div><div class="line">        .pipe(uglify())</div><div class="line">        .pipe(gulp.dest(<span class="string">'./public'</span>));</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 压缩图片任务</span></div><div class="line"><span class="comment">// 在命令行输入 gulp images 启动此任务</span></div><div class="line">gulp.task(<span class="string">'images'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// 1. 找到图片</span></div><div class="line">    gulp.src(<span class="string">'./photos/*.*'</span>)</div><div class="line">    <span class="comment">// 2. 压缩图片</span></div><div class="line">        .pipe(imagemin(&#123;</div><div class="line">            <span class="attr">progressive</span>: <span class="literal">true</span></div><div class="line">        &#125;))</div><div class="line">    <span class="comment">// 3. 另存图片</span></div><div class="line">        .pipe(gulp.dest(<span class="string">'dist/images'</span>))</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 执行 gulp 命令时执行的任务</span></div><div class="line">gulp.task(<span class="string">'default'</span>, [</div><div class="line">    <span class="string">'minify-html'</span>,<span class="string">'minify-css'</span>,<span class="string">'minify-js'</span>,<span class="string">'images'</span></div><div class="line">]);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>注意， 修改上面的各个目录为你的真实目录， ** 代表0或多个子目录</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/hexo-start/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -413,7 +559,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">Artikel</span>
             </a>
           </div>

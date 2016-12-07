@@ -84,22 +84,28 @@
 
 
 
-<meta name="description" content="ES5的顶层对象，本身也是一个问题，因为它在各种实现里面是不统一的。
-浏览器里面，顶层对象是window，但Node和Web Worker没有window。浏览器和Web Worker里面，self也指向顶层对象，但是Node没有self。Node里面，顶层对象是global，但其他环境都不支持。同一段代码为了能够在各种环境，都能取到顶层对象，现在一般是使用this变量，但是有局限性。
-全局环境中">
+<meta name="description" content="今天提交代码的时候遇到了一个小问题，这里解决了记下小记。
+提交代码遇到『Everything up-to-date』
+上网查了下，发现中文大多答非所问，少数能解决的并没有阐述原理，所以我写这篇文章记录下。
+这里先上 stackoverflow 的回答，基础好的可以看这个。
+接下来说我自己的理解，出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ES5中获取顶层变量的方法">
-<meta property="og:url" content="http://yoursite.com/2016/12/07/es5-get-top-param/index.html">
+<meta property="og:title" content="Git问题Everything up-to-date解决">
+<meta property="og:url" content="http://yoursite.com/2016/12/07/git-everything-up-to-data/index.html">
 <meta property="og:site_name" content="Mr.Hua's Blog">
-<meta property="og:description" content="ES5的顶层对象，本身也是一个问题，因为它在各种实现里面是不统一的。
-浏览器里面，顶层对象是window，但Node和Web Worker没有window。浏览器和Web Worker里面，self也指向顶层对象，但是Node没有self。Node里面，顶层对象是global，但其他环境都不支持。同一段代码为了能够在各种环境，都能取到顶层对象，现在一般是使用this变量，但是有局限性。
-全局环境中">
-<meta property="og:updated_time" content="2016-12-07T08:57:35.245Z">
+<meta property="og:description" content="今天提交代码的时候遇到了一个小问题，这里解决了记下小记。
+提交代码遇到『Everything up-to-date』
+上网查了下，发现中文大多答非所问，少数能解决的并没有阐述原理，所以我写这篇文章记录下。
+这里先上 stackoverflow 的回答，基础好的可以看这个。
+接下来说我自己的理解，出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个">
+<meta property="og:updated_time" content="2016-12-07T14:21:49.904Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ES5中获取顶层变量的方法">
-<meta name="twitter:description" content="ES5的顶层对象，本身也是一个问题，因为它在各种实现里面是不统一的。
-浏览器里面，顶层对象是window，但Node和Web Worker没有window。浏览器和Web Worker里面，self也指向顶层对象，但是Node没有self。Node里面，顶层对象是global，但其他环境都不支持。同一段代码为了能够在各种环境，都能取到顶层对象，现在一般是使用this变量，但是有局限性。
-全局环境中">
+<meta name="twitter:title" content="Git问题Everything up-to-date解决">
+<meta name="twitter:description" content="今天提交代码的时候遇到了一个小问题，这里解决了记下小记。
+提交代码遇到『Everything up-to-date』
+上网查了下，发现中文大多答非所问，少数能解决的并没有阐述原理，所以我写这篇文章记录下。
+这里先上 stackoverflow 的回答，基础好的可以看这个。
+接下来说我自己的理解，出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个">
 
 
 
@@ -127,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/07/es5-get-top-param/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/07/git-everything-up-to-data/"/>
 
 
 
 
 
-  <title> ES5中获取顶层变量的方法 | Mr.Hua's Blog </title>
+  <title> Git问题Everything up-to-date解决 | Mr.Hua's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -244,7 +250,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/es5-get-top-param/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/git-everything-up-to-data/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Mr.Hua">
@@ -268,7 +274,7 @@
             
             
               
-                ES5中获取顶层变量的方法
+                Git问题Everything up-to-date解决
               
             
           </h1>
@@ -281,7 +287,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Veröffentlicht am</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:36:47+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T22:21:43+08:00">
                 2016-12-07
               </time>
             
@@ -300,8 +306,8 @@
               <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/es6/" itemprop="url" rel="index">
-                    <span itemprop="name">es6</span>
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
                   </a>
                 </span>
 
@@ -335,13 +341,23 @@
       
 
       
-        <p>ES5的顶层对象，本身也是一个问题，因为它在各种实现里面是不统一的。</p>
-<p>浏览器里面，顶层对象是window，但Node和Web Worker没有window。<br>浏览器和Web Worker里面，self也指向顶层对象，但是Node没有self。<br>Node里面，顶层对象是global，但其他环境都不支持。<br>同一段代码为了能够在各种环境，都能取到顶层对象，现在一般是使用this变量，但是有局限性。</p>
-<p>全局环境中，this会返回顶层对象。但是，Node模块和ES6模块中，this返回的是当前模块。<br>函数里面的this，如果函数不是作为对象的方法运行，而是单纯作为函数运行，this会指向顶层对象。但是，严格模式下，这时this会返回undefined。<br>不管是严格模式，还是普通模式，new Function(‘return this’)()，总是会返回全局对象。但是，如果浏览器用了CSP（Content Security Policy，内容安全政策），那么eval、new Function这些方法都可能无法使用。<br>综上所述，很难找到一种方法，可以在所有情况下，都取到顶层对象。下面是两种勉强可以使用的方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 方法一</span></div><div class="line">(<span class="keyword">typeof</span> <span class="built_in">window</span> !== <span class="string">'undefined'</span></div><div class="line">? <span class="built_in">window</span></div><div class="line">: (<span class="keyword">typeof</span> process === <span class="string">'object'</span> &amp;&amp;</div><div class="line"><span class="keyword">typeof</span> <span class="built_in">require</span> === <span class="string">'function'</span> &amp;&amp;</div><div class="line"><span class="keyword">typeof</span> global === <span class="string">'object'</span>)</div><div class="line">? global</div><div class="line">: <span class="keyword">this</span>);</div><div class="line"></div><div class="line"><span class="comment">// 方法二</span></div><div class="line"><span class="keyword">var</span> getGlobal = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> self !== <span class="string">'undefined'</span>) &#123; <span class="keyword">return</span> self; &#125;</div><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span> !== <span class="string">'undefined'</span>) &#123; <span class="keyword">return</span> <span class="built_in">window</span>; &#125;</div><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> global !== <span class="string">'undefined'</span>) &#123; <span class="keyword">return</span> global; &#125;</div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'unable to locate global object'</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>现在有一个提案，在语言标准的层面，引入global作为顶层对象。也就是说，在所有环境下，global都是存在的，都可以从它拿到顶层对象。</p>
-<p>垫片库system.global模拟了这个提案，可以在所有环境拿到global。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// CommonJS的写法</span></div><div class="line"> <span class="built_in">require</span>(<span class="string">'system.global/shim'</span>)();</div><div class="line"> <span class="comment">// ES6模块的写法</span></div><div class="line"> <span class="keyword">import</span> shim <span class="keyword">from</span> <span class="string">'system.global/shim'</span>; shim();</div></pre></td></tr></table></figure></p>
-<p>上面代码可以保证各种环境里面，global对象都是存在的。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// CommonJS的写法</span></div><div class="line"> <span class="keyword">var</span> global = <span class="built_in">require</span>(<span class="string">'system.global'</span>)();</div><div class="line"> <span class="comment">// ES6模块的写法</span></div><div class="line"> <span class="keyword">import</span> getGlobal <span class="keyword">from</span> <span class="string">'system.global'</span>;</div><div class="line"> <span class="keyword">const</span> global = getGlobal();</div></pre></td></tr></table></figure></p>
-<p>上面代码将顶层对象放入变量global。</p>
+        <p>今天提交代码的时候遇到了一个小问题，这里解决了记下小记。</p>
+<p>提交代码遇到『Everything up-to-date』</p>
+<p>上网查了下，发现中文大多答非所问，少数能解决的并没有阐述原理，所以我写这篇文章记录下。</p>
+<p>这里先上 stackoverflow 的回答，基础好的可以看这个。</p>
+<p>接下来说我自己的理解，出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个问题。我们应该告诉git提交哪个分支。</p>
+<p>这里有种特殊的情况是如果你是fork别人的仓库再clone到本地的话，即使git上只有一个主分支，他还是可能出现这个错误。那么我们就需要新建分支提交改动然后合并分支。</p>
+<p>接下来先创建一个新分支提交改动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch newbranch</div></pre></td></tr></table></figure></p>
+<p>然后输入这条命令检查是否创建成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
+<p>这时终端输出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  newbranch</div><div class="line">* master</div></pre></td></tr></table></figure></p>
+<p>这样就创建成功了，前面的*代表的是当前你所在的工作分支。我们接下来就要切换工作分支。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout newbranch</div></pre></td></tr></table></figure></p>
+<p>这样就切换完了，可以 $ git branch 确认下。然后你要将你的改动提交到新的分支上。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git add .</div><div class="line">$ git commit <span class="_">-a</span></div></pre></td></tr></table></figure></p>
+<p>此时可以 $ git status 检查下提交情况。如果提交成功，我们接下来就要回主分支了，代码和之前一样。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout master</div></pre></td></tr></table></figure></p>
+<p>然后我们要将新分支提交的改动合并到主分支上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git merge newbranch</div></pre></td></tr></table></figure></p>
+<p>合并分支可能产生冲突这是正常的，虽然我们这是新建的分支不会产生冲突，但还是在这里记录下。下面的代码可以查看产生冲突的文件，然后做对应的修改再提交一次就可以了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git diff</div></pre></td></tr></table></figure></p>
+<p>我们的问题就解决了，接下来就可以push代码了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push -u origin master</div></pre></td></tr></table></figure></p>
+<p>新建分支的朋友别忘了删除这个分支<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -D newbranch</div></pre></td></tr></table></figure></p>
+<p>如果想保留分支只是想删除已经合并的部分只要把大写的D改成小写的d就行了。</p>
 
       
     </div>
@@ -368,8 +384,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/07/node-mongoose/" rel="next" title="Nodejs基于mongoose模块的增删改查">
-                <i class="fa fa-chevron-left"></i> Nodejs基于mongoose模块的增删改查
+              <a href="/2016/12/07/webpack-module/" rel="next" title="Webpack配置模块详解">
+                <i class="fa fa-chevron-left"></i> Webpack配置模块详解
               </a>
             
           </div>
@@ -377,10 +393,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/07/es6-coder-rules/" rel="prev" title="ES6编程规范">
-                ES6编程规范 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

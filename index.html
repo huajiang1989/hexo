@@ -239,6 +239,157 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/git-everything-up-to-data/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Mr.Hua">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Mr.Hua's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Mr.Hua's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/07/git-everything-up-to-data/" itemprop="url">
+                  Git问题Everything up-to-date解决
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T22:21:43+08:00">
+                2016-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天提交代码的时候遇到了一个小问题，这里解决了记下小记。</p>
+<p>提交代码遇到『Everything up-to-date』</p>
+<p>上网查了下，发现中文大多答非所问，少数能解决的并没有阐述原理，所以我写这篇文章记录下。</p>
+<p>这里先上 stackoverflow 的回答，基础好的可以看这个。</p>
+<p>接下来说我自己的理解，出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个问题。我们应该告诉git提交哪个分支。</p>
+<p>这里有种特殊的情况是如果你是fork别人的仓库再clone到本地的话，即使git上只有一个主分支，他还是可能出现这个错误。那么我们就需要新建分支提交改动然后合并分支。</p>
+<p>接下来先创建一个新分支提交改动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch newbranch</div></pre></td></tr></table></figure></p>
+<p>然后输入这条命令检查是否创建成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
+<p>这时终端输出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  newbranch</div><div class="line">* master</div></pre></td></tr></table></figure></p>
+<p>这样就创建成功了，前面的*代表的是当前你所在的工作分支。我们接下来就要切换工作分支。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout newbranch</div></pre></td></tr></table></figure></p>
+<p>这样就切换完了，可以 $ git branch 确认下。然后你要将你的改动提交到新的分支上。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git add .</div><div class="line">$ git commit <span class="_">-a</span></div></pre></td></tr></table></figure></p>
+<p>此时可以 $ git status 检查下提交情况。如果提交成功，我们接下来就要回主分支了，代码和之前一样。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout master</div></pre></td></tr></table></figure></p>
+<p>然后我们要将新分支提交的改动合并到主分支上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git merge newbranch</div></pre></td></tr></table></figure></p>
+<p>合并分支可能产生冲突这是正常的，虽然我们这是新建的分支不会产生冲突，但还是在这里记录下。下面的代码可以查看产生冲突的文件，然后做对应的修改再提交一次就可以了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git diff</div></pre></td></tr></table></figure></p>
+<p>我们的问题就解决了，接下来就可以push代码了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push -u origin master</div></pre></td></tr></table></figure></p>
+<p>新建分支的朋友别忘了删除这个分支<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -D newbranch</div></pre></td></tr></table></figure></p>
+<p>如果想保留分支只是想删除已经合并的部分只要把大写的D改成小写的d就行了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/webpack-module/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1665,171 +1816,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/webpack-slow-problem/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Mr.Hua">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Mr.Hua's Blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Mr.Hua's Blog" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/07/webpack-slow-problem/" itemprop="url">
-                  解决Webpack打包慢的问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Veröffentlicht am</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:55:48+08:00">
-                2016-12-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">in</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/webpack/" itemprop="url" rel="index">
-                    <span itemprop="name">webpack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>我们先来看一下完全没有任何优化的时候，Webpack 的打包速度（使用了jsx和babel的loader）。下面是我们的测试文件：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//test.js</span></div><div class="line"><span class="keyword">var</span> react = <span class="built_in">require</span>(<span class="string">'react'</span>);</div><div class="line"><span class="keyword">var</span> ReactAddonsCssTransitionGroup = <span class="built_in">require</span>(<span class="string">'react-addons-css-transition-group'</span>);</div><div class="line"><span class="keyword">var</span> reactDOM = <span class="built_in">require</span>(<span class="string">'react-dom'</span>);</div><div class="line"><span class="keyword">var</span> reactRouter = <span class="built_in">require</span>(<span class="string">'react-router'</span>);</div><div class="line"><span class="keyword">var</span> superagent = <span class="built_in">require</span>(<span class="string">"superagent"</span>);</div><div class="line"><span class="keyword">var</span> eventproxy = <span class="built_in">require</span>(<span class="string">"eventproxy"</span>);</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">webpack test.js</div></pre></td></tr></table></figure></p>
-<p>在我的2015款RMBP13，i5处理器，全SSD下，性能是这样的：</p>
-<p>没错你没有看错，这几个第三方轮子加起来有整整668个模块，全部打包需要20多秒。</p>
-<p>这意味着什么呢？你每次对业务代码的修改，gulp 或者 Webpack 监测到后都会重新打包，你要足足等20秒才能看到自己的修改结果。</p>
-<p>但是需要重新打包的只有你的业务代码，这些第三方库是完全不用重新打包的，它们的存在只会拖累打包性能。所以我们要找一些方法来优化这个过程。</p>
-<h2 id="配置externals"><a href="#配置externals" class="headerlink" title="配置externals"></a>配置externals</h2><p>Webpack 可以配置 externals 来将依赖的库指向全局变量，从而不再打包这个库，比如对于这样一个文件：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="built_in">console</span>.log(React);</div><div class="line">如果你在 Webpack.config.js 中配置了externals：</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">externals</span>: &#123;</div><div class="line">        <span class="string">'react'</span>: <span class="string">'window.React'</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//其它配置忽略......</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>等于让 Webpack 知道，对于 react 这个模块就不要打包啦，直接指向 window.React 就好。不过别忘了加载 react.min.js，让全局中有 React 这个变量。</p>
-<p>我们来看看性能，因为不用打包 React 了所以速度自然超级快，包也很小：</p>
-<h2 id="配置externals的缺陷"><a href="#配置externals的缺陷" class="headerlink" title="配置externals的缺陷"></a>配置externals的缺陷</h2><p>问题如果就这么简单地解决了的话，那我就没必要写这篇文章了，下面我们加一个 react 的动画库 react-addons-css-transition-group 来试一试：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> ReactAddonsCssTransitionGroup <span class="keyword">from</span> <span class="string">'react-addons-css-transition-group'</span>;</div><div class="line"><span class="built_in">console</span>.log(React);</div></pre></td></tr></table></figure></p>
-<p>对，你没有看错，我也没有截错图，新加了一个很小很小的动画库之后，性能又爆炸了。从模块数来看，一定是 Webpack 又把 react 重新打包了一遍。</p>
-<p>我们来看一下为什么一个很小很小的动画库会导致 Webpack 又傻傻地把 react 重新打包了一遍。找到 react-addons-css-transition-group 这个模块，然后看看它是怎么写的：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// react-addons-css-transition-group模块</span></div><div class="line"><span class="comment">// 入口文件 index.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="built_in">require</span>(<span class="string">'react/lib/ReactCSSTransitionGroup'</span>);</div><div class="line">这个动画模块就只有一行代码，唯一的作用就是指向 react 下面的一个子模块，我们再来看看这个子模块是怎么写的：</div><div class="line"></div><div class="line"><span class="comment">// react模块</span></div><div class="line"><span class="comment">// react/lib/ReactCSSTransitionGroup.js</span></div><div class="line"><span class="keyword">var</span> React = <span class="built_in">require</span>(<span class="string">'./React'</span>);</div><div class="line"><span class="keyword">var</span> ReactTransitionGroup = <span class="built_in">require</span>(<span class="string">'./ReactTransitionGroup'</span>);</div><div class="line"><span class="keyword">var</span> ReactCSSTransitionGroupChild = <span class="built_in">require</span>(<span class="string">'./ReactCSSTransitionGroupChild'</span>);</div><div class="line"><span class="comment">//....剩余代码忽略</span></div></pre></td></tr></table></figure></p>
-<p>这个子模块又反回去依赖了 react 整个库的入口，这就是拖累 Webpack 的罪魁祸首。</p>
-<p>总而言之，问题是这样产生的：</p>
-<p>Webpack 发现我们依赖了 react-addons-css-transition-group<br>Webpack 去打包 react-addons-css-transition-group 的时候发现它依赖了 react 模块下的一个叫 ReactTransitionGroup.js 的文件，于是 Webpack 去打包这个文件。<br>ReactTransitionGroup.js 依赖了整个 react 的入口文件 React.js，虽然我们设置了 externals ，但是 Webpack 不知道这个入口文件等效于 react 模块本身，于是我们可爱又敬业的 Webpack 就把整个 react 又重新打包了一遍。<br>读到这里你可能会有疑问，为什么不能把这个动画库也设置到 externals 里，这样不是就不用打包了吗？</p>
-<p>问题就在于，这个动画库并没有提供生产环境的文件，或者说这个库根本没有提供 react-addons-css-transition-group.min.js 这个文件。</p>
-<p>这个问题不只存在于 react-addons-css-transition-group 中，对于 react 的大多数现有库来说都有这个依赖关系复杂的问题。</p>
-<h2 id="初级解决方法"><a href="#初级解决方法" class="headerlink" title="初级解决方法"></a>初级解决方法</h2><p>所以对于这个问题的解决方法就是，手工打包这些 module，然后设置 externals ，让 Webpack 不再打包它们。</p>
-<p>我们需要这样一个 lib-bundle.js 文件：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.__LIB[<span class="string">"react"</span>] = <span class="built_in">require</span>(<span class="string">"react"</span>);</div><div class="line"><span class="built_in">window</span>.__LIB[<span class="string">"react-addons-css-transition-group"</span>] = <span class="built_in">require</span>(<span class="string">"react-addons-css-transition-group"</span>);</div><div class="line"><span class="comment">// ...其它依赖包</span></div></pre></td></tr></table></figure></p>
-<p>我们在这里把一些第三方库注册到了 window.__LIB 下，这些库可以作为底层的基础库，免于重复打包。</p>
-<p>然后执行 webpack lib-bundle.js lib.js，得到打包好的 lib.js。然后去设置我们的 externals ：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">externals</span>: &#123;</div><div class="line">        <span class="string">'react'</span>: <span class="string">'window.__LIB["react"]'</span>,</div><div class="line">        <span class="string">'react-addons-css-transition-group'</span>: <span class="string">'window.__LIB["react-addons-css-transition-group"]'</span>,</div><div class="line">        <span class="comment">// 其它库</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//其它配置忽略......</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>这时由于 externals 的存在，Webpack 打包的时候就会避开这些模块超多，依赖关系复杂的库，把这些第三方 module 的入口指向预先打包好的 lib.js 的入口 window.__LIB，从而只打包我们的业务代码。</p>
-<h2 id="终极解决方法"><a href="#终极解决方法" class="headerlink" title="终极解决方法"></a>终极解决方法</h2><p>上面我们提到的方法本质上就是一种动态链接库（dll）”的思想，这在 windows 系统下面是一种很常见的思想。一个dll包，就是一个很纯净的依赖库，它本身不能运行，是用来给你的 app 或者业务代码引用的。</p>
-<p>同样的 Webpack 最近也新加入了这个功能：webpack.DllPlugin。使用这个功能需要把打包过程分成两步：</p>
-<p>打包ddl包<br>引用ddl包，打包业务代码<br>首先我们来打包ddl包，首先配置一个这样的 ddl.config.js：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> vendors = [</div><div class="line">    <span class="string">'react'</span>,</div><div class="line">    <span class="string">'react-dom'</span>,</div><div class="line">    <span class="string">'react-router'</span>,</div><div class="line">    <span class="comment">// ...其它库</span></div><div class="line">];</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">path</span>: <span class="string">'build'</span>,</div><div class="line">        <span class="attr">filename</span>: <span class="string">'[name].js'</span>,</div><div class="line">        <span class="attr">library</span>: <span class="string">'[name]'</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">entry</span>: &#123;</div><div class="line">        <span class="string">"lib"</span>: vendors,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> webpack.DllPlugin(&#123;</div><div class="line">            <span class="attr">path</span>: <span class="string">'manifest.json'</span>,</div><div class="line">            <span class="attr">name</span>: <span class="string">'[name]'</span>,</div><div class="line">            <span class="attr">context</span>: __dirname,</div><div class="line">        &#125;),</div><div class="line">    ],</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>webpack.DllPlugin 的选项中：</p>
-<p>path 是 manifest.json 文件的输出路径，这个文件会用于后续的业务代码打包；<br>name 是dll暴露的对象名，要跟 output.library 保持一致；<br>context 是解析包路径的上下文，这个要跟接下来配置的 webpack.config.js 一致。<br>运行Webpack，会输出两个文件一个是打包好的 lib.js，一个就是 manifest.json，它里面的内容大概是这样的：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"name"</span>: <span class="string">"vendor_ac51ba426d4f259b8b18"</span>,</div><div class="line">    <span class="string">"content"</span>: &#123;</div><div class="line">        <span class="string">"./node_modules/react/react.js"</span>: <span class="number">1</span>,</div><div class="line">        <span class="string">"./node_modules/react/lib/React.js"</span>: <span class="number">2</span>,</div><div class="line">        <span class="string">"./node_modules/react/node_modules/object-assign/index.js"</span>: <span class="number">3</span>,</div><div class="line">        <span class="string">"./node_modules/react/lib/ReactChildren.js"</span>: <span class="number">4</span>,</div><div class="line">        <span class="string">"./node_modules/react/lib/PooledClass.js"</span>: <span class="number">5</span>,</div><div class="line">        <span class="string">"./node_modules/react/lib/reactProdInvariant.js"</span>: <span class="number">6</span>,</div><div class="line">        <span class="comment">// ............</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>接下来我们就可以快乐地打包业务代码啦，首先写好打包配置文件 webpack.config.js：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">path</span>: <span class="string">'build'</span>,</div><div class="line">        <span class="attr">filename</span>: <span class="string">'[name].js'</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">entry</span>: &#123;</div><div class="line">        <span class="attr">app</span>: <span class="string">'./src/index.js'</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> webpack.DllReferencePlugin(&#123;</div><div class="line">            <span class="attr">context</span>: __dirname,</div><div class="line">            <span class="attr">manifest</span>: <span class="built_in">require</span>(<span class="string">'./manifest.json'</span>),</div><div class="line">        &#125;),</div><div class="line">    ],</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>webpack.DllReferencePlugin 的选项中：</p>
-<p>context 需要跟之前保持一致，这个用来指导 Webpack 匹配 manifest 中库的路径；<br>manifest 用来引入刚才输出的 manifest.json 文件。<br>DllPlugin 本质上的做法和我们手动分离这些第三方库是一样的，但是对于包极多的应用来说，自动化明显加快了生产效率。</p>
-<p>PS:<br>其实还有一个速度的优化点，就是配置babel，让它排除一些文件，当loader这些文件时不进行转换，自动跳过；可在.babelrc文件中配置，示例：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"presets"</span>: [</div><div class="line">        <span class="string">"es2015"</span></div><div class="line">    ],</div><div class="line">    <span class="string">"ignore"</span>:[</div><div class="line">        <span class="string">"jquery.js"</span>,</div><div class="line">        <span class="string">"jquery.min.js"</span>,</div><div class="line">        <span class="string">"angular.js"</span>,</div><div class="line">        <span class="string">"angular.min.js"</span>,</div><div class="line">        <span class="string">"bootstrap.js"</span>,</div><div class="line">        <span class="string">"bootstrap.min.js"</span></div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1875,7 +1861,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
