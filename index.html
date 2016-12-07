@@ -236,6 +236,129 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/es5-get-top-param/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Mr.Hua">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Mr.Hua's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Mr.Hua's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/07/es5-get-top-param/" itemprop="url">
+                  ES5中获取顶层变量的方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:36:47+08:00">
+                2016-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ES5的顶层对象，本身也是一个问题，因为它在各种实现里面是不统一的。</p>
+<p>浏览器里面，顶层对象是window，但Node和Web Worker没有window。<br>浏览器和Web Worker里面，self也指向顶层对象，但是Node没有self。<br>Node里面，顶层对象是global，但其他环境都不支持。<br>同一段代码为了能够在各种环境，都能取到顶层对象，现在一般是使用this变量，但是有局限性。</p>
+<p>全局环境中，this会返回顶层对象。但是，Node模块和ES6模块中，this返回的是当前模块。<br>函数里面的this，如果函数不是作为对象的方法运行，而是单纯作为函数运行，this会指向顶层对象。但是，严格模式下，这时this会返回undefined。<br>不管是严格模式，还是普通模式，new Function(‘return this’)()，总是会返回全局对象。但是，如果浏览器用了CSP（Content Security Policy，内容安全政策），那么eval、new Function这些方法都可能无法使用。<br>综上所述，很难找到一种方法，可以在所有情况下，都取到顶层对象。下面是两种勉强可以使用的方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 方法一</span></div><div class="line">(<span class="keyword">typeof</span> <span class="built_in">window</span> !== <span class="string">'undefined'</span></div><div class="line">? <span class="built_in">window</span></div><div class="line">: (<span class="keyword">typeof</span> process === <span class="string">'object'</span> &amp;&amp;</div><div class="line"><span class="keyword">typeof</span> <span class="built_in">require</span> === <span class="string">'function'</span> &amp;&amp;</div><div class="line"><span class="keyword">typeof</span> global === <span class="string">'object'</span>)</div><div class="line">? global</div><div class="line">: <span class="keyword">this</span>);</div><div class="line"></div><div class="line"><span class="comment">// 方法二</span></div><div class="line"><span class="keyword">var</span> getGlobal = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> self !== <span class="string">'undefined'</span>) &#123; <span class="keyword">return</span> self; &#125;</div><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span> !== <span class="string">'undefined'</span>) &#123; <span class="keyword">return</span> <span class="built_in">window</span>; &#125;</div><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> global !== <span class="string">'undefined'</span>) &#123; <span class="keyword">return</span> global; &#125;</div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'unable to locate global object'</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>现在有一个提案，在语言标准的层面，引入global作为顶层对象。也就是说，在所有环境下，global都是存在的，都可以从它拿到顶层对象。</p>
+<p>垫片库system.global模拟了这个提案，可以在所有环境拿到global。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// CommonJS的写法</span></div><div class="line"> <span class="built_in">require</span>(<span class="string">'system.global/shim'</span>)();</div><div class="line"> <span class="comment">// ES6模块的写法</span></div><div class="line"> <span class="keyword">import</span> shim <span class="keyword">from</span> <span class="string">'system.global/shim'</span>; shim();</div></pre></td></tr></table></figure></p>
+<p>上面代码可以保证各种环境里面，global对象都是存在的。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// CommonJS的写法</span></div><div class="line"> <span class="keyword">var</span> global = <span class="built_in">require</span>(<span class="string">'system.global'</span>)();</div><div class="line"> <span class="comment">// ES6模块的写法</span></div><div class="line"> <span class="keyword">import</span> getGlobal <span class="keyword">from</span> <span class="string">'system.global'</span>;</div><div class="line"> <span class="keyword">const</span> global = getGlobal();</div></pre></td></tr></table></figure></p>
+<p>上面代码将顶层对象放入变量global。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/node-mongoose/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1303,7 +1426,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
