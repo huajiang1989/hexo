@@ -186,7 +186,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -196,7 +196,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -229,6 +229,157 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/rjs-help/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Mr.Hua">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Mr.Hua's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Mr.Hua's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/07/rjs-help/" itemprop="url">
+                  使用r.js进行简单的js/css压缩
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T16:13:06+08:00">
+                2016-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">in</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/r-js/" itemprop="url" rel="index">
+                    <span itemprop="name">r.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近用require写了一个网站的模块,到压缩的时候,各种查资料学习,但由于时间较紧,将所有代码都压缩成一个文件,导致代码的体积很大,今天抽时间网上参考下官网的说明配置,将这次压缩代码的配置及运行命令记录下来,以后留着用.</p>
+<h2 id="js的压缩"><a href="#js的压缩" class="headerlink" title=" js的压缩"></a> js的压缩</h2><p>这次只是初步应用,如果有好的方法或有误的地方,还望各位大侠们指教.</p>
+<p>第一种配置的文件: 需要把所有依赖的文件都压缩到当前代码中.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(&#123;</div><div class="line">   <span class="attr">baseUrl</span>: <span class="string">"./"</span>,</div><div class="line">   <span class="attr">paths</span>: &#123;</div><div class="line">       <span class="attr">amd_modules</span>: <span class="string">"../amd_modules"</span>,</div><div class="line">       <span class="attr">lib</span> : <span class="string">"../lib"</span></div><div class="line">   &#125;,</div><div class="line">   <span class="attr">name</span>: <span class="string">"main"</span>,</div><div class="line">   <span class="attr">optimizeCss</span>: <span class="string">"none"</span>,</div><div class="line">   <span class="attr">out</span>: <span class="string">"index-built.js"</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>　　baseUrl: 指当前配置文件的路径</p>
+<p>　　paths: 配置一些下面配置时需要的路径</p>
+<p>　　name: 需要被压缩的文件</p>
+<p>　　optimizeCss: none不压缩, standard标准压缩</p>
+<p>　　out: 输出的文件</p>
+<p>第二种配置的文件,去掉常用的库(单引用)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(&#123;</div><div class="line">    <span class="attr">mainConfigFile</span> : <span class="string">"main.js"</span>,</div><div class="line">    <span class="attr">baseUrl</span>: <span class="string">"./"</span>,</div><div class="line">    <span class="attr">paths</span> : &#123;</div><div class="line">        <span class="attr">amd_modules</span>: <span class="string">"../amd_modules"</span> ,</div><div class="line">        <span class="attr">lib</span>: <span class="string">"../lib"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">dir</span>: <span class="string">"built"</span>,</div><div class="line">    <span class="attr">keepBuildDir</span>: <span class="literal">false</span>,  <span class="comment">//不复制依赖文件</span></div><div class="line"></div><div class="line">    modules: [</div><div class="line">        &#123;</div><div class="line">            <span class="attr">name</span>: <span class="string">"main"</span>,</div><div class="line">            <span class="attr">exclude</span>: [<span class="string">"amd_modules/jquery/1.8.3/jquery"</span>, <span class="string">"lib/header/0.0.1/header"</span>]</div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>　　dir: 输出目录的路径</p>
+<p>　　modules: 压缩合并的模块,exclude: 筛选掉的文件,不被压缩到main的压缩文件里</p>
+<p>　　执行代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node r.js -o config.js</div></pre></td></tr></table></figure></p>
+<h2 id="css的压缩"><a href="#css的压缩" class="headerlink" title="css的压缩"></a>css的压缩</h2><p>第一种情况,直接压缩某个文件,执行代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node r.js -o cssIn=index.css out=built/index.css</div></pre></td></tr></table></figure></p>
+<p>第二种情况,压缩多个文件</p>
+<p>需要先将要压缩的文件放到一个css中,用@import引入,如下所示:存储文件为main.css<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">import</span> url(<span class="string">"icons.css"</span>);</div><div class="line">@<span class="keyword">import</span> url(<span class="string">"window.css"</span>);</div><div class="line">@<span class="keyword">import</span> url(<span class="string">"tabs.css"</span>);</div><div class="line">@<span class="keyword">import</span> url(<span class="string">"index.css"</span>);</div></pre></td></tr></table></figure></p>
+<p>执行代码:(标准压缩)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node r.js -o cssIn=main.css out=built/main.css optimizeCss=standard</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -278,7 +429,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T15:39:18+08:00">
                 2016-12-07
               </time>
@@ -295,7 +446,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/jquery/" itemprop="url" rel="index">
@@ -433,7 +584,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T15:23:11+08:00">
                 2016-12-07
               </time>
@@ -450,7 +601,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/linux/" itemprop="url" rel="index">
@@ -604,7 +755,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T15:09:18+08:00">
                 2016-12-07
               </time>
@@ -621,7 +772,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/git/" itemprop="url" rel="index">
@@ -746,7 +897,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T14:53:58+08:00">
                 2016-12-07
               </time>
@@ -763,7 +914,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/hexo/" itemprop="url" rel="index">
@@ -892,7 +1043,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T14:42:05+08:00">
                 2016-12-07
               </time>
@@ -909,7 +1060,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/hexo/" itemprop="url" rel="index">
@@ -1027,8 +1178,8 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
@@ -1036,7 +1187,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               
             </div>
           
@@ -1086,7 +1237,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
