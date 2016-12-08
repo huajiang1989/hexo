@@ -86,26 +86,23 @@
 
 <meta name="description" content="今天提交代码的时候遇到了一个小问题，这里解决了记下小记。
 提交代码遇到『Everything up-to-date』
-上网查了下，发现中文大多答非所问，少数能解决的并没有阐述原理，所以我写这篇文章记录下。
-这里先上 stackoverflow 的回答，基础好的可以看这个。
-接下来说我自己的理解，出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个">
+出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个问题。我们应该告诉git提交哪个分支。
+这里有种特殊的情况是如果你是fork别人的仓库再clone到本地的话，即使git上只有一个主分支，他还是可能出现这个错误。那么我们就需要新">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git问题Everything up-to-date解决">
 <meta property="og:url" content="http://yoursite.com/2016/12/07/git-everything-up-to-data/index.html">
 <meta property="og:site_name" content="Mr.Hua's Blog">
 <meta property="og:description" content="今天提交代码的时候遇到了一个小问题，这里解决了记下小记。
 提交代码遇到『Everything up-to-date』
-上网查了下，发现中文大多答非所问，少数能解决的并没有阐述原理，所以我写这篇文章记录下。
-这里先上 stackoverflow 的回答，基础好的可以看这个。
-接下来说我自己的理解，出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个">
-<meta property="og:updated_time" content="2016-12-07T14:21:49.904Z">
+出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个问题。我们应该告诉git提交哪个分支。
+这里有种特殊的情况是如果你是fork别人的仓库再clone到本地的话，即使git上只有一个主分支，他还是可能出现这个错误。那么我们就需要新">
+<meta property="og:updated_time" content="2016-12-08T01:27:03.422Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git问题Everything up-to-date解决">
 <meta name="twitter:description" content="今天提交代码的时候遇到了一个小问题，这里解决了记下小记。
 提交代码遇到『Everything up-to-date』
-上网查了下，发现中文大多答非所问，少数能解决的并没有阐述原理，所以我写这篇文章记录下。
-这里先上 stackoverflow 的回答，基础好的可以看这个。
-接下来说我自己的理解，出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个">
+出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个问题。我们应该告诉git提交哪个分支。
+这里有种特殊的情况是如果你是fork别人的仓库再clone到本地的话，即使git上只有一个主分支，他还是可能出现这个错误。那么我们就需要新">
 
 
 
@@ -197,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -207,7 +204,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -286,7 +283,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Veröffentlicht am</span>
+              <span class="post-meta-item-text">Posted on</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-07T22:21:43+08:00">
                 2016-12-07
               </time>
@@ -303,7 +300,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/git/" itemprop="url" rel="index">
@@ -343,9 +340,7 @@
       
         <p>今天提交代码的时候遇到了一个小问题，这里解决了记下小记。</p>
 <p>提交代码遇到『Everything up-to-date』</p>
-<p>上网查了下，发现中文大多答非所问，少数能解决的并没有阐述原理，所以我写这篇文章记录下。</p>
-<p>这里先上 stackoverflow 的回答，基础好的可以看这个。</p>
-<p>接下来说我自己的理解，出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个问题。我们应该告诉git提交哪个分支。</p>
+<p>出现这个问题的原因是git提交改动到缓存，要push的时候不会将本地所有的分支都push掉，所以出现这个问题。我们应该告诉git提交哪个分支。</p>
 <p>这里有种特殊的情况是如果你是fork别人的仓库再clone到本地的话，即使git上只有一个主分支，他还是可能出现这个错误。那么我们就需要新建分支提交改动然后合并分支。</p>
 <p>接下来先创建一个新分支提交改动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch newbranch</div></pre></td></tr></table></figure></p>
 <p>然后输入这条命令检查是否创建成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
@@ -356,7 +351,7 @@
 <p>然后我们要将新分支提交的改动合并到主分支上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git merge newbranch</div></pre></td></tr></table></figure></p>
 <p>合并分支可能产生冲突这是正常的，虽然我们这是新建的分支不会产生冲突，但还是在这里记录下。下面的代码可以查看产生冲突的文件，然后做对应的修改再提交一次就可以了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git diff</div></pre></td></tr></table></figure></p>
 <p>我们的问题就解决了，接下来就可以push代码了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push -u origin master</div></pre></td></tr></table></figure></p>
-<p>新建分支的朋友别忘了删除这个分支<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -D newbranch</div></pre></td></tr></table></figure></p>
+<p>删除新建的这个分支<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -D newbranch</div></pre></td></tr></table></figure></p>
 <p>如果想保留分支只是想删除已经合并的部分只要把大写的D改成小写的d就行了。</p>
 
       
@@ -393,6 +388,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/08/express-router/" rel="prev" title="Express-Router">
+                Express-Router <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -451,16 +450,16 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
-              <span class="site-state-item-name">Artikel</span>
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">posts</span>
             </a>
           </div>
 
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
               
             </div>
           
@@ -510,7 +509,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
