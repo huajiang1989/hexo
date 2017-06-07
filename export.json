@@ -1,10 +1,31 @@
 {
 	"meta": {
-		"exported_on": 1492569382856,
+		"exported_on": 1496797489612,
 		"version": "008"
 	},
 	"data": {
 		"posts": [
+			{
+				"id": "cj3maj58l000038fco7c2ggq4",
+				"title": "grpc之node调用静态代码",
+				"slug": "grpc_node_static",
+				"markdown": "\n# 创建项目文件夹，初始化项目\n我的文件夹为grpctest\ncd到项目文件下，运行 npm init\n\n<!--more-->\n\n# 安装protoc以及grpc插件\n这个用npm直接安装\n```\nnpm install grpc-tools --save-dev\nnpm install google-protobuf --save\nnpm install grpc --save\n```\n在./node_modules/grpc-tools/bin下，你会找到 protoc.exe 和 grpc_node_plugin.exe两个文件。\n# 编写.proto文件并使用protoc 进行编译\nHelloWorldService.proto\n```js\nsyntax = \"proto3\";\npackage com.sdp.grpctest;\nmessage HelloRequest{\n  string name = 1;\n}\nmessage HelloResponse{\n  string helloString = 1;\n}\n// 服务HelloWorld\nservice HelloWorldService{\n  rpc hello (HelloRequest) returns (HelloResponse){}\n}\n```\n# 运行编译命令\n```\n./node_modules/grpc-tools/bin/protoc --js_out=import_style=commonjs,binary:./ --plugin=protoc-gen-grpc=./node_modules/grpc-tools/bin/grpc_node_plugin.exe --grpc_out=./ HelloWorldService.proto\n```\n运行完成后，会生成HelloWorldService_grpc_pb.js 和 HelloWorldServer_pb.js两个文件。\n# 编写server.js文件\nserver.js\n```js\nvar services = require('./HelloWorldService_grpc_pb.js');\nvar messages = require('./HelloWorldService_pb.js');\nvar grpc = require('grpc')\nvar hello = function(call, callback) {\n  var response = new messages.HelloResponse();\n  response.setHellostring(\"hello,\" + call.request.getName());\n  callback(null, response);\n}\nvar server = new grpc.Server();\nserver.addService(\n  services.HelloWorldServiceService,\n  {\n    hello:hello\n  }\n);\nserver.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());\nserver.start(function(err,data){\n  console.log(err);\n  console.log(data);\n});\n```\n运行node server.js启动server\n\n# 编写client.js文件\n```js\nvar grpc = require('grpc');\nvar messages = require('./HelloWorldService_pb.js');\nvar services = require('./HelloWorldService_grpc_pb.js')\nvar request = new messages.HelloRequest();\nrequest.setName('world');\nvar client = new services.HelloWorldServiceClient(\n  'localhost:50051',\n  grpc.credentials.createInsecure()\n);\nclient.hello(request, function(err,data){\n  if(err){\n    console.error(err);\n  }\n  console.log(data);\n  console.log(data.getHellostring());\n})\n```\n运行node client.js ， 最后成功打印出hello,world",
+				"html": "<h1 id=\"创建项目文件夹，初始化项目\"><a href=\"#创建项目文件夹，初始化项目\" class=\"headerlink\" title=\"创建项目文件夹，初始化项目\"></a>创建项目文件夹，初始化项目</h1><p>我的文件夹为grpctest<br>cd到项目文件下，运行 npm init</p>\n<a id=\"more\"></a>\n<h1 id=\"安装protoc以及grpc插件\"><a href=\"#安装protoc以及grpc插件\" class=\"headerlink\" title=\"安装protoc以及grpc插件\"></a>安装protoc以及grpc插件</h1><p>这个用npm直接安装<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div></pre></td><td class=\"code\"><pre><div class=\"line\">npm install grpc-tools --save-dev</div><div class=\"line\">npm install google-protobuf --save</div><div class=\"line\">npm install grpc --save</div></pre></td></tr></table></figure></p>\n<p>在./node_modules/grpc-tools/bin下，你会找到 protoc.exe 和 grpc_node_plugin.exe两个文件。</p>\n<h1 id=\"编写-proto文件并使用protoc-进行编译\"><a href=\"#编写-proto文件并使用protoc-进行编译\" class=\"headerlink\" title=\"编写.proto文件并使用protoc 进行编译\"></a>编写.proto文件并使用protoc 进行编译</h1><p>HelloWorldService.proto<br><figure class=\"highlight js\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div><div class=\"line\">11</div><div class=\"line\">12</div></pre></td><td class=\"code\"><pre><div class=\"line\">syntax = <span class=\"string\">\"proto3\"</span>;</div><div class=\"line\">package com.sdp.grpctest;</div><div class=\"line\">message HelloRequest&#123;</div><div class=\"line\">  string name = <span class=\"number\">1</span>;</div><div class=\"line\">&#125;</div><div class=\"line\">message HelloResponse&#123;</div><div class=\"line\">  string helloString = <span class=\"number\">1</span>;</div><div class=\"line\">&#125;</div><div class=\"line\"><span class=\"comment\">// 服务HelloWorld</span></div><div class=\"line\">service HelloWorldService&#123;</div><div class=\"line\">  rpc hello (HelloRequest) returns (HelloResponse)&#123;&#125;</div><div class=\"line\">&#125;</div></pre></td></tr></table></figure></p>\n<h1 id=\"运行编译命令\"><a href=\"#运行编译命令\" class=\"headerlink\" title=\"运行编译命令\"></a>运行编译命令</h1><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div></pre></td><td class=\"code\"><pre><div class=\"line\">./node_modules/grpc-tools/bin/protoc --js_out=import_style=commonjs,binary:./ --plugin=protoc-gen-grpc=./node_modules/grpc-tools/bin/grpc_node_plugin.exe --grpc_out=./ HelloWorldService.proto</div></pre></td></tr></table></figure>\n<p>运行完成后，会生成HelloWorldService_grpc_pb.js 和 HelloWorldServer_pb.js两个文件。</p>\n<h1 id=\"编写server-js文件\"><a href=\"#编写server-js文件\" class=\"headerlink\" title=\"编写server.js文件\"></a>编写server.js文件</h1><p>server.js<br><figure class=\"highlight js\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div><div class=\"line\">11</div><div class=\"line\">12</div><div class=\"line\">13</div><div class=\"line\">14</div><div class=\"line\">15</div><div class=\"line\">16</div><div class=\"line\">17</div><div class=\"line\">18</div><div class=\"line\">19</div><div class=\"line\">20</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"keyword\">var</span> services = <span class=\"built_in\">require</span>(<span class=\"string\">'./HelloWorldService_grpc_pb.js'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> messages = <span class=\"built_in\">require</span>(<span class=\"string\">'./HelloWorldService_pb.js'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> grpc = <span class=\"built_in\">require</span>(<span class=\"string\">'grpc'</span>)</div><div class=\"line\"><span class=\"keyword\">var</span> hello = <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\">call, callback</span>) </span>&#123;</div><div class=\"line\">  <span class=\"keyword\">var</span> response = <span class=\"keyword\">new</span> messages.HelloResponse();</div><div class=\"line\">  response.setHellostring(<span class=\"string\">\"hello,\"</span> + call.request.getName());</div><div class=\"line\">  callback(<span class=\"literal\">null</span>, response);</div><div class=\"line\">&#125;</div><div class=\"line\"><span class=\"keyword\">var</span> server = <span class=\"keyword\">new</span> grpc.Server();</div><div class=\"line\">server.addService(</div><div class=\"line\">  services.HelloWorldServiceService,</div><div class=\"line\">  &#123;</div><div class=\"line\">    <span class=\"attr\">hello</span>:hello</div><div class=\"line\">  &#125;</div><div class=\"line\">);</div><div class=\"line\">server.bind(<span class=\"string\">'0.0.0.0:50051'</span>, grpc.ServerCredentials.createInsecure());</div><div class=\"line\">server.start(<span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\">err,data</span>)</span>&#123;</div><div class=\"line\">  <span class=\"built_in\">console</span>.log(err);</div><div class=\"line\">  <span class=\"built_in\">console</span>.log(data);</div><div class=\"line\">&#125;);</div></pre></td></tr></table></figure></p>\n<p>运行node server.js启动server</p>\n<h1 id=\"编写client-js文件\"><a href=\"#编写client-js文件\" class=\"headerlink\" title=\"编写client.js文件\"></a>编写client.js文件</h1><figure class=\"highlight js\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div><div class=\"line\">11</div><div class=\"line\">12</div><div class=\"line\">13</div><div class=\"line\">14</div><div class=\"line\">15</div><div class=\"line\">16</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"keyword\">var</span> grpc = <span class=\"built_in\">require</span>(<span class=\"string\">'grpc'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> messages = <span class=\"built_in\">require</span>(<span class=\"string\">'./HelloWorldService_pb.js'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> services = <span class=\"built_in\">require</span>(<span class=\"string\">'./HelloWorldService_grpc_pb.js'</span>)</div><div class=\"line\"><span class=\"keyword\">var</span> request = <span class=\"keyword\">new</span> messages.HelloRequest();</div><div class=\"line\">request.setName(<span class=\"string\">'world'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> client = <span class=\"keyword\">new</span> services.HelloWorldServiceClient(</div><div class=\"line\">  <span class=\"string\">'localhost:50051'</span>,</div><div class=\"line\">  grpc.credentials.createInsecure()</div><div class=\"line\">);</div><div class=\"line\">client.hello(request, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\">err,data</span>)</span>&#123;</div><div class=\"line\">  <span class=\"keyword\">if</span>(err)&#123;</div><div class=\"line\">    <span class=\"built_in\">console</span>.error(err);</div><div class=\"line\">  &#125;</div><div class=\"line\">  <span class=\"built_in\">console</span>.log(data);</div><div class=\"line\">  <span class=\"built_in\">console</span>.log(data.getHellostring());</div><div class=\"line\">&#125;)</div></pre></td></tr></table></figure>\n<p>运行node client.js ， 最后成功打印出hello,world</p>\n",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1496797391474,
+				"created_by": 2,
+				"updated_at": 1496797472452,
+				"updated_by": 2,
+				"published_at": 1496797391474,
+				"published_by": 2
+			},
 			{
 				"id": "cj1od6kd700005wfc4wqu5kdf",
 				"title": "dva中所用到的ES6知识点",
@@ -1874,6 +1895,12 @@
 		],
 		"tags": [
 			{
+				"id": "cj3maj59j000238fcmfm9dvja",
+				"name": "grpc",
+				"slug": "grpc",
+				"description": ""
+			},
+			{
 				"id": "ciwg2colr0000qcfcv8sf5avn",
 				"name": "es6",
 				"slug": "es6",
@@ -2392,6 +2419,10 @@
 		],
 		"posts_tags": [
 			{
+				"tag_id": "cj3maj59j000238fcmfm9dvja",
+				"post_id": "cj3maj58l000038fco7c2ggq4"
+			},
+			{
 				"tag_id": "ciwg2colr0000qcfcv8sf5avn",
 				"post_id": "cj1od6kd700005wfc4wqu5kdf"
 			},
@@ -2737,6 +2768,12 @@
 			}
 		],
 		"categories": [
+			{
+				"id": "cj3maj58y000138fcgd2sf9ur",
+				"name": "grpc",
+				"slug": "grpc",
+				"description": ""
+			},
 			{
 				"id": "ciwg0zxsb0003q0fc9r7jvg2o",
 				"name": "es6",
@@ -3237,6 +3274,10 @@
 			}
 		],
 		"posts_categories": [
+			{
+				"category_id": "cj3maj58y000138fcgd2sf9ur",
+				"post_id": "cj3maj58l000038fco7c2ggq4"
+			},
 			{
 				"category_id": "ciwg0zxsb0003q0fc9r7jvg2o",
 				"post_id": "cj1od6kd700005wfc4wqu5kdf"
