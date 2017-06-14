@@ -1,12 +1,33 @@
 {
 	"meta": {
-		"exported_on": 1497419068260,
+		"exported_on": 1497426722448,
 		"version": "008"
 	},
 	"data": {
 		"posts": [
 			{
-				"id": "cj3wkhd2p0000okfcm00md4j9",
+				"id": "cj3wp6xw50000rofcohkghgz1",
+				"title": "Nodejs PM2  使用介绍",
+				"slug": "nodejs-pm2",
+				"markdown": "\n# 介绍\nPM2 是一个带有负载均衡功能的 Node 应用的进程管理器。\n\n当你要把你的独立代码利用全部的服务器上的所有 CPU，并保证进程永远都活着，0 秒的重载， PM2 是完美的。它非常适合 IaaS 结构，但不要把它用于 PaaS 方案（随后将开发 Paas 的解决方案）。\n\n备注：\n\nSaaS、PaaS 和 IaaS 是云服务模式\nSaaS 软件即服务，例如 Google 的 Gmail 邮箱服务，面向应用型用户\nPaaS 平台即服务，例如 Google 的 GAE，面向开发型用户\nIaaS 基础架构即服务，例如亚马逊的 AWS，IaaS 对于不知道新推出的应用程序/网站会有多成功的创业公司来说非常有用\n<!--more-->\n# 主要特性\n内建负载均衡（使用 Node cluster 集群模块）\n后台运行\n0 秒停机重载，我理解大概意思是维护升级的时候不需要停机.\n具有 Ubuntu 和 CentOS 的启动脚本\n停止不稳定的进程（避免无限循环）\n控制台检测\n提供 HTTP API\n远程控制和实时的接口 API ( Nodejs 模块，允许和 PM2 进程管理器交互 )\n测试过 Nodejs v0.11/v0.10/v0.8 版本，兼容 CoffeeScript，基于 Linux 和 MacOS。\n\n# 安装\n```\nnpm install -g pm2\n```\n# 用法\n```\n$ npm install pm2 -g     # 命令行安装 pm2\n$ pm2 start app.js -i 4  # 后台运行pm2，启动4个app.js\n                         # 也可以把'max' 参数传递给 start\n                         # 正确的进程数目依赖于Cpu的核心数目\n$ pm2 start app.js --name my-api # 命名进程\n$ pm2 list               # 显示所有进程状态\n$ pm2 monit              # 监视所有进程\n$ pm2 logs               # 显示所有进程日志\n$ pm2 stop all           # 停止所有进程\n$ pm2 restart all        # 重启所有进程\n$ pm2 reload all         # 0 秒停机重载进程 (用于 NETWORKED 进程)\n$ pm2 stop 0             # 停止指定的进程\n$ pm2 restart 0          # 重启指定的进程\n$ pm2 startup            # 产生 init 脚本 保持进程活着\n$ pm2 web                # 运行健壮的 computer API endpoint (http://localhost:9615)\n$ pm2 delete 0           # 杀死指定的进程\n$ pm2 delete all         # 杀死全部进程\n```\n# 运行进程的不同方式\n```\n$ pm2 start app.js -i max    # 根据有效CPU数目启动最大进程数目\n$ pm2 start app.js -i 3      # 启动3个进程\n$ pm2 start app.js -x        #用fork模式启动 app.js 而不是使用 cluster\n$ pm2 start app.js -x -- -a 23   # 用fork模式启动 app.js 并且传递参数 (-a 23)\n$ pm2 start app.js --name serverone  # 启动一个进程并把它命名为 serverone\n$ pm2 stop serverone       # 停止 serverone 进程\n$ pm2 start app.json        # 启动进程, 在 app.json里设置选项\n$ pm2 start app.js -i max -- -a 23                   #在--之后给 app.js 传递参数\n$ pm2 start app.js -i max -e err.log -o out.log  # 启动 并 生成一个配置文件\n你也可以执行用其他语言编写的app  ( fork 模式):\n$ pm2 start my-bash-script.sh    -x --interpreter bash\n$ pm2 start my-python-script.py -x --interpreter python\n0 秒停机重载：这项功能允许你重新载入代码而不用失去请求连接。\n```\n注意：\n仅能用于 web 应用\n运行于 Node 0.11.x 版本\n运行于 cluster 模式（默认模式）\n```\n$ pm2 reload all\n```\nCoffeeScript:\n```\n$ pm2 start my_app.coffee  #这就是全部\n```\nPM2 准备好为产品级服务了吗？\n只需在你的服务器上测试\n```\n$ git clone https://github.com/Unitech/pm2.git\n$ cd pm2\n$ npm install  # 或者 npm install --dev ，如果devDependencies 没有安装\n$ npm test\n```\npm2 list：列出由 PM2 管理的所有进程信息，还会显示一个进程会被启动多少次，因为没处理的异常。\n\n![](https://sfault-image.b0.upaiyun.com/268/258/2682584144-54d359df2324d_articlex)\n\npm2 monit：监视每个 node 进程的 CPU 和内存的使用情况。\n![](https://sfault-image.b0.upaiyun.com/213/481/213481560-54d35a0fef97d_articlex)\n",
+				"html": "<h1 id=\"介绍\"><a href=\"#介绍\" class=\"headerlink\" title=\"介绍\"></a>介绍</h1><p>PM2 是一个带有负载均衡功能的 Node 应用的进程管理器。</p>\n<p>当你要把你的独立代码利用全部的服务器上的所有 CPU，并保证进程永远都活着，0 秒的重载， PM2 是完美的。它非常适合 IaaS 结构，但不要把它用于 PaaS 方案（随后将开发 Paas 的解决方案）。</p>\n<p>备注：</p>\n<p>SaaS、PaaS 和 IaaS 是云服务模式<br>SaaS 软件即服务，例如 Google 的 Gmail 邮箱服务，面向应用型用户<br>PaaS 平台即服务，例如 Google 的 GAE，面向开发型用户<br>IaaS 基础架构即服务，例如亚马逊的 AWS，IaaS 对于不知道新推出的应用程序/网站会有多成功的创业公司来说非常有用<br><a id=\"more\"></a></p>\n<h1 id=\"主要特性\"><a href=\"#主要特性\" class=\"headerlink\" title=\"主要特性\"></a>主要特性</h1><p>内建负载均衡（使用 Node cluster 集群模块）<br>后台运行<br>0 秒停机重载，我理解大概意思是维护升级的时候不需要停机.<br>具有 Ubuntu 和 CentOS 的启动脚本<br>停止不稳定的进程（避免无限循环）<br>控制台检测<br>提供 HTTP API<br>远程控制和实时的接口 API ( Nodejs 模块，允许和 PM2 进程管理器交互 )<br>测试过 Nodejs v0.11/v0.10/v0.8 版本，兼容 CoffeeScript，基于 Linux 和 MacOS。</p>\n<h1 id=\"安装\"><a href=\"#安装\" class=\"headerlink\" title=\"安装\"></a>安装</h1><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div></pre></td><td class=\"code\"><pre><div class=\"line\">npm install -g pm2</div></pre></td></tr></table></figure>\n<h1 id=\"用法\"><a href=\"#用法\" class=\"headerlink\" title=\"用法\"></a>用法</h1><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div><div class=\"line\">11</div><div class=\"line\">12</div><div class=\"line\">13</div><div class=\"line\">14</div><div class=\"line\">15</div><div class=\"line\">16</div><div class=\"line\">17</div></pre></td><td class=\"code\"><pre><div class=\"line\">$ npm install pm2 -g     # 命令行安装 pm2</div><div class=\"line\">$ pm2 start app.js -i 4  # 后台运行pm2，启动4个app.js</div><div class=\"line\">                         # 也可以把&apos;max&apos; 参数传递给 start</div><div class=\"line\">                         # 正确的进程数目依赖于Cpu的核心数目</div><div class=\"line\">$ pm2 start app.js --name my-api # 命名进程</div><div class=\"line\">$ pm2 list               # 显示所有进程状态</div><div class=\"line\">$ pm2 monit              # 监视所有进程</div><div class=\"line\">$ pm2 logs               # 显示所有进程日志</div><div class=\"line\">$ pm2 stop all           # 停止所有进程</div><div class=\"line\">$ pm2 restart all        # 重启所有进程</div><div class=\"line\">$ pm2 reload all         # 0 秒停机重载进程 (用于 NETWORKED 进程)</div><div class=\"line\">$ pm2 stop 0             # 停止指定的进程</div><div class=\"line\">$ pm2 restart 0          # 重启指定的进程</div><div class=\"line\">$ pm2 startup            # 产生 init 脚本 保持进程活着</div><div class=\"line\">$ pm2 web                # 运行健壮的 computer API endpoint (http://localhost:9615)</div><div class=\"line\">$ pm2 delete 0           # 杀死指定的进程</div><div class=\"line\">$ pm2 delete all         # 杀死全部进程</div></pre></td></tr></table></figure>\n<h1 id=\"运行进程的不同方式\"><a href=\"#运行进程的不同方式\" class=\"headerlink\" title=\"运行进程的不同方式\"></a>运行进程的不同方式</h1><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div><div class=\"line\">11</div><div class=\"line\">12</div><div class=\"line\">13</div></pre></td><td class=\"code\"><pre><div class=\"line\">$ pm2 start app.js -i max    # 根据有效CPU数目启动最大进程数目</div><div class=\"line\">$ pm2 start app.js -i 3      # 启动3个进程</div><div class=\"line\">$ pm2 start app.js -x        #用fork模式启动 app.js 而不是使用 cluster</div><div class=\"line\">$ pm2 start app.js -x -- -a 23   # 用fork模式启动 app.js 并且传递参数 (-a 23)</div><div class=\"line\">$ pm2 start app.js --name serverone  # 启动一个进程并把它命名为 serverone</div><div class=\"line\">$ pm2 stop serverone       # 停止 serverone 进程</div><div class=\"line\">$ pm2 start app.json        # 启动进程, 在 app.json里设置选项</div><div class=\"line\">$ pm2 start app.js -i max -- -a 23                   #在--之后给 app.js 传递参数</div><div class=\"line\">$ pm2 start app.js -i max -e err.log -o out.log  # 启动 并 生成一个配置文件</div><div class=\"line\">你也可以执行用其他语言编写的app  ( fork 模式):</div><div class=\"line\">$ pm2 start my-bash-script.sh    -x --interpreter bash</div><div class=\"line\">$ pm2 start my-python-script.py -x --interpreter python</div><div class=\"line\">0 秒停机重载：这项功能允许你重新载入代码而不用失去请求连接。</div></pre></td></tr></table></figure>\n<p>注意：<br>仅能用于 web 应用<br>运行于 Node 0.11.x 版本<br>运行于 cluster 模式（默认模式）<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div></pre></td><td class=\"code\"><pre><div class=\"line\">$ pm2 reload all</div></pre></td></tr></table></figure></p>\n<p>CoffeeScript:<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div></pre></td><td class=\"code\"><pre><div class=\"line\">$ pm2 start my_app.coffee  #这就是全部</div></pre></td></tr></table></figure></p>\n<p>PM2 准备好为产品级服务了吗？<br>只需在你的服务器上测试<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div></pre></td><td class=\"code\"><pre><div class=\"line\">$ git clone https://github.com/Unitech/pm2.git</div><div class=\"line\">$ cd pm2</div><div class=\"line\">$ npm install  # 或者 npm install --dev ，如果devDependencies 没有安装</div><div class=\"line\">$ npm test</div></pre></td></tr></table></figure></p>\n<p>pm2 list：列出由 PM2 管理的所有进程信息，还会显示一个进程会被启动多少次，因为没处理的异常。</p>\n<p><img src=\"https://sfault-image.b0.upaiyun.com/268/258/2682584144-54d359df2324d_articlex\" alt=\"\"></p>\n<p>pm2 monit：监视每个 node 进程的 CPU 和内存的使用情况。<br><img src=\"https://sfault-image.b0.upaiyun.com/213/481/213481560-54d35a0fef97d_articlex\" alt=\"\"></p>\n",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1497426676780,
+				"created_by": 2,
+				"updated_at": 1497426677963,
+				"updated_by": 2,
+				"published_at": 1497426676780,
+				"published_by": 2
+			},
+			{
+				"id": "cj3wkhd2p0000wwfczp3v4154",
 				"title": "Nodejs 部署到阿里云全过程",
 				"slug": "nodejs-aliyun",
 				"markdown": "整个部署过程学到了不少东西，记录一下。\n```\n参考了以下文章：\nhttp://itbilu.com/other/relate/NJ2TJohl.html\nhttps://segmentfault.com/a/1190000004051670\nhttp://borninsummer.com/2015/06/17/notes-on-developing-nodejs-webapp/\nhttps://bbs.aliyun.com/read/146189.html\nhttps://segmentfault.com/q/1010000003937372\n```\n<!--more-->\n# 1. 到阿里云购买云服务器 ECS 。\n```\nhttps://www.aliyun.com/product/ecs\n```\n如果是在校学生，在淘宝有实名认证，且在学信网有注册，可以试试抢学生的首月优惠套餐。https://www.aliyun.com/act/aliyun/campus.html\n作为一个穷逼+不熟悉服务器配置的菜鸟。选了最便宜的套餐：\nCPU： 1核 / 内存： 1024 MB / 带宽：1Mbps / 操作系统： CentOS 7.0\n购买环节会设置 ssh 登陆密码，记下密码。\n\n在最后的付费环节，使用推荐码可以享受9折。我的推荐码 no4qx1\n登陆到阿里云，查看购买的实例。\n注意公网 IP，下一步会用到\n\n\n购买的实例\n# 2. 登陆服务器\n\n打开 Terminal， 输入 ssh root@公网IP 登陆服务器。首次登陆会询问公钥，yes 即可。关于 ssh 登陆，具体可以看\n```\nhttp://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html\n```\n这篇文章。\n\n登陆服务器后。这里对于我这个 Linux 菜鸟有个大坑………就是 Linux 系统常见的目录结构和文件放置区域。\n使用 root 用户身份登陆后，会直接进入到下图 红色箭头标出的 root 目录下。先 cd .. 跳转到上一层, 再 ls -a ，就可以看到类似下图的目录结构了。\n\n\n图片引用自《鸟哥的Linux》\n# 3.安装 node 和 mongodb\n```\nnode -- 编译后二进制文件应在/usr/local/bin/node 下\nmongodb -- 安装在/usr/local/mongodb 下\n```\n下面就一步一步来，首先升级CentOS\n```\nyum -y update\n```\n\n升级后，跳转到 /usr/local/src , 这个文件夹通常用来存放软件源代码\n```\ncd /usr/local/src\n```\n下载 nodejs 代码，也可以使用scp命令直接上传，因为下载实在太慢了。\n```\nwget http://nodejs.org/dist/v0.12.5/node-v0.12.5.tar.gz\n```\n解压\n```\ntar -xzvf node-v0.12.5.tar.gz\n```\n进入解压后的文件夹\n```\ncd node-v0.12.5\n```\n执行配置脚本来进行编译预处理\n```\n./configure\n```\n编译源代码\n```\nmake\n```\n当编译完成后，需要使之在系统范围内可用, 编译后的二进制文件将被放置到系统路径，默认情况下，Node二进制文件应该放在/user/local/bin/node文件夹下\n```\nmake install\n```\n安装 express 和 forever，这两个模块都推荐 global 安装\n```\nnpm -g install express forever\n```\n建立超级链接, 不然 sudo node 时会报 \"command not found\"\n```\nsudo ln -s /usr/local/bin/node /usr/bin/node\nsudo ln -s /usr/local/lib/node /usr/lib/node\nsudo ln -s /usr/local/bin/npm /usr/bin/npm\nsudo ln -s /usr/local/bin/node-waf /usr/bin/node-waf\nsudo ln -s /usr/local/bin/forever /usr/bin/forever\n```\nNodejs到这里就基本安装完成了。\n\n 下面来安装mongodb\n\n软件安装位置：/usr/local/mongodb\n数据存放位置：/var/mongodb/data\n日志存放位置：/var/mongodb/logs\n首先下载安装包\n···\ncd /usr/local\nwget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.4.9.tgz\n···\n解压安装包，重命名文件夹为mongodb\n```\ntaz zxvf mongodb-linux-x86_64-2.6.0.tgz\nmv mongodb-linux-x86_64-2.6.0 mongodb\n```\n创建数据和日志存放目录\n```\nmkdir /var/mongodb\nmkdir /var/mongodb/data\nmkdir /var/mongodb/logs\n```\n打开rc.local文件，添加CentOS开机启动项：\n```\nvim /etc/rc.d/rc.local\n```\n将mongodb启动命令追加到本文件中，让mongodb开机自启动：\n```\n/usr/local/mongodb/bin/mongod --dbpath=/var/mongodb/data --logpath /var/mongodb/logs/log.log -fork\n```\n关闭 vim 后，直接手动启动mongodb\n```\n/usr/local/mongodb/bin/mongod --dbpath=/var/mongodb/data --logpath /var/mongodb/logs/log.log -fork\n```\n看到类似的信息，说明已启动成功。我在这里发了个傻，以为26308是port号，导致后面设置port时折腾了好久。其实这里的 forked process 和 port 号是两个东西， 这个是程序本身在Server上的进程。\n```\nforked process: 26308\n```\n启动mongo shell\n```\ncd /usr/local/mongodb/bin/\n./mongo\n```\n在 mongo shell 中创建管理员及数据库\n```json\nuse admin //admin 数据库\ndb.createUser({\nuser: \"用户名\",\npwd:\"登陆密码\",\nroles:[\"userAdminAnyDatabase\"] //超级管理员\n})\n\nuse databaseFoo //nodeapp 要连接的数据库\ndb.createUser({\nuser: \"用户名\",\npwd:\"登陆密码\",\nroles:[\"readWrite\"] //读写权限\n})\n```\n到这里 mongodb 基本已经安装设置完成了。具体数据的迁移导入可自行研究。\n\n# 4.配置及启动node app\n\n我们把 nodeapp 的程序放在 /home 下\n```\ncd /home\n```\n我使用 http://git.oschina.net/ 管理代码。它的私有库是免费的。基本操作和 github 一样。\n复制代码：\n```\ngit clone https://git.oschina.net/xxxxxxx/nodeapp.git   //你的repo地址\n```\n进入 nodeapp 文件夹\n```\ncd nodeapp\n```\n（若后续代码变更，提交到 git repo 后直接git pull即可部署代码）\n\n安装nodeapp的所有依赖\n```\nnpm install\n```\n\n在启动文件 ( 我的是 app.js ) 中设置数据库连接\n```\nvim app.js\n```\n数据库连接类似下面的格式，由于数据库安装在同一服务器，因此 host 为127.0.0.1：\n```js\nvar dbUrl = 'mongodb://用户名:登陆密码@127.0.0.1/databaseFoo';\nmongoose.connect(dbUrl)\n```\n这里要注意，如果直接 npm start 或 node app.js 启动，则一旦退出 ssh 远程登陆，nodeapp 就会停止运行。因此我们使用 forever 启动 nodeapp。\n```\nNODE_ENV=production forever start app.js\n```\n在尝试启动的过程中，一般会有很多报错。按照报错一点一点配置即可……\n\n在蹚过无数坑后，项目部署成功。用浏览器打开 公网IP:端口号 即可看到 nodeapp 的首页\n\nDNS 设置过程以后再补。",
@@ -1791,48 +1812,6 @@
 				"published_by": 2
 			},
 			{
-				"id": "cixb3z67q0000hofco7vhfo1h",
-				"title": "hexo命令及Markdown语法",
-				"slug": "hexo_markdown",
-				"markdown": "\n这篇我们要介绍两部分内容，Markdown与hexo的常用命令。\n<!--more-->\n# Markdown\nhexo是使用Markdown编辑文章的，我写的这些文章也都是用这种标记语言完成的。所以，我们先从Markdown说起。\n\n## 什么是Markdown\n\nMarkdown 是一种轻量级标记语言，创始人为约翰·格鲁伯和亚伦·斯沃茨。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML文档”。\n## Markdown语法\n```bash\n1、分段： 两个回车\n2、换行 两个空格 + 回车\n3、标题 #~###### 井号的个数表示几级标题，即Markdown可以表示一级标题到六级标题\n4、引用 >\n5、列表 *，+，-，1.，选其中之一，注意后面有个空格\n6、代码区块 四个空格开头\n7、链接 [文字](链接地址)\n8、图片 ![图片说明](图片地址)，图片地址可以是本地路劲，也可以是网络地址\n9、强调 **文字**，__文字__，_文字_，*文字*\n10、代码 ```，``\n```\n# hexo常用命令\n我们在前面的已经略微的接触了一些hexo的命令，如hexo new \"my blog\"，hexo server等。下面来介绍一下我们经常会用到的hexo命令\n## 新建\n```bash\n#新建的文件在hexo/source/_posts/my-blog.md\nhexo new \"my blog\"\n```\n## 编译\n```bash\n#一般部署上去的时候都需要编译一下，编译后，会出现一个public文件夹，将所有的md文件编译成html文件\nhexo generate\n```\n\n## 开启本地服务\n```bash\nhexo server #开启本地hexo服务用的\n```\n## 部署\n```bash\nhexo deploy\n#部署到git上的时候，需要用这个命令\n```\n## 清除public\n```bash\nhexo clean\n#当source文件夹中的部分资源更改过之后，特别是对文件进行了删除或者路径的改变之后，需要执行这个命令，然后重新编译。\n```",
-				"html": "<p>这篇我们要介绍两部分内容，Markdown与hexo的常用命令。<br><a id=\"more\"></a></p>\n<h1 id=\"Markdown\"><a href=\"#Markdown\" class=\"headerlink\" title=\"Markdown\"></a>Markdown</h1><p>hexo是使用Markdown编辑文章的，我写的这些文章也都是用这种标记语言完成的。所以，我们先从Markdown说起。</p>\n<h2 id=\"什么是Markdown\"><a href=\"#什么是Markdown\" class=\"headerlink\" title=\"什么是Markdown\"></a>什么是Markdown</h2><p>Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯和亚伦·斯沃茨。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML文档”。</p>\n<h2 id=\"Markdown语法\"><a href=\"#Markdown语法\" class=\"headerlink\" title=\"Markdown语法\"></a>Markdown语法</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div></pre></td><td class=\"code\"><pre><div class=\"line\">1、分段： 两个回车</div><div class=\"line\">2、换行 两个空格 + 回车</div><div class=\"line\">3、标题 <span class=\"comment\">#~###### 井号的个数表示几级标题，即Markdown可以表示一级标题到六级标题</span></div><div class=\"line\">4、引用 &gt;</div><div class=\"line\">5、列表 *，+，-，1.，选其中之一，注意后面有个空格</div><div class=\"line\">6、代码区块 四个空格开头</div><div class=\"line\">7、链接 [文字](链接地址)</div><div class=\"line\">8、图片 ![图片说明](图片地址)，图片地址可以是本地路劲，也可以是网络地址</div><div class=\"line\">9、强调 **文字**，__文字__，_文字_，*文字*</div><div class=\"line\">10、代码 ```，``</div></pre></td></tr></table></figure>\n<h1 id=\"hexo常用命令\"><a href=\"#hexo常用命令\" class=\"headerlink\" title=\"hexo常用命令\"></a>hexo常用命令</h1><p>我们在前面的已经略微的接触了一些hexo的命令，如hexo new “my blog”，hexo server等。下面来介绍一下我们经常会用到的hexo命令</p>\n<h2 id=\"新建\"><a href=\"#新建\" class=\"headerlink\" title=\"新建\"></a>新建</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"comment\">#新建的文件在hexo/source/_posts/my-blog.md</span></div><div class=\"line\">hexo new <span class=\"string\">\"my blog\"</span></div></pre></td></tr></table></figure>\n<h2 id=\"编译\"><a href=\"#编译\" class=\"headerlink\" title=\"编译\"></a>编译</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"comment\">#一般部署上去的时候都需要编译一下，编译后，会出现一个public文件夹，将所有的md文件编译成html文件</span></div><div class=\"line\">hexo generate</div></pre></td></tr></table></figure>\n<h2 id=\"开启本地服务\"><a href=\"#开启本地服务\" class=\"headerlink\" title=\"开启本地服务\"></a>开启本地服务</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div></pre></td><td class=\"code\"><pre><div class=\"line\">hexo server <span class=\"comment\">#开启本地hexo服务用的</span></div></pre></td></tr></table></figure>\n<h2 id=\"部署\"><a href=\"#部署\" class=\"headerlink\" title=\"部署\"></a>部署</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\">hexo deploy</div><div class=\"line\"><span class=\"comment\">#部署到git上的时候，需要用这个命令</span></div></pre></td></tr></table></figure>\n<h2 id=\"清除public\"><a href=\"#清除public\" class=\"headerlink\" title=\"清除public\"></a>清除public</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\">hexo clean</div><div class=\"line\"><span class=\"comment\">#当source文件夹中的部分资源更改过之后，特别是对文件进行了删除或者路径的改变之后，需要执行这个命令，然后重新编译。</span></div></pre></td></tr></table></figure>",
-				"image": null,
-				"featured": 0,
-				"page": 0,
-				"status": "published",
-				"language": "",
-				"meta_title": null,
-				"meta_description": null,
-				"author_id": 2,
-				"created_at": 1477929600000,
-				"created_by": 2,
-				"updated_at": 1483064045137,
-				"updated_by": 2,
-				"published_at": 1477929600000,
-				"published_by": 2
-			},
-			{
-				"id": "ciwg0zxur000gq0fcimwfpak5",
-				"title": "使用gulp对Hexo性能优化篇",
-				"slug": "hexo-gulp",
-				"markdown": "\n\n\nhexo项目生成的public文件可以使用gulp进行压缩优化\n<!--more-->\n----------\n静态文件压缩\n-------------\n\n静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务 。具体方法如下:\n\n 1. npm 安装如下工具, 方法皆为 : npm install xxx –save\n```bash\n\"gulp\": \"^3.9.1\",\n\"gulp-htmlclean\": \"^2.7.6\",\n\"gulp-htmlmin\": \"^1.3.0\",\n\"gulp-imagemin\": \"^2.4.0\",\n\"gulp-minify-css\": \"^1.2.4\",\n\"gulp-uglify\": \"^1.5.3\",\n```\n 2. 建立 gulpfile.js 文件\n```js\nvar gulp = require('gulp');\nvar minifycss = require('gulp-minify-css');\nvar uglify = require('gulp-uglify');\nvar htmlmin = require('gulp-htmlmin');\nvar htmlclean = require('gulp-htmlclean');\n// 获取 gulp-imagemin 模块\nvar imagemin = require('gulp-imagemin')\n// 压缩 public 目录 css\ngulp.task('minify-css', function() {\n    return gulp.src('./public/**/*.css')\n        .pipe(minifycss())\n        .pipe(gulp.dest('./public'));\n});\n// 压缩 public 目录 html\ngulp.task('minify-html', function() {\n  return gulp.src('./public/**/*.html')\n    .pipe(htmlclean())\n    .pipe(htmlmin({\n         removeComments: true,\n         minifyJS: true,\n         minifyCSS: true,\n         minifyURLs: true,\n    }))\n    .pipe(gulp.dest('./public'))\n});\n// 压缩 public/js 目录 js\ngulp.task('minify-js', function() {\n    return gulp.src('./public/**/*.js')\n        .pipe(uglify())\n        .pipe(gulp.dest('./public'));\n});\n// 压缩图片任务\n// 在命令行输入 gulp images 启动此任务\ngulp.task('images', function () {\n    // 1. 找到图片\n    gulp.src('./photos/*.*')\n    // 2. 压缩图片\n        .pipe(imagemin({\n            progressive: true\n        }))\n    // 3. 另存图片\n        .pipe(gulp.dest('dist/images'))\n});\n// 执行 gulp 命令时执行的任务\ngulp.task('default', [\n    'minify-html','minify-css','minify-js','images'\n]);\n```\n注意， 修改上面的各个目录为你的真实目录， ** 代表0或多个子目录\n",
-				"html": "<p>hexo项目生成的public文件可以使用gulp进行压缩优化</p>\n<h2 id=\"\"><a href=\"#\" class=\"headerlink\" title=\"\"></a><a id=\"more\"></a></h2><h2 id=\"静态文件压缩\"><a href=\"#静态文件压缩\" class=\"headerlink\" title=\"静态文件压缩\"></a>静态文件压缩</h2><p>静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务 。具体方法如下:</p>\n<ol>\n<li><p>npm 安装如下工具, 方法皆为 : npm install xxx –save</p>\n<figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"string\">\"gulp\"</span>: <span class=\"string\">\"^3.9.1\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-htmlclean\"</span>: <span class=\"string\">\"^2.7.6\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-htmlmin\"</span>: <span class=\"string\">\"^1.3.0\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-imagemin\"</span>: <span class=\"string\">\"^2.4.0\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-minify-css\"</span>: <span class=\"string\">\"^1.2.4\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-uglify\"</span>: <span class=\"string\">\"^1.5.3\"</span>,</div></pre></td></tr></table></figure>\n</li>\n<li><p>建立 gulpfile.js 文件</p>\n<figure class=\"highlight js\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div><div class=\"line\">11</div><div class=\"line\">12</div><div class=\"line\">13</div><div class=\"line\">14</div><div class=\"line\">15</div><div class=\"line\">16</div><div class=\"line\">17</div><div class=\"line\">18</div><div class=\"line\">19</div><div class=\"line\">20</div><div class=\"line\">21</div><div class=\"line\">22</div><div class=\"line\">23</div><div class=\"line\">24</div><div class=\"line\">25</div><div class=\"line\">26</div><div class=\"line\">27</div><div class=\"line\">28</div><div class=\"line\">29</div><div class=\"line\">30</div><div class=\"line\">31</div><div class=\"line\">32</div><div class=\"line\">33</div><div class=\"line\">34</div><div class=\"line\">35</div><div class=\"line\">36</div><div class=\"line\">37</div><div class=\"line\">38</div><div class=\"line\">39</div><div class=\"line\">40</div><div class=\"line\">41</div><div class=\"line\">42</div><div class=\"line\">43</div><div class=\"line\">44</div><div class=\"line\">45</div><div class=\"line\">46</div><div class=\"line\">47</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"keyword\">var</span> gulp = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> minifycss = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-minify-css'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> uglify = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-uglify'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> htmlmin = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-htmlmin'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> htmlclean = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-htmlclean'</span>);</div><div class=\"line\"><span class=\"comment\">// 获取 gulp-imagemin 模块</span></div><div class=\"line\"><span class=\"keyword\">var</span> imagemin = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-imagemin'</span>)</div><div class=\"line\"><span class=\"comment\">// 压缩 public 目录 css</span></div><div class=\"line\">gulp.task(<span class=\"string\">'minify-css'</span>, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">    <span class=\"keyword\">return</span> gulp.src(<span class=\"string\">'./public/**/*.css'</span>)</div><div class=\"line\">        .pipe(minifycss())</div><div class=\"line\">        .pipe(gulp.dest(<span class=\"string\">'./public'</span>));</div><div class=\"line\">&#125;);</div><div class=\"line\"><span class=\"comment\">// 压缩 public 目录 html</span></div><div class=\"line\">gulp.task(<span class=\"string\">'minify-html'</span>, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">  <span class=\"keyword\">return</span> gulp.src(<span class=\"string\">'./public/**/*.html'</span>)</div><div class=\"line\">    .pipe(htmlclean())</div><div class=\"line\">    .pipe(htmlmin(&#123;</div><div class=\"line\">         <span class=\"attr\">removeComments</span>: <span class=\"literal\">true</span>,</div><div class=\"line\">         <span class=\"attr\">minifyJS</span>: <span class=\"literal\">true</span>,</div><div class=\"line\">         <span class=\"attr\">minifyCSS</span>: <span class=\"literal\">true</span>,</div><div class=\"line\">         <span class=\"attr\">minifyURLs</span>: <span class=\"literal\">true</span>,</div><div class=\"line\">    &#125;))</div><div class=\"line\">    .pipe(gulp.dest(<span class=\"string\">'./public'</span>))</div><div class=\"line\">&#125;);</div><div class=\"line\"><span class=\"comment\">// 压缩 public/js 目录 js</span></div><div class=\"line\">gulp.task(<span class=\"string\">'minify-js'</span>, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">    <span class=\"keyword\">return</span> gulp.src(<span class=\"string\">'./public/**/*.js'</span>)</div><div class=\"line\">        .pipe(uglify())</div><div class=\"line\">        .pipe(gulp.dest(<span class=\"string\">'./public'</span>));</div><div class=\"line\">&#125;);</div><div class=\"line\"><span class=\"comment\">// 压缩图片任务</span></div><div class=\"line\"><span class=\"comment\">// 在命令行输入 gulp images 启动此任务</span></div><div class=\"line\">gulp.task(<span class=\"string\">'images'</span>, <span class=\"function\"><span class=\"keyword\">function</span> (<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">    <span class=\"comment\">// 1. 找到图片</span></div><div class=\"line\">    gulp.src(<span class=\"string\">'./photos/*.*'</span>)</div><div class=\"line\">    <span class=\"comment\">// 2. 压缩图片</span></div><div class=\"line\">        .pipe(imagemin(&#123;</div><div class=\"line\">            <span class=\"attr\">progressive</span>: <span class=\"literal\">true</span></div><div class=\"line\">        &#125;))</div><div class=\"line\">    <span class=\"comment\">// 3. 另存图片</span></div><div class=\"line\">        .pipe(gulp.dest(<span class=\"string\">'dist/images'</span>))</div><div class=\"line\">&#125;);</div><div class=\"line\"><span class=\"comment\">// 执行 gulp 命令时执行的任务</span></div><div class=\"line\">gulp.task(<span class=\"string\">'default'</span>, [</div><div class=\"line\">    <span class=\"string\">'minify-html'</span>,<span class=\"string\">'minify-css'</span>,<span class=\"string\">'minify-js'</span>,<span class=\"string\">'images'</span></div><div class=\"line\">]);</div></pre></td></tr></table></figure>\n</li>\n</ol>\n<p>注意， 修改上面的各个目录为你的真实目录， ** 代表0或多个子目录</p>\n",
-				"image": null,
-				"featured": 0,
-				"page": 0,
-				"status": "published",
-				"language": "",
-				"meta_title": null,
-				"meta_description": null,
-				"author_id": 2,
-				"created_at": 1477929600000,
-				"created_by": 2,
-				"updated_at": 1483064045164,
-				"updated_by": 2,
-				"published_at": 1477929600000,
-				"published_by": 2
-			},
-			{
 				"id": "ciwg0zxuh000eq0fcnk56cajp",
 				"title": "使用node和git搭建Hexo博客",
 				"slug": "hexo-start",
@@ -1870,6 +1849,48 @@
 				"created_at": 1477929600000,
 				"created_by": 2,
 				"updated_at": 1483064045151,
+				"updated_by": 2,
+				"published_at": 1477929600000,
+				"published_by": 2
+			},
+			{
+				"id": "cixb3z67q0000hofco7vhfo1h",
+				"title": "hexo命令及Markdown语法",
+				"slug": "hexo_markdown",
+				"markdown": "\n这篇我们要介绍两部分内容，Markdown与hexo的常用命令。\n<!--more-->\n# Markdown\nhexo是使用Markdown编辑文章的，我写的这些文章也都是用这种标记语言完成的。所以，我们先从Markdown说起。\n\n## 什么是Markdown\n\nMarkdown 是一种轻量级标记语言，创始人为约翰·格鲁伯和亚伦·斯沃茨。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML文档”。\n## Markdown语法\n```bash\n1、分段： 两个回车\n2、换行 两个空格 + 回车\n3、标题 #~###### 井号的个数表示几级标题，即Markdown可以表示一级标题到六级标题\n4、引用 >\n5、列表 *，+，-，1.，选其中之一，注意后面有个空格\n6、代码区块 四个空格开头\n7、链接 [文字](链接地址)\n8、图片 ![图片说明](图片地址)，图片地址可以是本地路劲，也可以是网络地址\n9、强调 **文字**，__文字__，_文字_，*文字*\n10、代码 ```，``\n```\n# hexo常用命令\n我们在前面的已经略微的接触了一些hexo的命令，如hexo new \"my blog\"，hexo server等。下面来介绍一下我们经常会用到的hexo命令\n## 新建\n```bash\n#新建的文件在hexo/source/_posts/my-blog.md\nhexo new \"my blog\"\n```\n## 编译\n```bash\n#一般部署上去的时候都需要编译一下，编译后，会出现一个public文件夹，将所有的md文件编译成html文件\nhexo generate\n```\n\n## 开启本地服务\n```bash\nhexo server #开启本地hexo服务用的\n```\n## 部署\n```bash\nhexo deploy\n#部署到git上的时候，需要用这个命令\n```\n## 清除public\n```bash\nhexo clean\n#当source文件夹中的部分资源更改过之后，特别是对文件进行了删除或者路径的改变之后，需要执行这个命令，然后重新编译。\n```",
+				"html": "<p>这篇我们要介绍两部分内容，Markdown与hexo的常用命令。<br><a id=\"more\"></a></p>\n<h1 id=\"Markdown\"><a href=\"#Markdown\" class=\"headerlink\" title=\"Markdown\"></a>Markdown</h1><p>hexo是使用Markdown编辑文章的，我写的这些文章也都是用这种标记语言完成的。所以，我们先从Markdown说起。</p>\n<h2 id=\"什么是Markdown\"><a href=\"#什么是Markdown\" class=\"headerlink\" title=\"什么是Markdown\"></a>什么是Markdown</h2><p>Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯和亚伦·斯沃茨。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML文档”。</p>\n<h2 id=\"Markdown语法\"><a href=\"#Markdown语法\" class=\"headerlink\" title=\"Markdown语法\"></a>Markdown语法</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div></pre></td><td class=\"code\"><pre><div class=\"line\">1、分段： 两个回车</div><div class=\"line\">2、换行 两个空格 + 回车</div><div class=\"line\">3、标题 <span class=\"comment\">#~###### 井号的个数表示几级标题，即Markdown可以表示一级标题到六级标题</span></div><div class=\"line\">4、引用 &gt;</div><div class=\"line\">5、列表 *，+，-，1.，选其中之一，注意后面有个空格</div><div class=\"line\">6、代码区块 四个空格开头</div><div class=\"line\">7、链接 [文字](链接地址)</div><div class=\"line\">8、图片 ![图片说明](图片地址)，图片地址可以是本地路劲，也可以是网络地址</div><div class=\"line\">9、强调 **文字**，__文字__，_文字_，*文字*</div><div class=\"line\">10、代码 ```，``</div></pre></td></tr></table></figure>\n<h1 id=\"hexo常用命令\"><a href=\"#hexo常用命令\" class=\"headerlink\" title=\"hexo常用命令\"></a>hexo常用命令</h1><p>我们在前面的已经略微的接触了一些hexo的命令，如hexo new “my blog”，hexo server等。下面来介绍一下我们经常会用到的hexo命令</p>\n<h2 id=\"新建\"><a href=\"#新建\" class=\"headerlink\" title=\"新建\"></a>新建</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"comment\">#新建的文件在hexo/source/_posts/my-blog.md</span></div><div class=\"line\">hexo new <span class=\"string\">\"my blog\"</span></div></pre></td></tr></table></figure>\n<h2 id=\"编译\"><a href=\"#编译\" class=\"headerlink\" title=\"编译\"></a>编译</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"comment\">#一般部署上去的时候都需要编译一下，编译后，会出现一个public文件夹，将所有的md文件编译成html文件</span></div><div class=\"line\">hexo generate</div></pre></td></tr></table></figure>\n<h2 id=\"开启本地服务\"><a href=\"#开启本地服务\" class=\"headerlink\" title=\"开启本地服务\"></a>开启本地服务</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div></pre></td><td class=\"code\"><pre><div class=\"line\">hexo server <span class=\"comment\">#开启本地hexo服务用的</span></div></pre></td></tr></table></figure>\n<h2 id=\"部署\"><a href=\"#部署\" class=\"headerlink\" title=\"部署\"></a>部署</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\">hexo deploy</div><div class=\"line\"><span class=\"comment\">#部署到git上的时候，需要用这个命令</span></div></pre></td></tr></table></figure>\n<h2 id=\"清除public\"><a href=\"#清除public\" class=\"headerlink\" title=\"清除public\"></a>清除public</h2><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\">hexo clean</div><div class=\"line\"><span class=\"comment\">#当source文件夹中的部分资源更改过之后，特别是对文件进行了删除或者路径的改变之后，需要执行这个命令，然后重新编译。</span></div></pre></td></tr></table></figure>",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1477929600000,
+				"created_by": 2,
+				"updated_at": 1483064045137,
+				"updated_by": 2,
+				"published_at": 1477929600000,
+				"published_by": 2
+			},
+			{
+				"id": "ciwg0zxur000gq0fcimwfpak5",
+				"title": "使用gulp对Hexo性能优化篇",
+				"slug": "hexo-gulp",
+				"markdown": "\n\n\nhexo项目生成的public文件可以使用gulp进行压缩优化\n<!--more-->\n----------\n静态文件压缩\n-------------\n\n静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务 。具体方法如下:\n\n 1. npm 安装如下工具, 方法皆为 : npm install xxx –save\n```bash\n\"gulp\": \"^3.9.1\",\n\"gulp-htmlclean\": \"^2.7.6\",\n\"gulp-htmlmin\": \"^1.3.0\",\n\"gulp-imagemin\": \"^2.4.0\",\n\"gulp-minify-css\": \"^1.2.4\",\n\"gulp-uglify\": \"^1.5.3\",\n```\n 2. 建立 gulpfile.js 文件\n```js\nvar gulp = require('gulp');\nvar minifycss = require('gulp-minify-css');\nvar uglify = require('gulp-uglify');\nvar htmlmin = require('gulp-htmlmin');\nvar htmlclean = require('gulp-htmlclean');\n// 获取 gulp-imagemin 模块\nvar imagemin = require('gulp-imagemin')\n// 压缩 public 目录 css\ngulp.task('minify-css', function() {\n    return gulp.src('./public/**/*.css')\n        .pipe(minifycss())\n        .pipe(gulp.dest('./public'));\n});\n// 压缩 public 目录 html\ngulp.task('minify-html', function() {\n  return gulp.src('./public/**/*.html')\n    .pipe(htmlclean())\n    .pipe(htmlmin({\n         removeComments: true,\n         minifyJS: true,\n         minifyCSS: true,\n         minifyURLs: true,\n    }))\n    .pipe(gulp.dest('./public'))\n});\n// 压缩 public/js 目录 js\ngulp.task('minify-js', function() {\n    return gulp.src('./public/**/*.js')\n        .pipe(uglify())\n        .pipe(gulp.dest('./public'));\n});\n// 压缩图片任务\n// 在命令行输入 gulp images 启动此任务\ngulp.task('images', function () {\n    // 1. 找到图片\n    gulp.src('./photos/*.*')\n    // 2. 压缩图片\n        .pipe(imagemin({\n            progressive: true\n        }))\n    // 3. 另存图片\n        .pipe(gulp.dest('dist/images'))\n});\n// 执行 gulp 命令时执行的任务\ngulp.task('default', [\n    'minify-html','minify-css','minify-js','images'\n]);\n```\n注意， 修改上面的各个目录为你的真实目录， ** 代表0或多个子目录\n",
+				"html": "<p>hexo项目生成的public文件可以使用gulp进行压缩优化</p>\n<h2 id=\"\"><a href=\"#\" class=\"headerlink\" title=\"\"></a><a id=\"more\"></a></h2><h2 id=\"静态文件压缩\"><a href=\"#静态文件压缩\" class=\"headerlink\" title=\"静态文件压缩\"></a>静态文件压缩</h2><p>静态文件包括: html,css,js,images . 我才用了gulp来跑自动压缩任务 。具体方法如下:</p>\n<ol>\n<li><p>npm 安装如下工具, 方法皆为 : npm install xxx –save</p>\n<figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"string\">\"gulp\"</span>: <span class=\"string\">\"^3.9.1\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-htmlclean\"</span>: <span class=\"string\">\"^2.7.6\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-htmlmin\"</span>: <span class=\"string\">\"^1.3.0\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-imagemin\"</span>: <span class=\"string\">\"^2.4.0\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-minify-css\"</span>: <span class=\"string\">\"^1.2.4\"</span>,</div><div class=\"line\"><span class=\"string\">\"gulp-uglify\"</span>: <span class=\"string\">\"^1.5.3\"</span>,</div></pre></td></tr></table></figure>\n</li>\n<li><p>建立 gulpfile.js 文件</p>\n<figure class=\"highlight js\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div><div class=\"line\">11</div><div class=\"line\">12</div><div class=\"line\">13</div><div class=\"line\">14</div><div class=\"line\">15</div><div class=\"line\">16</div><div class=\"line\">17</div><div class=\"line\">18</div><div class=\"line\">19</div><div class=\"line\">20</div><div class=\"line\">21</div><div class=\"line\">22</div><div class=\"line\">23</div><div class=\"line\">24</div><div class=\"line\">25</div><div class=\"line\">26</div><div class=\"line\">27</div><div class=\"line\">28</div><div class=\"line\">29</div><div class=\"line\">30</div><div class=\"line\">31</div><div class=\"line\">32</div><div class=\"line\">33</div><div class=\"line\">34</div><div class=\"line\">35</div><div class=\"line\">36</div><div class=\"line\">37</div><div class=\"line\">38</div><div class=\"line\">39</div><div class=\"line\">40</div><div class=\"line\">41</div><div class=\"line\">42</div><div class=\"line\">43</div><div class=\"line\">44</div><div class=\"line\">45</div><div class=\"line\">46</div><div class=\"line\">47</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"keyword\">var</span> gulp = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> minifycss = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-minify-css'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> uglify = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-uglify'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> htmlmin = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-htmlmin'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> htmlclean = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-htmlclean'</span>);</div><div class=\"line\"><span class=\"comment\">// 获取 gulp-imagemin 模块</span></div><div class=\"line\"><span class=\"keyword\">var</span> imagemin = <span class=\"built_in\">require</span>(<span class=\"string\">'gulp-imagemin'</span>)</div><div class=\"line\"><span class=\"comment\">// 压缩 public 目录 css</span></div><div class=\"line\">gulp.task(<span class=\"string\">'minify-css'</span>, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">    <span class=\"keyword\">return</span> gulp.src(<span class=\"string\">'./public/**/*.css'</span>)</div><div class=\"line\">        .pipe(minifycss())</div><div class=\"line\">        .pipe(gulp.dest(<span class=\"string\">'./public'</span>));</div><div class=\"line\">&#125;);</div><div class=\"line\"><span class=\"comment\">// 压缩 public 目录 html</span></div><div class=\"line\">gulp.task(<span class=\"string\">'minify-html'</span>, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">  <span class=\"keyword\">return</span> gulp.src(<span class=\"string\">'./public/**/*.html'</span>)</div><div class=\"line\">    .pipe(htmlclean())</div><div class=\"line\">    .pipe(htmlmin(&#123;</div><div class=\"line\">         <span class=\"attr\">removeComments</span>: <span class=\"literal\">true</span>,</div><div class=\"line\">         <span class=\"attr\">minifyJS</span>: <span class=\"literal\">true</span>,</div><div class=\"line\">         <span class=\"attr\">minifyCSS</span>: <span class=\"literal\">true</span>,</div><div class=\"line\">         <span class=\"attr\">minifyURLs</span>: <span class=\"literal\">true</span>,</div><div class=\"line\">    &#125;))</div><div class=\"line\">    .pipe(gulp.dest(<span class=\"string\">'./public'</span>))</div><div class=\"line\">&#125;);</div><div class=\"line\"><span class=\"comment\">// 压缩 public/js 目录 js</span></div><div class=\"line\">gulp.task(<span class=\"string\">'minify-js'</span>, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">    <span class=\"keyword\">return</span> gulp.src(<span class=\"string\">'./public/**/*.js'</span>)</div><div class=\"line\">        .pipe(uglify())</div><div class=\"line\">        .pipe(gulp.dest(<span class=\"string\">'./public'</span>));</div><div class=\"line\">&#125;);</div><div class=\"line\"><span class=\"comment\">// 压缩图片任务</span></div><div class=\"line\"><span class=\"comment\">// 在命令行输入 gulp images 启动此任务</span></div><div class=\"line\">gulp.task(<span class=\"string\">'images'</span>, <span class=\"function\"><span class=\"keyword\">function</span> (<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">    <span class=\"comment\">// 1. 找到图片</span></div><div class=\"line\">    gulp.src(<span class=\"string\">'./photos/*.*'</span>)</div><div class=\"line\">    <span class=\"comment\">// 2. 压缩图片</span></div><div class=\"line\">        .pipe(imagemin(&#123;</div><div class=\"line\">            <span class=\"attr\">progressive</span>: <span class=\"literal\">true</span></div><div class=\"line\">        &#125;))</div><div class=\"line\">    <span class=\"comment\">// 3. 另存图片</span></div><div class=\"line\">        .pipe(gulp.dest(<span class=\"string\">'dist/images'</span>))</div><div class=\"line\">&#125;);</div><div class=\"line\"><span class=\"comment\">// 执行 gulp 命令时执行的任务</span></div><div class=\"line\">gulp.task(<span class=\"string\">'default'</span>, [</div><div class=\"line\">    <span class=\"string\">'minify-html'</span>,<span class=\"string\">'minify-css'</span>,<span class=\"string\">'minify-js'</span>,<span class=\"string\">'images'</span></div><div class=\"line\">]);</div></pre></td></tr></table></figure>\n</li>\n</ol>\n<p>注意， 修改上面的各个目录为你的真实目录， ** 代表0或多个子目录</p>\n",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1477929600000,
+				"created_by": 2,
+				"updated_at": 1483064045164,
 				"updated_by": 2,
 				"published_at": 1477929600000,
 				"published_by": 2
@@ -1936,6 +1957,12 @@
 			}
 		],
 		"tags": [
+			{
+				"id": "ciwg2cosv000tqcfcsyzydc9j",
+				"name": "nodejs",
+				"slug": "nodejs",
+				"description": ""
+			},
 			{
 				"id": "ciwg2cosv000tqcfcsyzydc9j",
 				"name": "nodejs",
@@ -2474,7 +2501,11 @@
 		"posts_tags": [
 			{
 				"tag_id": "ciwg2cosv000tqcfcsyzydc9j",
-				"post_id": "cj3wkhd2p0000okfcm00md4j9"
+				"post_id": "cj3wp6xw50000rofcohkghgz1"
+			},
+			{
+				"tag_id": "ciwg2cosv000tqcfcsyzydc9j",
+				"post_id": "cj3wkhd2p0000wwfczp3v4154"
 			},
 			{
 				"tag_id": "ciwg2cosv000tqcfcsyzydc9j",
@@ -2814,22 +2845,28 @@
 			},
 			{
 				"tag_id": "ciwg2corj000jqcfcsmusdxqx",
-				"post_id": "cixb3z67q0000hofco7vhfo1h"
-			},
-			{
-				"tag_id": "ciwg2corj000jqcfcsmusdxqx",
-				"post_id": "ciwg0zxur000gq0fcimwfpak5"
-			},
-			{
-				"tag_id": "ciwg2corj000jqcfcsmusdxqx",
 				"post_id": "ciwg0zxuh000eq0fcnk56cajp"
 			},
 			{
 				"tag_id": "ciwg2corj000jqcfcsmusdxqx",
 				"post_id": "cixb5jc2s0000dkfcy1bflwdg"
+			},
+			{
+				"tag_id": "ciwg2corj000jqcfcsmusdxqx",
+				"post_id": "cixb3z67q0000hofco7vhfo1h"
+			},
+			{
+				"tag_id": "ciwg2corj000jqcfcsmusdxqx",
+				"post_id": "ciwg0zxur000gq0fcimwfpak5"
 			}
 		],
 		"categories": [
+			{
+				"id": "ciwg0zxyx001fq0fcjg9nawo5",
+				"name": "nodejs",
+				"slug": "nodejs",
+				"description": ""
+			},
 			{
 				"id": "ciwg0zxyx001fq0fcjg9nawo5",
 				"name": "nodejs",
@@ -3350,7 +3387,11 @@
 		"posts_categories": [
 			{
 				"category_id": "ciwg0zxyx001fq0fcjg9nawo5",
-				"post_id": "cj3wkhd2p0000okfcm00md4j9"
+				"post_id": "cj3wp6xw50000rofcohkghgz1"
+			},
+			{
+				"category_id": "ciwg0zxyx001fq0fcjg9nawo5",
+				"post_id": "cj3wkhd2p0000wwfczp3v4154"
 			},
 			{
 				"category_id": "ciwg0zxyx001fq0fcjg9nawo5",
@@ -3678,19 +3719,19 @@
 			},
 			{
 				"category_id": "ciwg0zxxm0012q0fcpfc32kf3",
-				"post_id": "cixb3z67q0000hofco7vhfo1h"
-			},
-			{
-				"category_id": "ciwg0zxxm0012q0fcpfc32kf3",
-				"post_id": "ciwg0zxur000gq0fcimwfpak5"
-			},
-			{
-				"category_id": "ciwg0zxxm0012q0fcpfc32kf3",
 				"post_id": "ciwg0zxuh000eq0fcnk56cajp"
 			},
 			{
 				"category_id": "ciwg0zxxm0012q0fcpfc32kf3",
 				"post_id": "cixb5jc2s0000dkfcy1bflwdg"
+			},
+			{
+				"category_id": "ciwg0zxxm0012q0fcpfc32kf3",
+				"post_id": "cixb3z67q0000hofco7vhfo1h"
+			},
+			{
+				"category_id": "ciwg0zxxm0012q0fcpfc32kf3",
+				"post_id": "ciwg0zxur000gq0fcimwfpak5"
 			}
 		],
 		"users": [
