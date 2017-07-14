@@ -1,10 +1,52 @@
 {
 	"meta": {
-		"exported_on": 1499601578065,
+		"exported_on": 1500002288149,
 		"version": "008"
 	},
 	"data": {
 		"posts": [
+			{
+				"id": "cj53aeqn40000tofc1a1bio2c",
+				"title": "linux下安装或升级GCC4.8，以支持C++11标准",
+				"slug": "node_gyp_c_plus",
+				"markdown": "\nC++11标准在2011年8月份获得一致通过，这是自1998年后C++语言第一次大修订，对C++语言进行了改进和扩充。随后各编译器厂商都各自实现或部分实现了C++中的特性。\nlinux服务器如果需要使用node的图片处理功能，很多组件需要C++11的支持\n<!--more-->\n\n　　本文主要介绍在Linux系统下，如何升级GCC以支持C++11。目前来看GCC是对C++11支持程度最高最多的编译器，但需要GCC4.8及以上版本。\n\n 　  本文使用操作系统：Centos 6.4 Desktop，64bit；\n\n　　原GCC版本：4.4.7；\n\n\n1. 获取GCC 4.8.2包：wget http://gcc.skazkaforyou.com/releases/gcc-4.8.2/gcc-4.8.2.tar.gz；\n2. 解压缩：tar -xf gcc-4.8.2.tar.gz；\n3. 进入到目录gcc-4.8.2，运行：./contrib/download_prerequisites。这个神奇的脚本文件会帮我们下载、配置、安装依赖库，可以节约我们大量的时间和精力。\n4. 建立输出目录并到目录里：mkdir gcc-build-4.8.2；cd gcc-build-4.8.2；\n5. ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib。--enable-languages表示你要让你的gcc支持那些语言，--disable-multilib不生成编译为其他平台可执行代码的交叉编译器。--disable-checking生成的编译器在编译过程中不做额外检查，也可以使用--enable-checking=xxx来增加一些检查；\n6. 编译：make；注意此步和上一步，比较耗时；\n7. 安装：make  install；\n8. 验证：gcc -v；或者g++ -v，如果显示的gcc版本仍是以前的版本，就需要重启系统；或者可以查看gcc的安装位置：which gcc；然后在查看版本 /usr/local/bin/gcc -v，通常gcc都安装在该处位置，如果显示为；\n\n",
+				"html": "<p>C++11标准在2011年8月份获得一致通过，这是自1998年后C++语言第一次大修订，对C++语言进行了改进和扩充。随后各编译器厂商都各自实现或部分实现了C++中的特性。<br>linux服务器如果需要使用node的图片处理功能，很多组件需要C++11的支持<br><a id=\"more\"></a></p>\n<p>　　本文主要介绍在Linux系统下，如何升级GCC以支持C++11。目前来看GCC是对C++11支持程度最高最多的编译器，但需要GCC4.8及以上版本。</p>\n<p> 　  本文使用操作系统：Centos 6.4 Desktop，64bit；</p>\n<p>　　原GCC版本：4.4.7；</p>\n<ol>\n<li>获取GCC 4.8.2包：wget <a href=\"http://gcc.skazkaforyou.com/releases/gcc-4.8.2/gcc-4.8.2.tar.gz；\" target=\"_blank\" rel=\"external\">http://gcc.skazkaforyou.com/releases/gcc-4.8.2/gcc-4.8.2.tar.gz；</a></li>\n<li>解压缩：tar -xf gcc-4.8.2.tar.gz；</li>\n<li>进入到目录gcc-4.8.2，运行：./contrib/download_prerequisites。这个神奇的脚本文件会帮我们下载、配置、安装依赖库，可以节约我们大量的时间和精力。</li>\n<li>建立输出目录并到目录里：mkdir gcc-build-4.8.2；cd gcc-build-4.8.2；</li>\n<li>../configure –enable-checking=release –enable-languages=c,c++ –disable-multilib。–enable-languages表示你要让你的gcc支持那些语言，–disable-multilib不生成编译为其他平台可执行代码的交叉编译器。–disable-checking生成的编译器在编译过程中不做额外检查，也可以使用–enable-checking=xxx来增加一些检查；</li>\n<li>编译：make；注意此步和上一步，比较耗时；</li>\n<li>安装：make  install；</li>\n<li>验证：gcc -v；或者g++ -v，如果显示的gcc版本仍是以前的版本，就需要重启系统；或者可以查看gcc的安装位置：which gcc；然后在查看版本 /usr/local/bin/gcc -v，通常gcc都安装在该处位置，如果显示为；</li>\n</ol>\n",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1500001337540,
+				"created_by": 2,
+				"updated_at": 1500002064408,
+				"updated_by": 2,
+				"published_at": 1500001337540,
+				"published_by": 2
+			},
+			{
+				"id": "cj5365ohb0000hofcy1dv5gm4",
+				"title": "nvm安装与常用命令",
+				"slug": "node_nvm_install",
+				"markdown": "nvm 是nodejs的版本管理工具，可以很方便的进行node版本切换\n<!--more-->\n# 在windows下用nvm 安装node\n\n## nvm 下载\nnvm 的下载地址：https://github.com/coreybutler/nvm-windows 。选择第一个 nvm-noinstall.zip ，然后解压在系统盘（一般开发相关的文件我都放C盘，但是放别的盘也是可以的）。我放的目录路径是C:\\dev\\nvm。解压出来的文件有：\n```\n +  elevate.cmd\n +  elevate.vbs\n +  install.cmd\n +  LICENSE\n +  nvm.exe\n```\n## nvm 安装\n\n双击 install.cmd ，是以控制台形式显示的，第一下直接按回车，然后会在C盘根目录产生settings.txt，把这个文件放进刚刚解压的那个目录，然后修改settings.txt内容，改成下面那样：\n```\n root: C:\\dev\\nvm\n path: C:\\dev\\nodejs\n arch: 64\n proxy: none\n node_mirror: http://npm.taobao.org/mirrors/node/\n npm_mirror: https://npm.taobao.org/mirrors/npm/\n```\n但是有些人很不幸，这个方法行不通，因为打开 install.cmd按下回车后，显示拒绝访问注册表路径，并弹出一个settings.txt。这时候，你只要淡定地叉掉那个文本以及控制台，然后在刚刚的目录里新建一个文件settings.txt，最后把上面的内容复制进去就可以了。\n```\nroot ： nvm的存放地址\npath ： 存放指向node版本的快捷方式，使用nvm的过程中会自动生成。一般写的时候与nvm同级。\narch ： 电脑系统是64位就写64,32位就写32\nproxy ： 代理\n```\n##  nvm 配置\n\n以控制台方法执行成功的，在环境变量里会自动配置了 NVM_HOME 和 NVM_SYMLINK ，这时候只要修改相应的路径就行了。\n直接创建settings文件的可以在环境变量里创建 NVM_HOME 和 NVM_SYMLINK，并添加路径\n要是嫌弃可视化界面打开环境变量的步骤太麻烦，可以直接使用  windows+r =>\n```\nsysdm.cpl\nNVM_HOME： C:\\dev\\nvm\nNVM_SYMLINK ： C:\\dev\\nodejs\n在PATH里加上;%NVM_HOME%;%NVM_SYMLINK%;。\n```\n一键控制台install的还要检查 环境变量 PATH 上的路径有没有添加C:\\dev\\nvm以及C:\\dev\\nodejs,有的话就删掉。\n## 检测安装结果\n\n打开控制台，输入：nvm -v,若是出现版本信息，则安装。若报错，那就重新把步骤再捋一遍。\n\n检查环境变量是否配置成功：可以在控制台输入：set [环境变量名]，查看路径是否填写错误\n## 使用node\n\n控制台下载 => 输入：nvm install [版本号]，下载最新版的可以直接输nvm install latest\n下载完成后，在控制台输入：nvm use [版本号]。即使用这个版本号的node了。在use后，上面所说的nodejs文件夹就自动生成了。（在use之前是没有的哦）\n\n# 在linux下安装nvm\n\n## 安装nvm\n```\ncurl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash\n```\n或者\n```\nwget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash\n```\n\n```\n## 安装brew\n$ /usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\"\n\n## 安装nvm\n$ brew install nvm\n```\nshell用了zsh，所以还要在~/.zshrc 配置文件里添加nvm PATH\n```\n## 添加nvm PATH\n export NVM_DIR=\"~/.nvm\"\n[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"\n```\n\n## 使用淘宝镜像安装nodejs\n```\nNVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node nvm install 6.2.0\n```\n\n# nvm 常用命令\n\n```\n\nnvm install ## 安装指定版本，可模糊安装，如：安装v4.4.0，既可nvm install v4.4.0，又可nvm install 4.4\n\nnvm uninstall ## 删除已安装的指定版本，语法与install类似\n\nnvm use ## 切换使用指定的版本node\n\nnvm ls ## 列出所有安装的版本\n\nnvm ls-remote ## 列出所以远程服务器的版本（官方node version list）\n\nnvm current ## 显示当前的版本\n\nnvm alias ## 给不同的版本号添加别名\n\nnvm unalias ## 删除已定义的别名\n\nnvm reinstall-packages ## 在当前版本node环境下，重新全局安装指定版本号的npm包\n```\n",
+				"html": "<p>nvm 是nodejs的版本管理工具，可以很方便的进行node版本切换<br><a id=\"more\"></a></p>\n<h1 id=\"在windows下用nvm-安装node\"><a href=\"#在windows下用nvm-安装node\" class=\"headerlink\" title=\"在windows下用nvm 安装node\"></a>在windows下用nvm 安装node</h1><h2 id=\"nvm-下载\"><a href=\"#nvm-下载\" class=\"headerlink\" title=\"nvm 下载\"></a>nvm 下载</h2><p>nvm 的下载地址：<a href=\"https://github.com/coreybutler/nvm-windows\" target=\"_blank\" rel=\"external\">https://github.com/coreybutler/nvm-windows</a> 。选择第一个 nvm-noinstall.zip ，然后解压在系统盘（一般开发相关的文件我都放C盘，但是放别的盘也是可以的）。我放的目录路径是C:\\dev\\nvm。解压出来的文件有：<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div></pre></td><td class=\"code\"><pre><div class=\"line\">+  elevate.cmd</div><div class=\"line\">+  elevate.vbs</div><div class=\"line\">+  install.cmd</div><div class=\"line\">+  LICENSE</div><div class=\"line\">+  nvm.exe</div></pre></td></tr></table></figure></p>\n<h2 id=\"nvm-安装\"><a href=\"#nvm-安装\" class=\"headerlink\" title=\"nvm 安装\"></a>nvm 安装</h2><p>双击 install.cmd ，是以控制台形式显示的，第一下直接按回车，然后会在C盘根目录产生settings.txt，把这个文件放进刚刚解压的那个目录，然后修改settings.txt内容，改成下面那样：<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div></pre></td><td class=\"code\"><pre><div class=\"line\">root: C:\\dev\\nvm</div><div class=\"line\">path: C:\\dev\\nodejs</div><div class=\"line\">arch: 64</div><div class=\"line\">proxy: none</div><div class=\"line\">node_mirror: http://npm.taobao.org/mirrors/node/</div><div class=\"line\">npm_mirror: https://npm.taobao.org/mirrors/npm/</div></pre></td></tr></table></figure></p>\n<p>但是有些人很不幸，这个方法行不通，因为打开 install.cmd按下回车后，显示拒绝访问注册表路径，并弹出一个settings.txt。这时候，你只要淡定地叉掉那个文本以及控制台，然后在刚刚的目录里新建一个文件settings.txt，最后把上面的内容复制进去就可以了。<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div></pre></td><td class=\"code\"><pre><div class=\"line\">root ： nvm的存放地址</div><div class=\"line\">path ： 存放指向node版本的快捷方式，使用nvm的过程中会自动生成。一般写的时候与nvm同级。</div><div class=\"line\">arch ： 电脑系统是64位就写64,32位就写32</div><div class=\"line\">proxy ： 代理</div></pre></td></tr></table></figure></p>\n<h2 id=\"nvm-配置\"><a href=\"#nvm-配置\" class=\"headerlink\" title=\"nvm 配置\"></a>nvm 配置</h2><p>以控制台方法执行成功的，在环境变量里会自动配置了 NVM_HOME 和 NVM_SYMLINK ，这时候只要修改相应的路径就行了。<br>直接创建settings文件的可以在环境变量里创建 NVM_HOME 和 NVM_SYMLINK，并添加路径<br>要是嫌弃可视化界面打开环境变量的步骤太麻烦，可以直接使用  windows+r =&gt;<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div></pre></td><td class=\"code\"><pre><div class=\"line\">sysdm.cpl</div><div class=\"line\">NVM_HOME： C:\\dev\\nvm</div><div class=\"line\">NVM_SYMLINK ： C:\\dev\\nodejs</div><div class=\"line\">在PATH里加上;%NVM_HOME%;%NVM_SYMLINK%;。</div></pre></td></tr></table></figure></p>\n<p>一键控制台install的还要检查 环境变量 PATH 上的路径有没有添加C:\\dev\\nvm以及C:\\dev\\nodejs,有的话就删掉。</p>\n<h2 id=\"检测安装结果\"><a href=\"#检测安装结果\" class=\"headerlink\" title=\"检测安装结果\"></a>检测安装结果</h2><p>打开控制台，输入：nvm -v,若是出现版本信息，则安装。若报错，那就重新把步骤再捋一遍。</p>\n<p>检查环境变量是否配置成功：可以在控制台输入：set [环境变量名]，查看路径是否填写错误</p>\n<h2 id=\"使用node\"><a href=\"#使用node\" class=\"headerlink\" title=\"使用node\"></a>使用node</h2><p>控制台下载 =&gt; 输入：nvm install [版本号]，下载最新版的可以直接输nvm install latest<br>下载完成后，在控制台输入：nvm use [版本号]。即使用这个版本号的node了。在use后，上面所说的nodejs文件夹就自动生成了。（在use之前是没有的哦）</p>\n<h1 id=\"在linux下安装nvm\"><a href=\"#在linux下安装nvm\" class=\"headerlink\" title=\"在linux下安装nvm\"></a>在linux下安装nvm</h1><h2 id=\"安装nvm\"><a href=\"#安装nvm\" class=\"headerlink\" title=\"安装nvm\"></a>安装nvm</h2><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div></pre></td><td class=\"code\"><pre><div class=\"line\">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash</div></pre></td></tr></table></figure>\n<p>或者<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div></pre></td><td class=\"code\"><pre><div class=\"line\">wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash</div></pre></td></tr></table></figure></p>\n<figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div></pre></td><td class=\"code\"><pre><div class=\"line\">## 安装brew</div><div class=\"line\">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</div><div class=\"line\"></div><div class=\"line\">## 安装nvm</div><div class=\"line\">$ brew install nvm</div></pre></td></tr></table></figure>\n<p>shell用了zsh，所以还要在~/.zshrc 配置文件里添加nvm PATH<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div></pre></td><td class=\"code\"><pre><div class=\"line\">## 添加nvm PATH</div><div class=\"line\"> export NVM_DIR=&quot;~/.nvm&quot;</div><div class=\"line\">[ -s &quot;$NVM_DIR/nvm.sh&quot; ] &amp;&amp; . &quot;$NVM_DIR/nvm.sh&quot;</div></pre></td></tr></table></figure></p>\n<h2 id=\"使用淘宝镜像安装nodejs\"><a href=\"#使用淘宝镜像安装nodejs\" class=\"headerlink\" title=\"使用淘宝镜像安装nodejs\"></a>使用淘宝镜像安装nodejs</h2><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div></pre></td><td class=\"code\"><pre><div class=\"line\">NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node nvm install 6.2.0</div></pre></td></tr></table></figure>\n<h1 id=\"nvm-常用命令\"><a href=\"#nvm-常用命令\" class=\"headerlink\" title=\"nvm 常用命令\"></a>nvm 常用命令</h1><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div><div class=\"line\">11</div><div class=\"line\">12</div><div class=\"line\">13</div><div class=\"line\">14</div><div class=\"line\">15</div><div class=\"line\">16</div><div class=\"line\">17</div><div class=\"line\">18</div></pre></td><td class=\"code\"><pre><div class=\"line\"></div><div class=\"line\">nvm install ## 安装指定版本，可模糊安装，如：安装v4.4.0，既可nvm install v4.4.0，又可nvm install 4.4</div><div class=\"line\"></div><div class=\"line\">nvm uninstall ## 删除已安装的指定版本，语法与install类似</div><div class=\"line\"></div><div class=\"line\">nvm use ## 切换使用指定的版本node</div><div class=\"line\"></div><div class=\"line\">nvm ls ## 列出所有安装的版本</div><div class=\"line\"></div><div class=\"line\">nvm ls-remote ## 列出所以远程服务器的版本（官方node version list）</div><div class=\"line\"></div><div class=\"line\">nvm current ## 显示当前的版本</div><div class=\"line\"></div><div class=\"line\">nvm alias ## 给不同的版本号添加别名</div><div class=\"line\"></div><div class=\"line\">nvm unalias ## 删除已定义的别名</div><div class=\"line\"></div><div class=\"line\">nvm reinstall-packages ## 在当前版本node环境下，重新全局安装指定版本号的npm包</div></pre></td></tr></table></figure>\n",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1499994747497,
+				"created_by": 2,
+				"updated_at": 1499994749235,
+				"updated_by": 2,
+				"published_at": 1499994747497,
+				"published_by": 2
+			},
 			{
 				"id": "cj3zdqq1h0003jgfct38qpunr",
 				"title": "nginx的基本功能",
@@ -2048,6 +2090,18 @@
 				"description": ""
 			},
 			{
+				"id": "cj5365opi0002hofcufc64owr",
+				"name": "nvm",
+				"slug": "nvm",
+				"description": ""
+			},
+			{
+				"id": "ciwg2cosv000tqcfcsyzydc9j",
+				"name": "nodejs",
+				"slug": "nodejs",
+				"description": ""
+			},
+			{
 				"id": "ciwg2cosv000tqcfcsyzydc9j",
 				"name": "nodejs",
 				"slug": "nodejs",
@@ -2609,6 +2663,14 @@
 		"posts_tags": [
 			{
 				"tag_id": "ciwg2cosv000tqcfcsyzydc9j",
+				"post_id": "cj53aeqn40000tofc1a1bio2c"
+			},
+			{
+				"tag_id": "cj5365opi0002hofcufc64owr",
+				"post_id": "cj5365ohb0000hofcy1dv5gm4"
+			},
+			{
+				"tag_id": "ciwg2cosv000tqcfcsyzydc9j",
 				"post_id": "cj3zdqq1h0003jgfct38qpunr"
 			},
 			{
@@ -2985,6 +3047,18 @@
 			}
 		],
 		"categories": [
+			{
+				"id": "ciwg0zxyx001fq0fcjg9nawo5",
+				"name": "nodejs",
+				"slug": "nodejs",
+				"description": ""
+			},
+			{
+				"id": "cj5365onq0001hofcypfl6zf2",
+				"name": "nvm",
+				"slug": "nvm",
+				"description": ""
+			},
 			{
 				"id": "ciwg0zxyx001fq0fcjg9nawo5",
 				"name": "nodejs",
@@ -3533,6 +3607,14 @@
 			}
 		],
 		"posts_categories": [
+			{
+				"category_id": "ciwg0zxyx001fq0fcjg9nawo5",
+				"post_id": "cj53aeqn40000tofc1a1bio2c"
+			},
+			{
+				"category_id": "cj5365onq0001hofcypfl6zf2",
+				"post_id": "cj5365ohb0000hofcy1dv5gm4"
+			},
 			{
 				"category_id": "ciwg0zxyx001fq0fcjg9nawo5",
 				"post_id": "cj3zdqq1h0003jgfct38qpunr"
