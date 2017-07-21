@@ -1,10 +1,52 @@
 {
 	"meta": {
-		"exported_on": 1500002288149,
+		"exported_on": 1500611005123,
 		"version": "008"
 	},
 	"data": {
 		"posts": [
+			{
+				"id": "cj5dd18m70000u0fcjljxpy4n",
+				"title": "",
+				"slug": "nginx_category",
+				"markdown": "\n\n---\ntitle: nginx负载均衡的5种策略\ncategory: ngnix\ntags: ngnix\n---\n\nnginx可以根据客户端IP进行负载均衡，在upstream里设置ip_hash，就可以针对同一个C类地址段中的客户端选择同一个后端服务器，除非那个后端服务器宕了才会换一个。\n\nnginx的upstream目前支持的5种方式的分配\n\n<!--mroe-->\n\n# 轮询（默认）\n每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。\n```\nupstream backserver {\nserver 192.168.0.14;\nserver 192.168.0.15;\n}\n```\n\n# 指定权重\n指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。\n```\nupstream backserver {\nserver 192.168.0.14 weight=10;\nserver 192.168.0.15 weight=10;\n}\n```\n\n# IP绑定 ip_hash\n每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。\n```\nupstream backserver {\nip_hash;\nserver 192.168.0.14:88;\nserver 192.168.0.15:80;\n}\n\n```\n# fair（第三方）\n按后端服务器的响应时间来分配请求，响应时间短的优先分配。\n```\nupstream backserver {\nserver server1;\nserver server2;\nfair;\n}\n```\n# url_hash（第三方）\n按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。\n```\nupstream backserver {\nserver squid1:3128;\nserver squid2:3128;\nhash $request_uri;\nhash_method crc32;\n}\n```\n在需要使用负载均衡的server中增加\n```\nproxy_pass http://backserver/;\nupstream backserver{\nip_hash;\nserver 127.0.0.1:9090 down; (down 表示单前的server暂时不参与负载)\nserver 127.0.0.1:8080 weight=2; (weight 默认为1.weight越大，负载的权重就越大)\nserver 127.0.0.1:6060;\nserver 127.0.0.1:7070 backup; (其它所有的非backup机器down或者忙的时候，请求backup机器)\n}\n```\nmax_fails ：允许请求失败的次数默认为1.当超过最大次数时，返回proxy_next_upstream 模块定义的错误\n\n\nfail_timeout:max_fails次失败后，暂停的时间",
+				"html": "<hr>\n<p>title: nginx负载均衡的5种策略<br>category: ngnix</p>\n<h2 id=\"tags-ngnix\"><a href=\"#tags-ngnix\" class=\"headerlink\" title=\"tags: ngnix\"></a>tags: ngnix</h2><p>nginx可以根据客户端IP进行负载均衡，在upstream里设置ip_hash，就可以针对同一个C类地址段中的客户端选择同一个后端服务器，除非那个后端服务器宕了才会换一个。</p>\n<p>nginx的upstream目前支持的5种方式的分配</p>\n<!--mroe-->\n<h1 id=\"轮询（默认）\"><a href=\"#轮询（默认）\" class=\"headerlink\" title=\"轮询（默认）\"></a>轮询（默认）</h1><p>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div></pre></td><td class=\"code\"><pre><div class=\"line\">upstream backserver &#123;</div><div class=\"line\">server 192.168.0.14;</div><div class=\"line\">server 192.168.0.15;</div><div class=\"line\">&#125;</div></pre></td></tr></table></figure></p>\n<h1 id=\"指定权重\"><a href=\"#指定权重\" class=\"headerlink\" title=\"指定权重\"></a>指定权重</h1><p>指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div></pre></td><td class=\"code\"><pre><div class=\"line\">upstream backserver &#123;</div><div class=\"line\">server 192.168.0.14 weight=10;</div><div class=\"line\">server 192.168.0.15 weight=10;</div><div class=\"line\">&#125;</div></pre></td></tr></table></figure></p>\n<h1 id=\"IP绑定-ip-hash\"><a href=\"#IP绑定-ip-hash\" class=\"headerlink\" title=\"IP绑定 ip_hash\"></a>IP绑定 ip_hash</h1><p>每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div></pre></td><td class=\"code\"><pre><div class=\"line\">upstream backserver &#123;</div><div class=\"line\">ip_hash;</div><div class=\"line\">server 192.168.0.14:88;</div><div class=\"line\">server 192.168.0.15:80;</div><div class=\"line\">&#125;</div></pre></td></tr></table></figure></p>\n<h1 id=\"fair（第三方）\"><a href=\"#fair（第三方）\" class=\"headerlink\" title=\"fair（第三方）\"></a>fair（第三方）</h1><p>按后端服务器的响应时间来分配请求，响应时间短的优先分配。<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div></pre></td><td class=\"code\"><pre><div class=\"line\">upstream backserver &#123;</div><div class=\"line\">server server1;</div><div class=\"line\">server server2;</div><div class=\"line\">fair;</div><div class=\"line\">&#125;</div></pre></td></tr></table></figure></p>\n<h1 id=\"url-hash（第三方）\"><a href=\"#url-hash（第三方）\" class=\"headerlink\" title=\"url_hash（第三方）\"></a>url_hash（第三方）</h1><p>按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div></pre></td><td class=\"code\"><pre><div class=\"line\">upstream backserver &#123;</div><div class=\"line\">server squid1:3128;</div><div class=\"line\">server squid2:3128;</div><div class=\"line\">hash $request_uri;</div><div class=\"line\">hash_method crc32;</div><div class=\"line\">&#125;</div></pre></td></tr></table></figure></p>\n<p>在需要使用负载均衡的server中增加<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div></pre></td><td class=\"code\"><pre><div class=\"line\">proxy_pass http://backserver/;</div><div class=\"line\">upstream backserver&#123;</div><div class=\"line\">ip_hash;</div><div class=\"line\">server 127.0.0.1:9090 down; (down 表示单前的server暂时不参与负载)</div><div class=\"line\">server 127.0.0.1:8080 weight=2; (weight 默认为1.weight越大，负载的权重就越大)</div><div class=\"line\">server 127.0.0.1:6060;</div><div class=\"line\">server 127.0.0.1:7070 backup; (其它所有的非backup机器down或者忙的时候，请求backup机器)</div><div class=\"line\">&#125;</div></pre></td></tr></table></figure></p>\n<p>max_fails ：允许请求失败的次数默认为1.当超过最大次数时，返回proxy_next_upstream 模块定义的错误</p>\n<p>fail_timeout:max_fails次失败后，暂停的时间</p>\n",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1500610886256,
+				"created_by": 2,
+				"updated_at": 1500610975630,
+				"updated_by": 2,
+				"published_at": 1500610886256,
+				"published_by": 2
+			},
+			{
+				"id": "cj5d9cpyd0000lwfc4dvvy405",
+				"title": "Windows下Nginx的启动、停止等命令",
+				"slug": "nginx_windows_command",
+				"markdown": "\n在Windows下使用Nginx，我们需要掌握一些基本的操作命令，比如：启动、停止Nginx服务，重新载入Nginx等，下面我就进行一些简单的介绍。\n1、启动：\nC:\\server\\nginx-1.0.2>start nginx或\nC:\\server\\nginx-1.0.2>nginx.exe\n\n2、停止：\nC:\\server\\nginx-1.0.2>nginx.exe -s stop或\nC:\\server\\nginx-1.0.2>nginx.exe -s quit\n注：stop是快速停止nginx，可能并不保存相关信息；quit是完整有序的停止nginx，并保存相关信息。\n\n3、重新载入Nginx：\nC:\\server\\nginx-1.0.2>nginx.exe -s reload\n当配置信息修改，需要重新载入这些配置时使用此命令。\n\n\n4、重新打开日志文件：\nC:\\server\\nginx-1.0.2>nginx.exe -s reopen\n\n5、查看Nginx版本：\nC:\\server\\nginx-1.0.2>nginx -v",
+				"html": "<p>在Windows下使用Nginx，我们需要掌握一些基本的操作命令，比如：启动、停止Nginx服务，重新载入Nginx等，下面我就进行一些简单的介绍。<br>1、启动：<br>C:\\server\\nginx-1.0.2&gt;start nginx或<br>C:\\server\\nginx-1.0.2&gt;nginx.exe</p>\n<p>2、停止：<br>C:\\server\\nginx-1.0.2&gt;nginx.exe -s stop或<br>C:\\server\\nginx-1.0.2&gt;nginx.exe -s quit<br>注：stop是快速停止nginx，可能并不保存相关信息；quit是完整有序的停止nginx，并保存相关信息。</p>\n<p>3、重新载入Nginx：<br>C:\\server\\nginx-1.0.2&gt;nginx.exe -s reload<br>当配置信息修改，需要重新载入这些配置时使用此命令。</p>\n<p>4、重新打开日志文件：<br>C:\\server\\nginx-1.0.2&gt;nginx.exe -s reopen</p>\n<p>5、查看Nginx版本：<br>C:\\server\\nginx-1.0.2&gt;nginx -v</p>\n",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1500604752097,
+				"created_by": 2,
+				"updated_at": 1500604789652,
+				"updated_by": 2,
+				"published_at": 1500604752097,
+				"published_by": 2
+			},
 			{
 				"id": "cj53aeqn40000tofc1a1bio2c",
 				"title": "linux下安装或升级GCC4.8，以支持C++11标准",
@@ -2084,6 +2126,12 @@
 		],
 		"tags": [
 			{
+				"id": "cj5d9cpzw0002lwfc9zss7th7",
+				"name": "ngnix",
+				"slug": "ngnix",
+				"description": ""
+			},
+			{
 				"id": "ciwg2cosv000tqcfcsyzydc9j",
 				"name": "nodejs",
 				"slug": "nodejs",
@@ -2662,6 +2710,10 @@
 		],
 		"posts_tags": [
 			{
+				"tag_id": "cj5d9cpzw0002lwfc9zss7th7",
+				"post_id": "cj5d9cpyd0000lwfc4dvvy405"
+			},
+			{
 				"tag_id": "ciwg2cosv000tqcfcsyzydc9j",
 				"post_id": "cj53aeqn40000tofc1a1bio2c"
 			},
@@ -3047,6 +3099,12 @@
 			}
 		],
 		"categories": [
+			{
+				"id": "cj5d9cpyt0001lwfc8jfmkvp3",
+				"name": "ngnix",
+				"slug": "ngnix",
+				"description": ""
+			},
 			{
 				"id": "ciwg0zxyx001fq0fcjg9nawo5",
 				"name": "nodejs",
@@ -3607,6 +3665,10 @@
 			}
 		],
 		"posts_categories": [
+			{
+				"category_id": "cj5d9cpyt0001lwfc8jfmkvp3",
+				"post_id": "cj5d9cpyd0000lwfc4dvvy405"
+			},
 			{
 				"category_id": "ciwg0zxyx001fq0fcjg9nawo5",
 				"post_id": "cj53aeqn40000tofc1a1bio2c"
