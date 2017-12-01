@@ -1,10 +1,52 @@
 {
 	"meta": {
-		"exported_on": 1504063241197,
+		"exported_on": 1512096093541,
 		"version": "008"
 	},
 	"data": {
 		"posts": [
+			{
+				"id": "cjanay1jk0001j4fcxefuagw5",
+				"title": "openssl生成SSL证书的流程",
+				"slug": "nodejs_openssl",
+				"markdown": "\n\nSSL证书通过在客户端浏览器和Web服务器之间建立一条SSL安全通道（Secure socketlayer(SSL),SSL安全协议主要用来提供对用户和服务器的认证；对传送的数据进行加密和隐藏；确保数据在传送中不被改变，即数据的完整性，现已成为该领域中全球化的标准。由于SSL技术已建立到所有主要的浏览器和WEB服务器程序中，因此，仅需安装服务器证书就可以激活该功能了）。即通过它可以激活SSL协议，实现数据信息在客户端和服务器之间的加密传输，可以防止数据信息的泄露。保证了双方传递信息的安全性，而且用户可以通过服务器证书验证他所访问的网站是否是真实可靠。\nSSL网站不同于一般的Web站点，它使用的是“HTTPS”协议，而不是普通的“HTTP”协议。因此它的URL（统一资源定位器）格式为“https://www.baidu.com”。\n<!--more-->\n\n# 什么是x509证书链\nx509证书一般会用到三类文件，key，csr，crt。\nKey是私用密钥，openssl格式，通常是rsa算法。\ncsr是证书请求文件，用于申请证书。在制作csr文件的时候，必须使用自己的私钥来签署申请，还可以设定一个密钥。\ncrt是CA认证后的证书文件（windows下面的csr，其实是crt），签署人用自己的key给你签署的凭证。\n## 概念\n首先要有一个CA根证书，然后用CA根证书来签发用户证书。\n用户进行证书申请：一般先生成一个私钥，然后用私钥生成证书请求(证书请求里应含有公钥信息)，再利用证书服务器的CA根证书来签发证书。\n特别说明:\n```\n（1）自签名证书(一般用于顶级证书、根证书): 证书的名称和认证机构的名称相同.\n（2）根证书：根证书是CA认证中心给自己颁发的证书,是信任链的起始点。任何安装CA根证书的服务器都意味着对这个CA认证中心是信任的。\n数字证书则是由证书认证机构（CA）对证书申请者真实身份验证之后，用CA的根证书对申请人的一些基本信息以及申请人的公钥进行签名（相当于加盖发证书机构的公章）后形成的一个数字文件。数字证书包含证书中所标识的实体的公钥（就是说你的证书里有你的公钥），由于证书将公钥与特定的个人匹配，并且该证书的真实性由颁发机构保证（就是说可以让大家相信你的证书是真的），因此，数字证书为如何找到用户的公钥并知道它是否有效这一问题提供了解决方案。\n```\nopenssl中有如下后缀名的文件\n```\n.key格式：私有的密钥\n.csr格式：证书签名请求（证书请求文件），含有公钥信息，certificate signing request的缩写\n.crt格式：证书文件，certificate的缩写\n.crl格式：证书吊销列表，Certificate Revocation List的缩写\n.pem格式：用于导出，导入证书时候的证书的格式，有证书开头，结尾的格式\n```\n# CA根证书的生成步骤\n生成CA私钥（.key）-->生成CA证书请求（.csr）-->自签名得到根证书（.crt）（CA给自已颁发的证书）。\n```\n# Generate CA private key\nopenssl genrsa -out ca.key 2048\n# Generate CSR\nopenssl req -new -key ca.key -out ca.csr\n# Generate Self Signed certificate（CA 根证书）\nopenssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt\n```\n在实际的软件开发工作中，往往服务器就采用这种自签名的方式，因为毕竟找第三方签名机构是要给钱的，也是需要花时间的。\n# 用户证书的生成步骤\n生成私钥（.key）-->生成证书请求（.csr）-->用CA根证书签名得到证书（.crt）\n服务器端用户证书：\n```\n# private key\n$openssl genrsa -des3 -out server.key 1024\n# generate csr\n$openssl req -new -key server.key -out server.csr\n# generate certificate\n$openssl ca -in server.csr -out server.crt -cert ca.crt -keyfile ca.key\n```\n客户端用户证书：\n```\n[plain] view plain copy\n$openssl genrsa -des3 -out client.key 1024\n$openssl req -new -key client.key -out client.csr\n$openssl ca -in client.csr -out client.crt -cert ca.crt -keyfile ca.key\n生成pem格式证书\n```\n有时需要用到pem格式的证书，可以用以下方式合并证书文件（crt）和私钥文件（key）来生成\n```\n$cat client.crt client.key> client.pem\n$cat server.crt server.key > server.pem\n```\n结果：\n```\n服务端证书：ca.crt, server.key, server.crt, server.pem\n客户端证书：ca.crt, client.key, client.crt, client.pem\n```",
+				"html": "<p>SSL证书通过在客户端浏览器和Web服务器之间建立一条SSL安全通道（Secure socketlayer(SSL),SSL安全协议主要用来提供对用户和服务器的认证；对传送的数据进行加密和隐藏；确保数据在传送中不被改变，即数据的完整性，现已成为该领域中全球化的标准。由于SSL技术已建立到所有主要的浏览器和WEB服务器程序中，因此，仅需安装服务器证书就可以激活该功能了）。即通过它可以激活SSL协议，实现数据信息在客户端和服务器之间的加密传输，可以防止数据信息的泄露。保证了双方传递信息的安全性，而且用户可以通过服务器证书验证他所访问的网站是否是真实可靠。<br>SSL网站不同于一般的Web站点，它使用的是“HTTPS”协议，而不是普通的“HTTP”协议。因此它的URL（统一资源定位器）格式为“<a href=\"https://www.baidu.com”。\" target=\"_blank\" rel=\"external\">https://www.baidu.com”。</a><br><a id=\"more\"></a></p>\n<h1 id=\"什么是x509证书链\"><a href=\"#什么是x509证书链\" class=\"headerlink\" title=\"什么是x509证书链\"></a>什么是x509证书链</h1><p>x509证书一般会用到三类文件，key，csr，crt。<br>Key是私用密钥，openssl格式，通常是rsa算法。<br>csr是证书请求文件，用于申请证书。在制作csr文件的时候，必须使用自己的私钥来签署申请，还可以设定一个密钥。<br>crt是CA认证后的证书文件（windows下面的csr，其实是crt），签署人用自己的key给你签署的凭证。</p>\n<h2 id=\"概念\"><a href=\"#概念\" class=\"headerlink\" title=\"概念\"></a>概念</h2><p>首先要有一个CA根证书，然后用CA根证书来签发用户证书。<br>用户进行证书申请：一般先生成一个私钥，然后用私钥生成证书请求(证书请求里应含有公钥信息)，再利用证书服务器的CA根证书来签发证书。<br>特别说明:<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div></pre></td><td class=\"code\"><pre><div class=\"line\">（1）自签名证书(一般用于顶级证书、根证书): 证书的名称和认证机构的名称相同.</div><div class=\"line\">（2）根证书：根证书是CA认证中心给自己颁发的证书,是信任链的起始点。任何安装CA根证书的服务器都意味着对这个CA认证中心是信任的。</div><div class=\"line\">数字证书则是由证书认证机构（CA）对证书申请者真实身份验证之后，用CA的根证书对申请人的一些基本信息以及申请人的公钥进行签名（相当于加盖发证书机构的公章）后形成的一个数字文件。数字证书包含证书中所标识的实体的公钥（就是说你的证书里有你的公钥），由于证书将公钥与特定的个人匹配，并且该证书的真实性由颁发机构保证（就是说可以让大家相信你的证书是真的），因此，数字证书为如何找到用户的公钥并知道它是否有效这一问题提供了解决方案。</div></pre></td></tr></table></figure></p>\n<p>openssl中有如下后缀名的文件<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div></pre></td><td class=\"code\"><pre><div class=\"line\">.key格式：私有的密钥</div><div class=\"line\">.csr格式：证书签名请求（证书请求文件），含有公钥信息，certificate signing request的缩写</div><div class=\"line\">.crt格式：证书文件，certificate的缩写</div><div class=\"line\">.crl格式：证书吊销列表，Certificate Revocation List的缩写</div><div class=\"line\">.pem格式：用于导出，导入证书时候的证书的格式，有证书开头，结尾的格式</div></pre></td></tr></table></figure></p>\n<h1 id=\"CA根证书的生成步骤\"><a href=\"#CA根证书的生成步骤\" class=\"headerlink\" title=\"CA根证书的生成步骤\"></a>CA根证书的生成步骤</h1><p>生成CA私钥（.key）–&gt;生成CA证书请求（.csr）–&gt;自签名得到根证书（.crt）（CA给自已颁发的证书）。<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div></pre></td><td class=\"code\"><pre><div class=\"line\"># Generate CA private key</div><div class=\"line\">openssl genrsa -out ca.key 2048</div><div class=\"line\"># Generate CSR</div><div class=\"line\">openssl req -new -key ca.key -out ca.csr</div><div class=\"line\"># Generate Self Signed certificate（CA 根证书）</div><div class=\"line\">openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt</div></pre></td></tr></table></figure></p>\n<p>在实际的软件开发工作中，往往服务器就采用这种自签名的方式，因为毕竟找第三方签名机构是要给钱的，也是需要花时间的。</p>\n<h1 id=\"用户证书的生成步骤\"><a href=\"#用户证书的生成步骤\" class=\"headerlink\" title=\"用户证书的生成步骤\"></a>用户证书的生成步骤</h1><p>生成私钥（.key）–&gt;生成证书请求（.csr）–&gt;用CA根证书签名得到证书（.crt）<br>服务器端用户证书：<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div></pre></td><td class=\"code\"><pre><div class=\"line\"># private key</div><div class=\"line\">$openssl genrsa -des3 -out server.key 1024</div><div class=\"line\"># generate csr</div><div class=\"line\">$openssl req -new -key server.key -out server.csr</div><div class=\"line\"># generate certificate</div><div class=\"line\">$openssl ca -in server.csr -out server.crt -cert ca.crt -keyfile ca.key</div></pre></td></tr></table></figure></p>\n<p>客户端用户证书：<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div></pre></td><td class=\"code\"><pre><div class=\"line\">[plain] view plain copy</div><div class=\"line\">$openssl genrsa -des3 -out client.key 1024</div><div class=\"line\">$openssl req -new -key client.key -out client.csr</div><div class=\"line\">$openssl ca -in client.csr -out client.crt -cert ca.crt -keyfile ca.key</div><div class=\"line\">生成pem格式证书</div></pre></td></tr></table></figure></p>\n<p>有时需要用到pem格式的证书，可以用以下方式合并证书文件（crt）和私钥文件（key）来生成<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\">$cat client.crt client.key&gt; client.pem</div><div class=\"line\">$cat server.crt server.key &gt; server.pem</div></pre></td></tr></table></figure></p>\n<p>结果：<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div></pre></td><td class=\"code\"><pre><div class=\"line\">服务端证书：ca.crt, server.key, server.crt, server.pem</div><div class=\"line\">客户端证书：ca.crt, client.key, client.crt, client.pem</div></pre></td></tr></table></figure></p>\n",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1512096032053,
+				"created_by": 2,
+				"updated_at": 1512096033233,
+				"updated_by": 2,
+				"published_at": 1512096032053,
+				"published_by": 2
+			},
+			{
+				"id": "cjanay1is0000j4fc70bey3wq",
+				"title": "Nodejs+Express创建HTTPS服务器",
+				"slug": "nodejs_express_https",
+				"markdown": "使用Express创建Https服务器\n\n在Nodejs中，我们可以通过内置的https库，来实现HTTPS服务器。\n\n首先，我们需要利用openssl生成证书文件：\n```\n＃生成私钥key文件\nopenssl genrsa 1024 > /path/to/private.pem\n//\n＃通过私钥文件生成CSR证书签名\nopenssl req -new -key /path/to/private.pem -out csr.pem\n//\n＃通过私钥文件和CSR证书签名生成证书文件\nopenssl x509 -req -days 365 -in csr.pem -signkey /path/to/private.pem -out /path/to/file.crt\n```\n\n<!--more-->\n\n新生成了三个文件：\n```\nprivate.pem: 私钥\ncsr.pem: CSR证书签名\nfile.crt: 证书文件\n```\n修改Nodejs启动文件server.js：\n\n```js\nvar app = require('express')();\nvar fs = require('fs');\nvar http = require('http');\nvar https = require('https');\nvar privateKey  = fs.readFileSync('/path/to/private.pem', 'utf8');\nvar certificate = fs.readFileSync('/path/to/file.crt', 'utf8');\nvar credentials = {key: privateKey, cert: certificate};\n\nvar httpServer = http.createServer(app);\nvar httpsServer = https.createServer(credentials, app);\nvar PORT = 18080;\nvar SSLPORT = 18081;\n\nhttpServer.listen(PORT, function() {\n    console.log('HTTP Server is running on: http://localhost:%s', PORT);\n});\nhttpsServer.listen(SSLPORT, function() {\n    console.log('HTTPS Server is running on: https://localhost:%s', SSLPORT);\n});\n\n// Welcome\napp.get('/', function(req, res) {\n    if(req.protocol === 'https') {\n        res.status(200).send('Welcome to Safety Land!');\n    }\n    else {\n        res.status(200).send('Welcome!');\n    }\n});\n```\n\n启动服务器：\n\n```\n$ node server.js\nHTTP Server is running on: http://localhost:18080\nHTTPS Server is running on: https://localhost:18081\n```",
+				"html": "<p>使用Express创建Https服务器</p>\n<p>在Nodejs中，我们可以通过内置的https库，来实现HTTPS服务器。</p>\n<p>首先，我们需要利用openssl生成证书文件：<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div></pre></td><td class=\"code\"><pre><div class=\"line\">＃生成私钥key文件</div><div class=\"line\">openssl genrsa 1024 &gt; /path/to/private.pem</div><div class=\"line\">//</div><div class=\"line\">＃通过私钥文件生成CSR证书签名</div><div class=\"line\">openssl req -new -key /path/to/private.pem -out csr.pem</div><div class=\"line\">//</div><div class=\"line\">＃通过私钥文件和CSR证书签名生成证书文件</div><div class=\"line\">openssl x509 -req -days 365 -in csr.pem -signkey /path/to/private.pem -out /path/to/file.crt</div></pre></td></tr></table></figure></p>\n<a id=\"more\"></a>\n<p>新生成了三个文件：<br><figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div></pre></td><td class=\"code\"><pre><div class=\"line\">private.pem: 私钥</div><div class=\"line\">csr.pem: CSR证书签名</div><div class=\"line\">file.crt: 证书文件</div></pre></td></tr></table></figure></p>\n<p>修改Nodejs启动文件server.js：</p>\n<figure class=\"highlight js\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div><div class=\"line\">4</div><div class=\"line\">5</div><div class=\"line\">6</div><div class=\"line\">7</div><div class=\"line\">8</div><div class=\"line\">9</div><div class=\"line\">10</div><div class=\"line\">11</div><div class=\"line\">12</div><div class=\"line\">13</div><div class=\"line\">14</div><div class=\"line\">15</div><div class=\"line\">16</div><div class=\"line\">17</div><div class=\"line\">18</div><div class=\"line\">19</div><div class=\"line\">20</div><div class=\"line\">21</div><div class=\"line\">22</div><div class=\"line\">23</div><div class=\"line\">24</div><div class=\"line\">25</div><div class=\"line\">26</div><div class=\"line\">27</div><div class=\"line\">28</div><div class=\"line\">29</div></pre></td><td class=\"code\"><pre><div class=\"line\"><span class=\"keyword\">var</span> app = <span class=\"built_in\">require</span>(<span class=\"string\">'express'</span>)();</div><div class=\"line\"><span class=\"keyword\">var</span> fs = <span class=\"built_in\">require</span>(<span class=\"string\">'fs'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> http = <span class=\"built_in\">require</span>(<span class=\"string\">'http'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> https = <span class=\"built_in\">require</span>(<span class=\"string\">'https'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> privateKey  = fs.readFileSync(<span class=\"string\">'/path/to/private.pem'</span>, <span class=\"string\">'utf8'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> certificate = fs.readFileSync(<span class=\"string\">'/path/to/file.crt'</span>, <span class=\"string\">'utf8'</span>);</div><div class=\"line\"><span class=\"keyword\">var</span> credentials = &#123;<span class=\"attr\">key</span>: privateKey, <span class=\"attr\">cert</span>: certificate&#125;;</div><div class=\"line\"></div><div class=\"line\"><span class=\"keyword\">var</span> httpServer = http.createServer(app);</div><div class=\"line\"><span class=\"keyword\">var</span> httpsServer = https.createServer(credentials, app);</div><div class=\"line\"><span class=\"keyword\">var</span> PORT = <span class=\"number\">18080</span>;</div><div class=\"line\"><span class=\"keyword\">var</span> SSLPORT = <span class=\"number\">18081</span>;</div><div class=\"line\"></div><div class=\"line\">httpServer.listen(PORT, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">    <span class=\"built_in\">console</span>.log(<span class=\"string\">'HTTP Server is running on: http://localhost:%s'</span>, PORT);</div><div class=\"line\">&#125;);</div><div class=\"line\">httpsServer.listen(SSLPORT, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\"></span>) </span>&#123;</div><div class=\"line\">    <span class=\"built_in\">console</span>.log(<span class=\"string\">'HTTPS Server is running on: https://localhost:%s'</span>, SSLPORT);</div><div class=\"line\">&#125;);</div><div class=\"line\"></div><div class=\"line\"><span class=\"comment\">// Welcome</span></div><div class=\"line\">app.get(<span class=\"string\">'/'</span>, <span class=\"function\"><span class=\"keyword\">function</span>(<span class=\"params\">req, res</span>) </span>&#123;</div><div class=\"line\">    <span class=\"keyword\">if</span>(req.protocol === <span class=\"string\">'https'</span>) &#123;</div><div class=\"line\">        res.status(<span class=\"number\">200</span>).send(<span class=\"string\">'Welcome to Safety Land!'</span>);</div><div class=\"line\">    &#125;</div><div class=\"line\">    <span class=\"keyword\">else</span> &#123;</div><div class=\"line\">        res.status(<span class=\"number\">200</span>).send(<span class=\"string\">'Welcome!'</span>);</div><div class=\"line\">    &#125;</div><div class=\"line\">&#125;);</div></pre></td></tr></table></figure>\n<p>启动服务器：</p>\n<figure class=\"highlight plain\"><table><tr><td class=\"gutter\"><pre><div class=\"line\">1</div><div class=\"line\">2</div><div class=\"line\">3</div></pre></td><td class=\"code\"><pre><div class=\"line\">$ node server.js</div><div class=\"line\">HTTP Server is running on: http://localhost:18080</div><div class=\"line\">HTTPS Server is running on: https://localhost:18081</div></pre></td></tr></table></figure>",
+				"image": null,
+				"featured": 0,
+				"page": 0,
+				"status": "published",
+				"language": "",
+				"meta_title": null,
+				"meta_description": null,
+				"author_id": 2,
+				"created_at": 1512095883257,
+				"created_by": 2,
+				"updated_at": 1512095910862,
+				"updated_by": 2,
+				"published_at": 1512095883257,
+				"published_by": 2
+			},
 			{
 				"id": "cj6yg9afn0000j0fc3o4n5mv2",
 				"title": "前端面试总结",
@@ -2147,6 +2189,18 @@
 		],
 		"tags": [
 			{
+				"id": "ciwg2cosv000tqcfcsyzydc9j",
+				"name": "nodejs",
+				"slug": "nodejs",
+				"description": ""
+			},
+			{
+				"id": "ciwg2cosv000tqcfcsyzydc9j",
+				"name": "nodejs",
+				"slug": "nodejs",
+				"description": ""
+			},
+			{
 				"id": "cj6yg9agy0002j0fcyqoyolr1",
 				"name": "interview",
 				"slug": "interview",
@@ -2743,6 +2797,14 @@
 		],
 		"posts_tags": [
 			{
+				"tag_id": "ciwg2cosv000tqcfcsyzydc9j",
+				"post_id": "cjanay1jk0001j4fcxefuagw5"
+			},
+			{
+				"tag_id": "ciwg2cosv000tqcfcsyzydc9j",
+				"post_id": "cjanay1is0000j4fc70bey3wq"
+			},
+			{
 				"tag_id": "cj6yg9agy0002j0fcyqoyolr1",
 				"post_id": "cj6yg9afn0000j0fc3o4n5mv2"
 			},
@@ -3140,6 +3202,18 @@
 			}
 		],
 		"categories": [
+			{
+				"id": "ciwg0zxyx001fq0fcjg9nawo5",
+				"name": "nodejs",
+				"slug": "nodejs",
+				"description": ""
+			},
+			{
+				"id": "ciwg0zxyx001fq0fcjg9nawo5",
+				"name": "nodejs",
+				"slug": "nodejs",
+				"description": ""
+			},
 			{
 				"id": "cj6yg9ag30001j0fcvttpoi49",
 				"name": "interview",
@@ -3718,6 +3792,14 @@
 			}
 		],
 		"posts_categories": [
+			{
+				"category_id": "ciwg0zxyx001fq0fcjg9nawo5",
+				"post_id": "cjanay1jk0001j4fcxefuagw5"
+			},
+			{
+				"category_id": "ciwg0zxyx001fq0fcjg9nawo5",
+				"post_id": "cjanay1is0000j4fc70bey3wq"
+			},
 			{
 				"category_id": "cj6yg9ag30001j0fcvttpoi49",
 				"post_id": "cj6yg9afn0000j0fc3o4n5mv2"
